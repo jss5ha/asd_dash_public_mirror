@@ -1,6 +1,6 @@
-#DASH - Your Personal Dashboard
+# Dash - Your Personal Dashboard
 
-Tasks:
--[x] django app + GitHub repo created
--[ ] to-do module
--[ ] grades module
+## Tasks:
+- [x] django app + GitHub repo created
+- [ ] to-do module
+- [ ] grades module
