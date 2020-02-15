@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    </head>
+    <body>
+    {% if latest_question_list %}
+        <ul>
+        {% for question in latest_question_list %}
+            <a href="{% url 'polls:detail' question.id %}">{{ question.question_text }}</a>
+        {% endfor %}
+        </ul>
+    {% else %}
+        <p class="text-center h4">No classes have been created.</p>
+    {% endif %}
+    </body>
+
+</html>

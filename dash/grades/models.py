@@ -8,14 +8,16 @@ class course (models.Model):
     def __str__(self):
         return self.class_name
 
-class assTypes (models.Model):
+class assType (models.Model):
     course = models.ForeignKey(course, on_delete=models.CASCADE)
+    ass_type = models.CharField(max_length=30)
     grade_percentage = models.IntegerField(default=0, validators=[MaxValueValidator(100), MinValueValidator(1)])
 
     def __str__(self):
         return self.course + ' ' + str(self.grade_percentage)
 
 class assignment (models.Model):
+    ass_type = models.ForeignKey(assType, on_delete=models.CASCADE)
     ass_name = models.CharField(max_length=100)
     grade = models.IntegerField(default=0)
 
