@@ -26,6 +26,7 @@
 						<div class="form-group">
 							<div class="input-group">
 							  {{ form.text }}
+								{{form.date}}
 							  <span class="input-group-btn">
 								  <button type="submit" class="btn btn-default" id="add-btn">ADD</button>
 							  </span>
@@ -53,9 +54,9 @@
 					<ul class="list-group t20">
 						{% for todo in todo_list %}
 							{% if todo.complete %}
-							<li class="list-group-item todo-completed">{{ todo.text }}</li>
+							<li class="list-group-item todo-completed">{{todo.due_date}} -- {{ todo.text }}</li>
 							{% else %}
-							<a href="{% url 'complete' todo.id %}"><li class="list-group-item">{{ todo.text }}</li></a>
+							<a href="{% url 'complete' todo.id %}"><li class="list-group-item">{{todo.due_date}} -- {{ todo.text }}</li></a>
 							{% endif %}
 						{% endfor %}
 					</ul>
