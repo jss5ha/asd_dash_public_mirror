@@ -3,10 +3,10 @@
     <head>
     </head>
     <body>
-    {% if latest_question_list %}
+    {% if course_list %}
         <ul>
-        {% for question in latest_question_list %}
-            <a href="{% url 'polls:detail' question.id %}">{{ question.question_text }}</a>
+        {% for course in course_list %}
+            <p>{{ course.course_name }}</p>
         {% endfor %}
         </ul>
     {% else %}

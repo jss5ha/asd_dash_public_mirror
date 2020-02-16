@@ -6,7 +6,7 @@ class course (models.Model):
     course_name = models.CharField(max_length=75)
 
     def __str__(self):
-        return self.class_name
+        return self.course_name
 
 class assType (models.Model):
     course = models.ForeignKey(course, on_delete=models.CASCADE)
