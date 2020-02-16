@@ -6,10 +6,10 @@
     </head>
     <body>
     
-    
+    <div class = "container" style = "text-align:left;">
     <form action="{% url 'grades:NewCourse' %}" method="post">
         {% csrf_token %}
-        <label for="name_input">Enter the course name</label>
+        <label for="name_input" style = "font-size:x-large;">Enter the course name</label>
         <input class = "form-control" type="text" name="course_name" id="name_input" value="{{ choice.id }}">
      <!-- <br> 
         <label for="suggestion_input">Enter your suggestion</label>
@@ -18,5 +18,7 @@
     <input type="submit" value="Submit">
     </form>
     </div>
+</div>
+    </body>
 
 </html>
