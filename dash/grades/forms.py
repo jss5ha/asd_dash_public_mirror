@@ -4,7 +4,7 @@ from django.forms import ModelForm, ModelChoiceField
 class courseForm(ModelForm):
     class Meta:
         model = models.course
-        fields = ('course_name')
+        fields = ('course_name',)
 
 class assTypeForm(ModelForm):
 
