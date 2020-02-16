@@ -3,5 +3,7 @@ from . import views
 
 app_name = 'grades'
 urlpatterns = [
-    path('', views.IndexView.as_view(), name='index')
-    ]
+    path('', views.IndexView.as_view(), name='index'),
+    path('courses/', views.CourseView.as_view(), name = 'courses'),
+    path('courses/addcourse', views.addcourse, name = 'addcourse')
+]

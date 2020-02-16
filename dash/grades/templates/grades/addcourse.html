@@ -5,10 +5,10 @@
     <body>
     
     
-    <form action="{% url 'grades:addcourse' %}" method="post">
+    <form action="{% url 'grades:AddCourseView' %}" method="post">
         {% csrf_token %}
         <label for="name_input">Enter your name</label>
-        <input class = "form-control" type="text" name="course_name" id="name_input" value="{{ choice.id }}">
+        <input class = "form-control" type="text" name="name" id="name_input" value="{{ choice.id }}">
      <br> 
         <label for="suggestion_input">Enter your suggestion</label>
        <input class = "form-control" type="text" name="body" id="suggestion_input">
