@@ -5,6 +5,9 @@ app_name = 'grades'
 urlpatterns = [
     path('', views.IndexView.as_view(), name='index'),
     path('courses/', views.CourseView.as_view(), name = 'courses'),
+    path('courses/<int:pk>/', views.IndCourseView.as_view(), name = 'Individual Course'),
     path('courses/NewCourse', views.NewCourse, name = 'NewCourse'),
     path('assignmentlist/', views.assView.as_view(), name = 'Assignment View'),
+    path('assignments/', views.addAssignmentView.as_view(), name = 'addAssignment'),
+   
 ]

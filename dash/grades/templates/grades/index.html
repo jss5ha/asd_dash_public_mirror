@@ -10,7 +10,8 @@
     {% if course_list %}
         <ul>
         {% for course in course_list %}
-            <p><a href="assignmentlist">{{ course.course_name }}</a></p>
+            <!-- <p><a href="assignmentlist">{{ course.course_name }}</a></p> -->
+            <p><a href="{% url 'grades:Individual Course' course.id %}">{{ course.course_name }}</a></p>
         {% endfor %}
             <a href="/grades/courses"> Add a course here </a>
         </ul>
