@@ -18,6 +18,7 @@ class assType (models.Model):
 
 class assignment (models.Model):
     ass_type = models.ForeignKey(assType, on_delete=models.CASCADE)
+    course = models.ForeignKey(course, on_delete=models.CASCADE)
     ass_name = models.CharField(max_length=100)
     grade = models.IntegerField(default=0)
 
