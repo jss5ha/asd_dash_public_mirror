@@ -14,7 +14,7 @@ class assType (models.Model):
     grade_percentage = models.IntegerField(default=0, validators=[MaxValueValidator(100), MinValueValidator(1)])
 
     def __str__(self):
-        return self.course + ' ' + str(self.grade_percentage)
+        return self.ass_type + ' ' + str(self.grade_percentage)
 
 class assignment (models.Model):
     ass_type = models.ForeignKey(assType, on_delete=models.CASCADE)
