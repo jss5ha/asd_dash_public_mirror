@@ -8,9 +8,11 @@
         {% for course in course_list %}
             <p>{{ course.course_name }}</p>
         {% endfor %}
+            <a href="/grades/courses"> Add a course here </a>
         </ul>
     {% else %}
         <p>No classes have been created.</p>
+        <a href="/grades/courses"> Add a course here </a>
     {% endif %}
     </body>
 
