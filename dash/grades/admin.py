@@ -2,9 +2,13 @@ from django.contrib import admin
 from .models import course, assignment, assType
 # Register your models here.
 
+class AssignmentInLine(admin.TabularInline):
+    model = assignment
+    extra = 3
+
 class AssignmentTypeInLine(admin.TabularInline):
     model = assType
-    extra = 3
+    inlines = [AssignmentInLine]
 
 class CourseAdmin(admin.ModelAdmin):
     fieldsets = [
