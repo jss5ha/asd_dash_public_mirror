@@ -6,17 +6,17 @@
     </head>
     <body>
     <div class = "container">
-    <h4 class = "display-4" style = "text-align: left;">Here are your courses:</h4>
+    <h4 class = "display-4" style = "text-align: left;">Here are your assignments:</h4>
     {% if course_list %}
-        <ul>
-        {% for course in course_list %}
-            <p><a href="assignmentlist">{{ course.course_name }}</a></p>
+        <ul>asslist
+        {% for ass in ass_list %}
+            <p{{ ass }}<p>
         {% endfor %}
-            <a href="/grades/courses"> Add a course here </a>
+            <a href="/grades/assignments"> Add an assignment here </a>
         </ul>
     {% else %}
-        <p>No classes have been created.</p>
-        <a href="/grades/courses"> Add a course here </a>
+        <p>No assignments have been created.</p>
+        <a href="/grades/assignments"> Add an assignment here </a>
     {% endif %}
     </div>
     </body>
