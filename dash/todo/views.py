@@ -6,7 +6,7 @@ from .forms import TodoForm
 
 
 def index(request):
-    todo_list = Todo.objects.order_by('id')
+    todo_list = Todo.objects.order_by('date')
     form = TodoForm()
     context = {'todo_list' : todo_list, 'form' : form}
     return render(request, 'todo/index.html', context)
@@ -17,7 +17,7 @@ def addTodo(request):
     form = TodoForm(request.POST)
 
     if form.is_valid():
-        new_todo = Todo(text=request.POST['text'])
+        new_todo = Todo(text=request.POST['text'], date=request.POST['date'])
         new_todo.save()
 
     return redirect('index')
