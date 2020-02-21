@@ -4,7 +4,6 @@ from .models import course, assignment, assType
 
 class AssignmentInLine(admin.TabularInline):
     model = assignment
-    extra = 3
 
 class AssignmentTypeInLine(admin.TabularInline):
     model = assType
@@ -14,7 +13,7 @@ class CourseAdmin(admin.ModelAdmin):
     fieldsets = [
         (None, {'fields': ['course_name']}),
     ]
-    inlines = [AssignmentTypeInLine]
+    inlines = [AssignmentInLine]
     # list_display = ('course_name')
     search_fields = ['course_name']
 admin.site.register(course, CourseAdmin)

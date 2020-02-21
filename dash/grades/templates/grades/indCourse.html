@@ -1,2 +1,17 @@
-<h1> {{ course.course_name }}</h1>
+<h1> {{ indCourse.course_name }}</h1>
 test test
+{%if course %}
+    asdjkfhaksjdhf
+{% endif %}
+{% if course_list %}
+        <ul>
+        {% for course in course_list %}
+            <!-- <p><a href="assignmentlist">{{ course.course_name }}</a></p> -->
+            <p><a href="{% url 'grades:Individual Course' course.id %}">{{ course.id }}</a></p>
+        {% endfor %}
+            <a href="/grades/courses"> Add a course here </a>
+        </ul>
+    {% else %}
+        <p>No classes have been created.</p>
+        <a href="/grades/courses"> Add a course here </a>
+    {% endif %}

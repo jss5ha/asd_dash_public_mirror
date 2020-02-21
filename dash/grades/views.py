@@ -20,11 +20,15 @@ class CourseView(generic.ListView):
     def get_queryset(self):
         return course.objects.all()
 
-class IndCourseView(generic.ListView):
-    model = course
-    template_name = 'grades/indCourse.html'
-    def get_queryset(self):
-        return course.objects.all() #How to make this specific for each question
+
+
+def IndCourse(request, pk):
+    indCourse = course.objects.get(id = pk)
+    print(indCourse)
+    context = {'indCourse': indCourse}
+    template = 'grades/indCourse.html'
+    return render(request, template, context)
+   
 
 def NewCourse (request):
     # course1 = get_object_or_404(course)
