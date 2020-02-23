@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+    <div class="container pt-5">
+        <h1>Please log in to see your Personal Dashboard</h1>
+
+        {% if user.is_authenticated %}
+
+        <h2>
+            <a href="/admin/">    Go To Dashboard</a>
+
+        </h2>
+        <hr>
+
+        <a href="{% url 'logout' %}">Logout</a>
+
+        {% else %}
+        <a href="{% url 'social:begin' 'google-oauth2' %}">
+                Login
+                </a>
+        {% endif %}
+    </div>
+
+</body>
+</html>
