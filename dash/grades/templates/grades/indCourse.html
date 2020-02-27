@@ -1,17 +1,26 @@
 <h1> {{ indCourse.course_name }}</h1>
-test test
-{%if course %}
-    asdjkfhaksjdhf
-{% endif %}
-{% if course_list %}
+{% if indCourse %}
         <ul>
-        {% for course in course_list %}
-            <!-- <p><a href="assignmentlist">{{ course.course_name }}</a></p> -->
-            <p><a href="{% url 'grades:Individual Course' course.id %}">{{ course.id }}</a></p>
+        {% for assignment in indCourse.assignment_set.all %}
+            <p>{{ assignment.ass_name }} {{ assignment.grade }} {{ assignment.grade_percentage }}%<p>
         {% endfor %}
-            <a href="/grades/courses"> Add a course here </a>
+            <!-- <a href="/grades/assignments"> Add an assignment here </a> -->
         </ul>
-    {% else %}
-        <p>No classes have been created.</p>
-        <a href="/grades/courses"> Add a course here </a>
-    {% endif %}
+{% endif %}
+
+<form action="{% url 'grades:NewAssignment' indCourse.id%}" method="post">
+    {% csrf_token %}
+    <label for="name_input" style = "font-size:x-large;">Enter the assignment name</label>
+    <input class = "form-control" type="text" name="course_name" id="name_input" >
+   
+    <label for="grade_input" style = "font-size:x-large;">Enter the assignment grade</label>
+    <input class = "form-control" type="number" name="grade_input" id="grade_input" >
+   
+    <label for="grade_percentage" style = "font-size:x-large;">Enter the assignment percentage</label>
+    <input class = "form-control" type="number" name="grade_percentage" id="grade_percentage" >
+    <!-- <br>
+    <label for="suggestion_input">Enter your suggestion</label>
+   <input class = "form-control" type="text" name="body" id="suggestion_input"> -->
+<br>
+<input type="submit" value="Submit">
+</form>

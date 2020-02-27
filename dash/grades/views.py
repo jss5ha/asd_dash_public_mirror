@@ -4,6 +4,7 @@ from .forms import courseForm, assTypeForm, assignmentForm
 from django.urls import reverse
 from django.views import generic
 from django.http import HttpResponseRedirect
+from django.db import IntegrityError
 
 
 #todo: i think we can get rid of index view and the index.html file -joebediah
@@ -29,6 +30,20 @@ def IndCourse(request, pk):
     template = 'grades/indCourse.html'
     return render(request, template, context)
    
+def NewAssignment(request, pk):
+    indCourse = get_object_or_404(course, pk=pk)
+    if(request.method == 'POST'):
+        form = courseForm(request.POST)
+        if form.is_valid():
+
+            # try: 
+            indCourse.assignment_set.create(course = indCourse, ass_name = request.POST.get("course_name"), grade = request.POST.get('grade_input'), grade_percentage = request.POST.get('grade_percentage'))
+                # indCourse.assignment_set.add(target)
+            # except IntegrityError as e:
+    
+            return IndCourse(request, pk)
+                
+    return IndCourse(request, pk)
 
 def NewCourse (request):
     # course1 = get_object_or_404(course)
