@@ -4,8 +4,11 @@ import os
 import sys
 
 
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> grade-module
 def main():
     os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'dash.settings')
     try:

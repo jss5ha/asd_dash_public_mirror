@@ -1,0 +1,33 @@
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+<div class = "container">
+<h1> Course: {{ indCourse.course_name }}</h1>
+{% if indCourse %}
+        Assignments:
+        <ul>
+        {% for assignment in indCourse.assignment_set.all %}
+            <p>{{ assignment.ass_name }}:
+            <br> Grade: {{ assignment.grade }}% Worth: {{ assignment.grade_percentage }}% 
+            <br> <p><a href = "{% url 'grades:RemoveAssignment' course_id=indCourse.id assignment_id=assignment.id%}">Remove assignment</a></p>
+        {% endfor %}
+            <!-- <a href="/grades/assignments"> Add an assignment here </a> -->
+        </ul>
+{% endif %}
+<h4>Enter New Assignment</h4>
+<form action="{% url 'grades:NewAssignment' indCourse.id%}" method="post">
+    {% csrf_token %}
+    <label for="name_input" style = "font-size:x-large;">Enter the assignment name</label>
+    <input class = "form-control" type="text" name="course_name" id="name_input" >
+   
+    <label for="grade_input" style = "font-size:x-large;">Enter the grade you got on the assignment</label>
+    <input class = "form-control" type="number" name="grade_input" id="grade_input" >
+   
+    <label for="grade_percentage" style = "font-size:x-large;">How much of your total grade is this assignment worth? (in percent)</label>
+    <input class = "form-control" type="number" name="grade_percentage" id="grade_percentage" >
+    <!-- <br>
+    <label for="suggestion_input">Enter your suggestion</label>
+   <input class = "form-control" type="text" name="body" id="suggestion_input"> -->
+<br>
+<input type="submit" value="Submit">
+</form>
+</div>
