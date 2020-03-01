@@ -21,11 +21,14 @@ class CourseView(generic.ListView):
     def get_queryset(self):
         return course.objects.all()
 
+def RemoveAssignment(request, course_id, assignment_id):
+    indCourse = course.objects.get(id = course_id)
+    removed = indCourse.assignment_set.get(id = assignment_id)
+    removed.delete()
+    return HttpResponseRedirect(reverse('grades:toIndCourse', args=(course_id,)))
 
-
-def IndCourse(request, pk):
-    indCourse = course.objects.get(id = pk)
-    print(indCourse)
+def IndCourse(request, course_id):
+    indCourse = course.objects.get(id = course_id)
     context = {'indCourse': indCourse}
     template = 'grades/indCourse.html'
     return render(request, template, context)
@@ -41,9 +44,9 @@ def NewAssignment(request, pk):
                 # indCourse.assignment_set.add(target)
             # except IntegrityError as e:
     
-            return IndCourse(request, pk)
+            return HttpResponseRedirect(reverse('grades:toIndCourse', args=(pk,)))
                 
-    return IndCourse(request, pk)
+    return HttpResponseRedirect(reverse('grades:toIndCourse', args=(pk,)))
 
 def NewCourse (request):
     # course1 = get_object_or_404(course)
