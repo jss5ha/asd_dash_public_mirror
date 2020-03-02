@@ -33,7 +33,7 @@ SECRET_KEY = '3$*rou8bp)mk2z@e6&3$ehq&2lg0=o&!bj(@)d6*=kcy#ow@9j'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
 
 #stuff used for social auth
 AUTHENTICATION_BACKENDS = (
