@@ -16,6 +16,7 @@
 		<link rel="stylesheet" href="{% static 'todo/styles.css' %}" />
 	</head>
 	<body>
+<<<<<<< HEAD
 
 	<div class="container">
 	  <div class="row">
@@ -54,22 +55,71 @@
 				{% endif %}
 			{% endfor %}
 		</ul>
-		</div>
-<!--		<div class="col-xs-6">-->
-<!--			col2-->
-<!--		</div>-->
-<!--		<div class="w-100"></div>-->
-<!--		<div class="col">col</div>-->
-<!--		<div class="col">col</div>-->
-	  </div>
-	</div>
-	</body>
+=======
+		<div class = "container">
+		<div class="container-fluid" id="wrapper">
+			{% if user.is_authenticated %}
+			<div class="row">
+				<div class="col-lg-4 col-lg-offset-4" id="content">
+					<h2>What are your to-dos?</h2>
 
-	<footer>
-					<div class="row pad">
-						<div class="col-lg-12 text-center">
-							Copyright &copy; 2020 <strong>asdfghjkl - DASH</strong>
+					<form action="{% url 'add' %}" method="POST" role="form">
+						{% csrf_token %}
+						<div class="form-group">
+							<div class="input-group">
+							  {{ form.text }}
+								{{form.date}}
+							  <span class="input-group-btn">
+								  <button type="submit" class="btn btn-default" id="add-btn">ADD</button>
+							  </span>
+							</div>
+						</div>
+					</form>
+
+					<div class="row t10">
+						<div class="col-lg-12">
+							<div class="btn-toolbar">
+								<div class="btn-group">
+									<a href="{% url 'deletecomplete' %}"><button type="button" class="btn btn-warning">
+										<i class="glyphicon glyphicon-trash"></i> DELETE COMPLETED
+									</button></a>
+								</div>
+								<div class="btn-group">
+									<a href="{% url 'deleteall' %}"><button type="button" class="btn btn-warning">
+										<i class="glyphicon glyphicon-trash"></i> DELETE ALL
+									</button></a>
+								</div>
+							</div>
 						</div>
 					</div>
-	</footer>
+
+					<ul class="list-group t20">
+						{% for todo in todo_list %}
+							{% if todo.complete %}
+							<li class="list-group-item todo-completed">{{todo.due_date}} -- {{ todo.text }}</li>
+							{% else %}
+							<a href="{% url 'complete' todo.id %}"><li class="list-group-item">{{todo.due_date}} -- {{ todo.text }}</li></a>
+							{% endif %}
+						{% endfor %}
+					</ul>
+				</div>
+			</div>
+				{% else %}
+        		<h1>Please log in to see your Personal Dashboard</h1>
+        		<a href="{% url 'social:begin' 'google-oauth2' %}">
+                Login
+                </a>
+				{%endif%}
+
+			<footer>
+				<div class="row pad">
+					<div class="col-lg-12 text-center">
+						Copyright &copy; 2020 <strong>asdfghjkl - DASH</strong>
+					</div>
+				</div>
+			</div>
+			</footer>
+>>>>>>> parent of 8c9ea3e... Merge pull request #12 from uva-cs3240-s20/todo-module
+		</div>
+	</body>
 </html>

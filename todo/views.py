@@ -32,13 +32,6 @@ def completeTodo(request, todo_id):
 
     return redirect('index')
 
-def deselect(request, todo_id):
-    todo = Todo.objects.get(pk=todo_id)
-    todo.complete = False
-    todo.save()
-
-    return redirect('index')
-
 def deleteCompleted(request):
     Todo.objects.filter(complete__exact=True).delete()
 
