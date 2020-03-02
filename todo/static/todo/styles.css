@@ -1,5 +1,5 @@
 body {
-	background: rgba(1, 61, 80, 0.8);
+	background: rgba(5, 4, 92, 0.6);
 	font-family: 'Times New Roman', Times, serif;
 }
 #wrapper {
@@ -30,4 +30,18 @@ footer {
 }
 .list-group-item {
 	color: black;
+}
+
+.row {
+    padding: 100px;
+}
+
+.row-height {
+    height: 70px;
+    text-align: center;
+    padding-top: 25px;
+}
+
+.col-xs-6 {
+    background-color: #f5f3f3;
 }
