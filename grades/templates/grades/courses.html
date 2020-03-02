@@ -7,6 +7,7 @@
     <body>
 
     <div class = "container" style = "text-align:left;">
+{% if user.is_authenticated %}
     <form action="{% url 'grades:NewCourse' %}" method="post">
         {% csrf_token %}
         <label for="name_input" style = "font-size:x-large;">Enter the course name</label>
@@ -18,7 +19,14 @@
     <input type="submit" value="Submit">
     </form>
     </div>
+        {% else %}
+        <h1>Please log in to see your Personal Dashboard</h1>
+        <a href="{% url 'social:begin' 'google-oauth2' %}">
+                Login
+                </a>
+        {% endif %}
 </div>
+
     </body>
 
 </html>

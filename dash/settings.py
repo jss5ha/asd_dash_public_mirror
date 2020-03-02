@@ -13,6 +13,11 @@ import django_heroku
 import os
 
 
+'''
+used this tutorial to help set up google oauth
+https://dev.to/codetricity/how-to-set-up-django-with-central-oauth2-login-1co
+'''
+
 if 'HEROKU' in os.environ:
     django_heroku.settings(locals())
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -30,11 +35,25 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+#stuff used for social auth
+AUTHENTICATION_BACKENDS = (
+    'social_core.backends.google.GoogleOAuth2',
+    'django.contrib.auth.backends.ModelBackend',
+)
+
+LOGIN_URL = '/auth/login/google-oauth2/'
+
+LOGIN_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL = '/'
+SOCIAL_AUTH_URL_NAMESPACE = 'social'
 
 
 # Application definition
 
 INSTALLED_APPS = [
+    #make sure we look at oscial django support when debugging bc some stuff doesnt
+    #seem v compatible w/it
+    'social_django',
     'grades.apps.GradesConfig',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -127,3 +146,8 @@ STATIC_URL = '/static/'
 
 # Activate Django-Heroku.
 # django_heroku.settings(locals())
+
+try:
+    from .local_settings import *
+except ImportError:
+    pass
