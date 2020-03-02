@@ -1,0 +1,14 @@
+language: python
+python:
+- '3.6'
+install:
+- pip install -r requirements-travis.txt
+script:
+- python manage.py test
+deploy:
+  provider: heroku
+  api_key:
+    secure: d375522e-e1c7-4114-ac4c-2b05360473ac
+  app: asd-dash
+  on:
+    repo: uva-cs3240-s20/project-102-asdfghjkl

@@ -12,6 +12,14 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 import django_heroku
 import os
 
+
+'''
+used this tutorial to help set up google oauth
+https://dev.to/codetricity/how-to-set-up-django-with-central-oauth2-login-1co
+'''
+
+if 'HEROKU' in os.environ:
+    django_heroku.settings(locals())
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -25,12 +33,28 @@ SECRET_KEY = '3$*rou8bp)mk2z@e6&3$ehq&2lg0=o&!bj(@)d6*=kcy#ow@9j'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'asd-dash.herokuapp.com', 'ghost-dash.herokuapp.com']
+
+#stuff used for social auth
+AUTHENTICATION_BACKENDS = (
+    'social_core.backends.google.GoogleOAuth2',
+    'django.contrib.auth.backends.ModelBackend',
+)
+
+LOGIN_URL = '/auth/login/google-oauth2/'
+
+LOGIN_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL = '/'
+SOCIAL_AUTH_URL_NAMESPACE = 'social'
 
 
 # Application definition
 
 INSTALLED_APPS = [
+    #make sure we look at oscial django support when debugging bc some stuff doesnt
+    #seem v compatible w/it
+    'social_django',
+    'grades.apps.GradesConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -106,7 +130,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'America/New_York'
 
 USE_I18N = True
 
@@ -121,4 +145,9 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 # Activate Django-Heroku.
-django_heroku.settings(locals())
+# django_heroku.settings(locals())
+
+try:
+    from .local_settings import *
+except ImportError:
+    pass
