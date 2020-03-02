@@ -8,7 +8,7 @@ script:
 deploy:
   provider: heroku
   api_key:
-    secure: gcE3romc6QM5rJ5klV3/WXUPeboB2s4h3ZRddBR3fmbsRp+A4EYN75gkWvsns2ShCNmfoWP2cK7+rTpEGnTCgPESQmAzaZiPwS4/WsCq2aguPR6yOJ4/BHA6K/3S8RPHZohZXVevcL4RguBdS5pnEbtWpG5P2LY94p3MlW4uEl5swDeItmWxcGMV2VfyCGFDzwK/Zil3i8GPvO3+xj2400nRIoKF1a9dWOPB41mt0hXNWu5n7uc9TS2HYE7Das0jlTsGsg3jKz5WIGqFomP/p+SWGuivdjU84NmKGzgUYSLpIvJjAjhRqADD+fEeXyUwycCf7HpX/MdxDmm8JMOIz/Z75h7IMyk/c6iqapAwo2n3s4ZvJYn5HjVQI2GlTIDcot1Akm5ZLfBg/5zUMXR001AJlx0iI+PLXdMegNz//yt9TUsuwiUL4pBXSYF3V8QB8kUCZnrSmGETfhBEb+njDW4YTD9CDDaikm/o3ttcjC+lPYbny2NRYDhl49/G5lU2olKCxB2sxUGRF3+i//zWkKJ1b//ccTpmcnmzvurvPTjacIIqpMYH3REmnXtye6eCmUOl3ZIyAOt2BvU4r/NeOxKdO7c4S8iq2bK4YEijFdOLXFTg27pk+ot2md/poe7MLhPpODMVyTzdEQ9JsbPJ9vipe/lB9ZmfjKvHk4sOCdY=
+    secure: d375522e-e1c7-4114-ac4c-2b05360473ac
   app: asd-dash
   on:
     repo: uva-cs3240-s20/project-102-asdfghjkl
