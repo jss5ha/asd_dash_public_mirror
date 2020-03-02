@@ -6,20 +6,29 @@
     </head>
     <body>
     <div class = "container">
-    <h4 class = "display-4" style = "text-align: left;">Here are your courses:</h4>
-    {% if course_list %}
-        <ul>
-        {% for course in course_list %}
-            <!-- <p><a href="assignmentlist">{{ course.course_name }}</a></p> -->
-            <p><a href="{% url 'grades:toIndCourse' course.id %}">{{ course.course_name }}</a></p>
-        {% endfor %}
+        {% if user.is_authenticated %}
+
+        <h4 class = "display-4" style = "text-align: left;">Here are your courses:</h4>
+        {% if course_list %}
+            <ul>
+            {% for course in course_list %}
+                <!-- <p><a href="assignmentlist">{{ course.course_name }}</a></p> -->
+                <p><a href="{% url 'grades:toIndCourse' course.id %}">{{ course.course_name }}</a></p>
+            {% endfor %}
+                <a href="/grades/courses" class = "btn btn-primary"> Add a course </a>
+            </ul>
+        {% else %}
+            <p>No classes have been created.</p>
             <a href="/grades/courses" class = "btn btn-primary"> Add a course </a>
-        </ul>
+
+        {% endif %}
     {% else %}
-        <p>No classes have been created.</p>
-        <a href="/grades/courses" class = "btn btn-primary"> Add a course </a>
-        
-    {% endif %}
+        <h1>Please log in to see your Personal Dashboard</h1>
+        <a href="{% url 'social:begin' 'google-oauth2' %}">
+                Login
+                </a>
+        {% endif %}
+
     </div>
     </body>
 
