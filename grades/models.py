@@ -18,7 +18,7 @@ class assType (models.Model):
         return self.ass_type + ' ' + str(self.grade_percentage)
 
 class assignment (models.Model):
-    # ass_type = models.ForeignKey(assType, on_delete=models.CASCADE)
+    ass_type = models.ForeignKey(assType, on_delete=models.CASCADE, default = "")
     course = models.ForeignKey(course, on_delete=models.CASCADE)
     ass_name = models.CharField(max_length=100)
     grade = models.IntegerField(default=0)
