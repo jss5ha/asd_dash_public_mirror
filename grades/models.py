@@ -3,8 +3,9 @@ from django.core.validators import MaxValueValidator, MinValueValidator
 
 # Create your models here.
 class course (models.Model):
+    improved = models.BooleanField(blank=True, default=False)
     course_name = models.CharField(max_length=75)
-
+    course_grade = models.DecimalField(max_digits=5, decimal_places=2, default = 0, validators=[MaxValueValidator(200), MinValueValidator(0)])
     def __str__(self):
         return self.course_name
 
