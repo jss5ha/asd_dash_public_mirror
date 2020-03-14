@@ -48,6 +48,7 @@ def RemoveType(request, course_id, asstype_id):
     for i in atype.assignment_set.all():
         i.delete()
     atype.delete()
+    CalculateGrade(request, course_id)
     return HttpResponseRedirect(reverse('grades:toIndCourse', args = (course_id,)))
 
 def NewType(request, pk):
@@ -72,19 +73,9 @@ def NewAssignment(request, course_id, asstype_id):
     if(request.method == 'POST'):
         form = courseForm(request.POST)
         if form.is_valid():
-            # counter = 0
             if int(request.POST.get('grade_input')) < 0:
                 return HttpResponseRedirect(reverse('grades:toIndCourse', args=(course_id,)))
-            # counter = int(request.POST.get('grade_input'))
-            # for i in indCourse.assignment_set.all():
-                # counter += i.grade_percentage
-            # if counter > 100 or counter < 0:
-                # return HttpResponseRedirect(reverse('grades:toIndCourse', args=(course_id,)))
-                # return render(request, 'grades/indCourse.html', {
-                #     'indCourse': indCourse,
-                #     'error_message': "You didn't select a choice.",
-                #  })
-            # try: 
+           
             atype.assignment_set.create(course = indCourse, ass_type = atype, ass_name = request.POST.get("course_name"), grade = request.POST.get('grade_input'))
                 # indCourse.assignment_set.add(target)
             # except IntegrityError as e:
@@ -121,6 +112,7 @@ def CalculateGrade(request, course_id):
     if x < current:
         indCourse.improved = False
     indCourse.save()
+    return
     
 def NewCourse (request):
     # course1 = get_object_or_404(course)
