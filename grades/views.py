@@ -35,13 +35,21 @@ def RemoveAssignment(request, course_id, assignment_id):
 
 def IndCourse(request, course_id):
     indCourse = course.objects.get(id = course_id)
-    print(indCourse)
-    print(indCourse.assignment_set.all())
+    # print(indCourse)
+    # print(indCourse.assignment_set.all())
     # print(indCourse.asstype_set.all())
     context = {'indCourse': indCourse}
     template = 'grades/indCourse.html'
     return render(request, template, context)
    
+def RemoveType(request, course_id, asstype_id):
+    # indCourse = get_object_or_404(course, pk = course_id)
+    atype = get_object_or_404(assType, pk = asstype_id)
+    for i in atype.assignment_set.all():
+        i.delete()
+    atype.delete()
+    return HttpResponseRedirect(reverse('grades:toIndCourse', args = (course_id,)))
+
 def NewType(request, pk):
     indCourse = get_object_or_404(course, pk=pk)
     if(request.method == 'POST'):
@@ -58,45 +66,52 @@ def NewType(request, pk):
             indCourse.asstype_set.create(course = indCourse, ass_type = request.POST.get('course_name'), grade_percentage = request.POST.get('grade_input'))
             return HttpResponseRedirect(reverse('grades:toIndCourse', args = (pk,)))
             
-def NewAssignment(request, pk):
-    indCourse = get_object_or_404(course, pk=pk)
+def NewAssignment(request, course_id, asstype_id):
+    indCourse = get_object_or_404(course, pk=course_id)
+    atype = get_object_or_404(assType, pk = asstype_id)
     if(request.method == 'POST'):
         form = courseForm(request.POST)
         if form.is_valid():
-            counter = 0
-            if int(request.POST.get('grade_percentage')) < 0:
-                return HttpResponseRedirect(reverse('grades:toIndCourse', args=(pk,)))
-            counter = int(request.POST.get('grade_percentage'))
-            for i in indCourse.assignment_set.all():
-                counter += i.grade_percentage
-            if counter > 100 or counter < 0:
-                return HttpResponseRedirect(reverse('grades:toIndCourse', args=(pk,)))
+            # counter = 0
+            if int(request.POST.get('grade_input')) < 0:
+                return HttpResponseRedirect(reverse('grades:toIndCourse', args=(course_id,)))
+            # counter = int(request.POST.get('grade_input'))
+            # for i in indCourse.assignment_set.all():
+                # counter += i.grade_percentage
+            # if counter > 100 or counter < 0:
+                # return HttpResponseRedirect(reverse('grades:toIndCourse', args=(course_id,)))
                 # return render(request, 'grades/indCourse.html', {
                 #     'indCourse': indCourse,
                 #     'error_message': "You didn't select a choice.",
                 #  })
             # try: 
-            indCourse.assignment_set.create(course = indCourse, ass_name = request.POST.get("course_name"), grade = request.POST.get('grade_input'))
+            atype.assignment_set.create(course = indCourse, ass_type = atype, ass_name = request.POST.get("course_name"), grade = request.POST.get('grade_input'))
                 # indCourse.assignment_set.add(target)
             # except IntegrityError as e:
-            CalculateGrade(request, pk)
-            # print(indCourse.course_grade)
-            return HttpResponseRedirect(reverse('grades:toIndCourse', args=(pk,)))
+            CalculateGrade(request, course_id)
+            return HttpResponseRedirect(reverse('grades:toIndCourse', args=(course_id,)))
                 
-    return HttpResponseRedirect(reverse('grades:toIndCourse', args=(pk,)))
+    return HttpResponseRedirect(reverse('grades:toIndCourse', args=(course_id,)))
 def CalculateGrade(request, course_id):
     indCourse = get_object_or_404(course, pk = course_id)
     current = indCourse.course_grade
     overall = 0
-    if indCourse.assignment_set.exists() is False:
+    if indCourse.asstype_set.exists() is False:
         indCourse.course_grade = 0
         indCourse.improved = False
         indCourse.save()
         return
     
     total_grade_percent = 0
-    for i in indCourse.assignment_set.all():
-        overall += i.grade*i.grade_percentage
+    for i in indCourse.asstype_set.all():
+        if(i.assignment_set.exists()):
+            num_of_assignments = 0
+            for j in i.assignment_set.all():
+                overall += j.grade * i.grade_percentage
+                num_of_assignments += 1
+            overall = overall / num_of_assignments
+        else:
+            overall = 0
         total_grade_percent += i.grade_percentage
     
     x = float(overall/total_grade_percent)

@@ -18,7 +18,8 @@
     {% endif %}
     {% if indCourse %}
     {% for assType in indCourse.asstype_set.all %}
-    <p>Assignment Type: {{ assType.ass_type }} Worth: {{ assType.grade_percentage }}%</p>  
+    <p>Assignment Type: {{ assType.ass_type }} Worth: {{ assType.grade_percentage }}% <a href="{% url 'grades:RemoveType' course_id=indCourse.id asstype_id=assType.id%}">Remove
+        {{ assType.ass_name }} </a></p>  
     <div class="container">
         <div class="row">
 
@@ -48,7 +49,7 @@
       </div>
       <h4>Enter New Assignment</h4>
       
-      <form action="{% url 'grades:NewAssignment' indCourse.id%}" method="post">
+      <form action="{% url 'grades:NewAssignment' indCourse.id assType.id%}" method="post">
           {% csrf_token %}
           <label for="name_input" style="font-size:larger;">Enter the assignment name</label>
           <input class="form-control" type="text" name="course_name" id="name_input" style = "width: 160px;" placeholder = "Assignment name">
