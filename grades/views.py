@@ -11,7 +11,7 @@ from django.db import IntegrityError
 class IndexView(generic.ListView):
     template_name = 'grades/index.html'
     context_object_name = 'course_list'
-
+    
     def get_queryset(self):
         return course.objects.all()
 
@@ -35,10 +35,29 @@ def RemoveAssignment(request, course_id, assignment_id):
 
 def IndCourse(request, course_id):
     indCourse = course.objects.get(id = course_id)
+    print(indCourse)
+    print(indCourse.assignment_set.all())
+    # print(indCourse.asstype_set.all())
     context = {'indCourse': indCourse}
     template = 'grades/indCourse.html'
     return render(request, template, context)
    
+def NewType(request, pk):
+    indCourse = get_object_or_404(course, pk=pk)
+    if(request.method == 'POST'):
+        form = courseForm(request.POST)
+        if form.is_valid():
+            counter = 0
+            if int(request.POST.get('grade_input')) < 0:
+                return HttpResponseRedirect(reverse('grades:toIndCourse', args = (pk,)))
+            counter = int(request.POST.get('grade_input'))
+            for i in indCourse.asstype_set.all():
+                counter += i.grade_percentage
+            if counter > 100 or counter < 0:
+                return HttpResponseRedirect(reverse('grades:toIndCourse', args = (pk,)))
+            indCourse.asstype_set.create(course = indCourse, ass_type = request.POST.get('course_name'), grade_percentage = request.POST.get('grade_input'))
+            return HttpResponseRedirect(reverse('grades:toIndCourse', args = (pk,)))
+            
 def NewAssignment(request, pk):
     indCourse = get_object_or_404(course, pk=pk)
     if(request.method == 'POST'):
@@ -57,7 +76,7 @@ def NewAssignment(request, pk):
                 #     'error_message': "You didn't select a choice.",
                 #  })
             # try: 
-            indCourse.assignment_set.create(course = indCourse, ass_name = request.POST.get("course_name"), grade = request.POST.get('grade_input'), grade_percentage = request.POST.get('grade_percentage'))
+            indCourse.assignment_set.create(course = indCourse, ass_name = request.POST.get("course_name"), grade = request.POST.get('grade_input'))
                 # indCourse.assignment_set.add(target)
             # except IntegrityError as e:
             CalculateGrade(request, pk)
@@ -90,6 +109,7 @@ def CalculateGrade(request, course_id):
     
 def NewCourse (request):
     # course1 = get_object_or_404(course)
+    print(course.objects.all())
     if request.method == 'POST':
         form = courseForm(request.POST)
         if form.is_valid():
