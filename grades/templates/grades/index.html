@@ -1,5 +1,6 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+<script src="https://kit.fontawesome.com/a076d05399.js"></script>
 <!DOCTYPE html>
 <html>
     <head>
@@ -14,16 +15,17 @@
             {% for course in course_list %}
                 {% if course.improved is True %}
                 <div style = "display: inline-block" >
-                    <p style = "float: left;"><a href="{% url 'grades:toIndCourse' course.id %}">{{ course.course_name }}</a></p> <p style = "float: left;color: #39D043; padding-left: 20em; padding-right: 20em;"> <strong>{{ course.course_grade }}</strong></p>
-                    <a href="{% url 'grades:RemoveCourse' course_id=course.id %}">Remove
-                        course</a>
+                    <p style = "float: left;"><a href="{% url 'grades:toIndCourse' course.id %}">{{ course.course_name }}</a></p> <p style = "float: left;color: #39D043; padding-left: 20em; padding-right: 20em;"> <strong>{{ course.course_grade }}</strong><i class = "fa fa-angle-up" style = "color: #39D043; padding-left: 5px;"></i></p>
+                    <a href="{% url 'grades:RemoveCourse' course_id=course.id %}"><i class = "fa fa-trash"></i></a> 
+                        <!-- <i class = "bi bi-chevron-right">test</i> -->
+                        <!-- <svg class="bi bi-chevron-right" width="32" height="32" viewBox="0 0 20 20" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M6.646 3.646a.5.5 0 01.708 0l6 6a.5.5 0 010 .708l-6 6a.5.5 0 01-.708-.708L12.293 10 6.646 4.354a.5.5 0 010-.708z" clip-rule="evenodd"/></svg> -->
+
                 </div>
                 {% endif %}
                 {% if course.improved is False %}
                 <div style = "display: inline-block">
-                <p style = "float: left;"><a href="{% url 'grades:toIndCourse' course.id %}">{{ course.course_name }}</a></p> <p style = "float: left;color: red; padding-left: 20em; padding-right: 20em;"> <strong>{{ course.course_grade }}</strong></p>
-                <a href="{% url 'grades:RemoveCourse' course_id=course.id %}">Remove
-                    course</a>
+                <p style = "float: left;"><a href="{% url 'grades:toIndCourse' course.id %}">{{ course.course_name }}</a></p> <p style = "float: left;color: red; padding-left: 20em; padding-right: 20em;"> <strong>{{ course.course_grade }}</strong><i class = "fa fa-angle-down" style = "color: red; padding-left: 5px;"></i></p>
+                <a href="{% url 'grades:RemoveCourse' course_id=course.id %}"><i class = "fa fa-trash"></i></a>
                 </div>
                 {% endif %}
             {% endfor %}

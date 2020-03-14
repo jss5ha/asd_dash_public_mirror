@@ -92,7 +92,6 @@ def CalculateGrade(request, course_id):
         indCourse.improved = False
         indCourse.save()
         return
-    
     total_grade_percent = 0
     for i in indCourse.asstype_set.all():
         if(i.assignment_set.exists()):
@@ -101,8 +100,7 @@ def CalculateGrade(request, course_id):
                 overall += j.grade * i.grade_percentage
                 num_of_assignments += 1
             overall = overall / num_of_assignments
-        else:
-            overall = 0
+
         total_grade_percent += i.grade_percentage
     
     x = float(overall/total_grade_percent)
