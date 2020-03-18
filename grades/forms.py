@@ -17,4 +17,4 @@ class assTypeForm(ModelForm):
 class assignmentForm(ModelForm):
     class Meta:
         model = models.assignment
-        fields = ('course', 'ass_name', 'grade', 'grade_percentage')
+        fields = ('course', 'ass_type','ass_name', 'grade')

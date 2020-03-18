@@ -1,40 +1,152 @@
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-<div class = "container">
-{% if user.is_authenticated %}
-<h1> Course: {{ indCourse.course_name }}</h1>
-{% if indCourse %}
-        Assignments:
-        <ul>
-        {% for assignment in indCourse.assignment_set.all %}
-            <p>{{ assignment.ass_name }}:
-            <br> Grade: {{ assignment.grade }}% Worth: {{ assignment.grade_percentage }}% 
-            <br> <p><a href = "{% url 'grades:RemoveAssignment' course_id=indCourse.id assignment_id=assignment.id%}">Remove assignment</a></p>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+    integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+    integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+    crossorigin="anonymous"></script>
+<script src="https://kit.fontawesome.com/a076d05399.js"></script>
+<!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"> -->
+<html>
+<!-- <head>
+        <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+        <script type="text/javascript">
+          google.charts.load('current', {'packages':['corechart']});
+          google.charts.setOnLoadCallback(drawChart);
+    
+          function drawChart() {
+            var data = google.visualization.arrayToDataTable([
+              ['Year', 'Sales', 'Expenses'],
+              ['2004',  1000,      400],
+              ['2005',  1170,      460],
+              ['2006',  660,       1120],
+              ['2007',  1030,      540]
+            ]);
+    
+            var options = {
+              title: 'Company Performance',
+              curveType: 'function',
+              legend: { position: 'bottom' }
+            };
+    
+            var chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
+    
+            chart.draw(data, options);
+          }
+        </script>
+      </head> -->
+
+<body>
+    <div class="container">
+        <!-- <div id="curve_chart" style="width: 900px; height: 500px"></div> -->
+        {% if user.is_authenticated %}
+        <h1 style="text-align: center;"> {{ indCourse.course_name }}</h1>
+        {% if indCourse.course_grade == 0 is True %}
+        <div>
+            <h2 style="float: left;">Current grade:</h2>
+            <h2 style="color: black; padding-left: 8em;"> {{ indCourse.course_grade }}%</h2>
+        </div>
+        {% elif indCourse.improved is False %}
+        <div>
+            <h2 style="float: left;">Current grade:</h2>
+            <h2 style="color: red; padding-left: 8em;"> {{ indCourse.course_grade }}%<i class="fa fa-angle-down"
+                    style="color: red; padding-left: 5px;"></i></h2>
+        </div>
+        {% elif indCourse.improved is True %}
+        <div>
+            <h2 style="float: left;">Current grade:</h2>
+            <h2 style="color: #39D043; padding-left: 8em;"> {{ indCourse.course_grade }}%<i class="fa fa-angle-up"
+                    style="color: #39D043; padding-left: 5px;"></i></h2>
+        </div>
+        {% endif %}
+        
+        {% if indCourse %}
+        {% for assType in indCourse.asstype_set.all %}
+        <p>Assignment Type: {{ assType.ass_type }} Worth: {{ assType.grade_percentage }}% <a
+                href="{% url 'grades:RemoveType' course_id=indCourse.id asstype_id=assType.id%}"><i
+                    class="fa fa-trash"></i> </a></p>
+        <div class="container">
+            <div class="row">
+
+
+                <div class="col-sm" style="width: 100;">
+                    {% if assType.assignment_set.exists %}
+                    Assignment Name<br>
+                    {% endif %}
+                    <ul>
+                        {% for assignment in assType.assignment_set.all %}
+                        <p>{{ assignment.ass_name }} </p>
+                        {% endfor %}
+
+                    </ul>
+                </div>
+
+                <div class="col-sm" style="width: 100;">
+                    {% if assType.assignment_set.exists %}
+                    Assignment Grade<br>
+                    {% endif %}
+                    <ul>
+                        {% for assignment in assType.assignment_set.all %}
+                        <p> {{ assignment.grade }}%
+                            <a
+                                href="{% url 'grades:RemoveAssignment' course_id=indCourse.id assignment_id=assignment.id%}"><i
+                                    class="fa fa-trash"></i></a></p>
+                        {% endfor %}
+                        <!-- <a href="/grades/assignments"> Add an assignment here </a> -->
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <!-- <h4>Enter New Assignment</h4> -->
+
+        <form action="{% url 'grades:NewAssignment' indCourse.id assType.id%}" method="post">
+            {% csrf_token %}
+            <div style="display: inline-block;">
+                <div style="float: left;">
+                    <label for="name_input" style="font-size:larger;">Enter New {{ assType.ass_type }} </label>
+                    <input class="form-control" type="text" name="course_name" id="name_input" style="width: 160px;"
+                        placeholder="Assignment name">
+                </div>
+                <div style="float: left; padding-left: 20px;">
+                    <label for="grade_input" style="font-size: larger;">Enter Grade Achieved</label>
+                    <input class="form-control" type="number" name="grade_input" id="grade_input" style="width: 125px;"
+                        placeholder="E.g. 100%">
+                </div>
+                <div style="float: left; padding-left: 20px; padding-top: 40px;">
+                    <input type="submit" value="Submit">
+                </div>
+            </div>
+            <!-- <label for="grade_percentage" style="font-size: larger;">How much of your total grade is this assignment worth?
+              (in percent)</label>
+          <input class="form-control" type="number" name="grade_percentage" id="grade_percentage" style = "width: 75px;"> -->
+
+        </form>
         {% endfor %}
-            <!-- <a href="/grades/assignments"> Add an assignment here </a> -->
-        </ul>
-{% endif %}
-<h4>Enter New Assignment</h4>
-<form action="{% url 'grades:NewAssignment' indCourse.id%}" method="post">
-    {% csrf_token %}
-    <label for="name_input" style = "font-size:x-large;">Enter the assignment name</label>
-    <input class = "form-control" type="text" name="course_name" id="name_input" >
-   
-    <label for="grade_input" style = "font-size:x-large;">Enter the grade you got on the assignment</label>
-    <input class = "form-control" type="number" name="grade_input" id="grade_input" >
-   
-    <label for="grade_percentage" style = "font-size:x-large;">How much of your total grade is this assignment worth? (in percent)</label>
-    <input class = "form-control" type="number" name="grade_percentage" id="grade_percentage" >
-    <!-- <br>
-    <label for="suggestion_input">Enter your suggestion</label>
-   <input class = "form-control" type="text" name="body" id="suggestion_input"> -->
-<br>
-<input type="submit" value="Submit">
-</form>
-    {% else %}
+        {% endif %}
+        <h4>Enter New Assignment Type</h4>
+
+        <form action="{% url 'grades:NewType' indCourse.id%}" method="post">
+            {% csrf_token %}
+            <label for="name_input" style="font-size:larger;">Enter the type of assignment</label>
+            <input class="form-control" type="text" name="course_name" id="name_input" style="width: 160px;"
+                placeholder="E.g. test">
+
+            <label for="grade_input" style="font-size: larger;">How much percent does this assignment type
+                weigh?</label>
+            <input class="form-control" type="number" name="grade_input" id="grade_input" style="width: 125px;"
+                placeholder="E.g. 25%">
+
+            <!-- <label for="grade_percentage" style="font-size: larger;">How much of your total grade is this assignment worth?
+            (in percent)</label>
+        <input class="form-control" type="number" name="grade_percentage" id="grade_percentage" style = "width: 75px;"> -->
+            <br>
+            <input type="submit" value="Submit">
+        </form>
+        {% else %}
         <h1>Please log in to see your Personal Dashboard</h1>
         <a href="{% url 'social:begin' 'google-oauth2' %}">
-                Login
-                </a>
+            Login
+        </a>
         {% endif %}
-</div>
+    </div>
+</body>
+
+</html>
