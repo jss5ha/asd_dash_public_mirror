@@ -39,20 +39,25 @@
         <!-- <div id="curve_chart" style="width: 900px; height: 500px"></div> -->
         {% if user.is_authenticated %}
         <h1 style="text-align: center;"> {{ indCourse.course_name }}</h1>
-        {% if indCourse.improved is False %}
+        {% if indCourse.course_grade == 0 is True %}
+        <div>
+            <h2 style="float: left;">Current grade:</h2>
+            <h2 style="color: black; padding-left: 8em;"> {{ indCourse.course_grade }}%</h2>
+        </div>
+        {% elif indCourse.improved is False %}
         <div>
             <h2 style="float: left;">Current grade:</h2>
             <h2 style="color: red; padding-left: 8em;"> {{ indCourse.course_grade }}%<i class="fa fa-angle-down"
                     style="color: red; padding-left: 5px;"></i></h2>
         </div>
-        {% endif %}
-        {% if indCourse.improved is True %}
+        {% elif indCourse.improved is True %}
         <div>
             <h2 style="float: left;">Current grade:</h2>
             <h2 style="color: #39D043; padding-left: 8em;"> {{ indCourse.course_grade }}%<i class="fa fa-angle-up"
                     style="color: #39D043; padding-left: 5px;"></i></h2>
         </div>
         {% endif %}
+        
         {% if indCourse %}
         {% for assType in indCourse.asstype_set.all %}
         <p>Assignment Type: {{ assType.ass_type }} Worth: {{ assType.grade_percentage }}% <a
