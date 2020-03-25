@@ -13,6 +13,7 @@ class CourseAdmin(NestedModelAdmin):
     fieldsets = [
         (None, {'fields': ['course_name']}),
         ('Course Grade', {'fields': ['course_grade']}),
+        ('UserProf', {'fields':['owner']}),
     ]
     inlines = [AssignmentTypeInLine,]
     # list_display = ('course_name')

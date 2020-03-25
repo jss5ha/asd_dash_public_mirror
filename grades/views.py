@@ -6,12 +6,12 @@ from django.views import generic
 from django.http import HttpResponseRedirect
 from django.db import IntegrityError
 
+#TODO: make queryset based on logged in user
 
-#todo: i think we can get rid of index view and the index.html file -joebediah
 class IndexView(generic.ListView):
     template_name = 'grades/index.html'
     context_object_name = 'course_list'
-    
+
     def get_queryset(self):
         return course.objects.all()
 
