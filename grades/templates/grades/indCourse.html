@@ -1,10 +1,20 @@
-{% load bootstrap4 %}
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
     integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
     integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
     crossorigin="anonymous"></script>
 <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js">
+</script>
+<script src="https://code.jquery.com/jquery-2.2.3.min.js">
+// $('#pointscheck').change(function(){
+//     $('#points').submit()
+// });
+// $("#checkbox-container :checkbox").on("change",function(){
+//     alert("bro");
+// })
+</script>
+
 <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"> -->
 <html>
 <!-- <head>
@@ -35,6 +45,71 @@
         </script>
       </head> -->
 
+<head>
+    <style>
+        /* https://www.w3schools.com/howto/howto_css_switch.asp */
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 60px;
+            height: 34px;
+        }
+
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            -webkit-transition: .4s;
+            transition: .4s;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 26px;
+            width: 26px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            -webkit-transition: .4s;
+            transition: .4s;
+        }
+
+        input:checked+.slider {
+            background-color: #2196F3;
+        }
+
+        input:focus+.slider {
+            box-shadow: 0 0 1px #2196F3;
+        }
+
+        input:checked+.slider:before {
+            -webkit-transform: translateX(26px);
+            -ms-transform: translateX(26px);
+            transform: translateX(26px);
+        }
+
+        /* Rounded sliders */
+        .slider.round {
+            border-radius: 34px;
+        }
+
+        .slider.round:before {
+            border-radius: 50%;
+        }
+    </style>
+</head>
+
 <body>
     <div class="container">
         <!-- <div id="curve_chart" style="width: 900px; height: 500px"></div> -->
@@ -43,9 +118,40 @@
             <div style="float:left;padding-top: 20px;">
                 <a href="{% url 'grades:index' %}"><i class="fa fa-angle-left"></i> Back</a>
             </div>
-            <div style="text-align: center; font-size: 40px;"><strong>{{ indCourse.course_name }}</strong></div>
-        </div>
+            <div style="text-align: center; font-size: 40px;"><strong>{{ indCourse.course_name }}</strong>
+                <div style="float: right; padding-top: 20px;">
+                    <div id="checkbox-container">
+                        <form action="" method="post">
+                            {% csrf_token %}
+                            <label class="switch">
+                                {{ points }}
 
+                                <span class="slider round"></span>
+                            </label>
+                            <script>
+                                //https://www.sitepoint.com/quick-tip-persist-checkbox-checked-state-after-page-reload/
+                                var checkboxValues = JSON.parse(localStorage.getItem('checkboxValues')) || {};
+
+                                var $checkboxes = $("#checkbox-container :checkbox");
+
+                                $checkboxes.on("change", function () {
+                                    $checkboxes.each(function () {
+                                        checkboxValues[this.id] = this.checked;
+                                    });
+                                    localStorage.setItem("checkboxValues", JSON.stringify(checkboxValues));
+                                });
+                                $.each(checkboxValues, function (key, value) {
+                                    $("#" + key).prop('checked', value);
+                                });
+                            </script>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+{{ indCourse.pointbased }}
+
+        </form>
         {% if indCourse.course_grade == 0 is True %}
         <div>
             <h2 style="float: left;">Current grade:</h2>
@@ -79,6 +185,7 @@
                 </div>
             </div>
         </div>
+        
         <div class="container">
             <div class="row">
 
@@ -89,7 +196,8 @@
                     {% endif %}
                     <ul>
                         {% for assignment in assType.assignment_set.all %}
-                        <p>{{ assignment.ass_name }} </p>
+                        <p>{{ assignment.ass_name }}  </p>
+                        
                         {% endfor %}
 
                     </ul>

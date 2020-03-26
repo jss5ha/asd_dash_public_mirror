@@ -11,6 +11,7 @@
 </head>
 
 <body>
+    
     <div class="container">
         {% if user.is_authenticated %}
         <h4 class="display-4" style="text-align: center; font-size: 45px;">Welcome {{ user }}</h4>
@@ -27,6 +28,13 @@
                     <strong>{{ course.course_grade }}</strong><i class="fa fa-angle-down"
                         style="color: #39D043; padding-left: 5px;"></i>
                 </div>
+                <div class ="col-sm">
+                    {% if course.pointbased is True %}
+                    Point-based
+                    {% else %}
+                    Percentage-based
+                    {% endif %}
+                </div>
                 <div class="col-sm">
                     <a href="{% url 'grades:RemoveCourse' course_id=course.id %}"><i class="fa fa-trash"></i></a>
                 </div>
@@ -41,6 +49,13 @@
                 <div class="col-sm" style="float: left;color: red;">
                     <strong>{{ course.course_grade }}</strong><i class="fa fa-angle-down"
                         style="color: red; padding-left: 5px;"></i>
+                </div>
+                <div class ="col-sm">
+                    {% if course.pointbased is True %}
+                    Point-based
+                    {% else %}
+                    Percentage-based
+                    {% endif %}
                 </div>
                 <div class="col-sm">
                     <a href="{% url 'grades:RemoveCourse' course_id=course.id %}"><i class="fa fa-trash"></i></a>

@@ -6,6 +6,8 @@ class course (models.Model):
     improved = models.BooleanField(blank=True, default=False)
     course_name = models.CharField(max_length=75)
     course_grade = models.DecimalField(max_digits=5, decimal_places=2, default = 0, validators=[MaxValueValidator(200), MinValueValidator(0)])
+    #add points based courses
+    pointbased = models.BooleanField(blank=False, default=False)
     def __str__(self):
         return self.course_name
 
@@ -22,6 +24,7 @@ class assignment (models.Model):
     course = models.ForeignKey(course, on_delete=models.CASCADE)
     ass_name = models.CharField(max_length=100)
     grade = models.IntegerField(default=0)
+    #add points based assignments for points based courses
     # grade_percentage = models.IntegerField(default = 0, validators = [MaxValueValidator(100), MinValueValidator(1)])
 
     def __str__(self):

@@ -2,6 +2,11 @@ from . import models
 from django.forms import ModelForm, ModelChoiceField
 from django import forms
 
+class PointCheckbox(forms.Form):
+    pointscheck = forms.BooleanField(label = '',required = False, widget = forms.CheckboxInput(attrs={'onchange': 'submit();'}))
+    # class Meta:
+        # model = models.course
+        # fields = ('pointbased',)
 class courseForm(ModelForm):
     class Meta:
         model = models.course
@@ -15,6 +20,7 @@ class assTypeForm(ModelForm):
         #see https://stackoverflow.com/questions/11933548/in-a-form-how-to-display-fields-from-other-models-using-foreign-keys-specially?noredirect=1&lq=1
         fields = ('ass_type','grade_percentage')
     def clean(self):
+        # https://django.cowhite.com/blog/django-form-validation-and-customization-adding-your-own-validation-rules/
         super(assTypeForm, self).clean()
         ass_type = self.cleaned_data.get('ass_type')
         grade_percentage = self.cleaned_data.get('grade_percentage')

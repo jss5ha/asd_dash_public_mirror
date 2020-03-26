@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from .forms import courseForm, assTypeForm, assignmentForm
+from .forms import courseForm, assTypeForm, assignmentForm, PointCheckbox
 from django.urls import reverse
 from django.views import generic
 from django.http import HttpResponseRedirect
@@ -29,8 +29,19 @@ def RemoveAssignment(request, course_id, assignment_id):
 
 def IndCourse(request, course_id):
     indCourse = course.objects.get(id = course_id)
-   
-    context = {'indCourse': indCourse}
+    course_id = indCourse.id
+    points = PointCheckbox(request.POST or None)
+    if(request.method == "POST"):
+        if points.is_valid():
+            pointschecked = request.POST.get('points')
+            print(pointschecked)
+            if pointschecked is None:
+                indCourse.pointbased = not(indCourse.pointbased)
+                indCourse.save()
+                template = 'grades/indCourse.html'
+                context = {'indCourse': indCourse, 'points': points}
+                return HttpResponseRedirect(reverse('grades:toIndCourse', args = (course_id,)))
+    context = {'indCourse': indCourse, 'points': points}
     template = 'grades/indCourse.html'
     return render(request, template, context)
    
@@ -102,6 +113,8 @@ def CalculateGrade(request, course_id):
     indCourse = get_object_or_404(course, pk = course_id)
     current = indCourse.course_grade
     overall = 0
+    total_grade_percent = 0
+    # if indCourse.pointbased is False:
     if indCourse.asstype_set.exists() is False:
         indCourse.course_grade = 0
         indCourse.improved = False
@@ -117,7 +130,11 @@ def CalculateGrade(request, course_id):
             overall = overall / num_of_assignments
 
         total_grade_percent += i.grade_percentage
-    
+    # if indCourse.pointbased is True:
+    #     for i in indCourse.assignment_set.all():
+    #         if(i.pointbased is True):
+    #             overall += i.grade
+    #             total_grade_percent += i.grade
     x = float(overall/total_grade_percent)
     indCourse.course_grade = x
     if x >= current:
