@@ -13,5 +13,6 @@ urlpatterns = [
     path('assignments/', views.addAssignmentView.as_view(), name = 'addAssignment'),
     path('courses/NewType/<int:pk>', views.NewType, name = 'NewType'),
     path('courses/RemoveType/<int:course_id>/<int:asstype_id>', views.RemoveType, name = 'RemoveType'),
-    path('courses/<int:course_id>/NewAssignment/<int:asstype_id>', views.NewAssignment, name = 'NewAssignment')
+    path('courses/<int:course_id>/NewAssignment/<int:asstype_id>', views.NewAssignment, name = 'NewAssignment'),
+    path('courses/<int:course_id>/NewAssignment2/', views.NewAssignment2, name = 'NewAssignment2'),
 ]

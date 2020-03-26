@@ -1,11 +1,10 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import course, assType, assignment
 from .forms import courseForm, assTypeForm, assignmentForm
 from django.urls import reverse
 from django.views import generic
 from django.http import HttpResponseRedirect
 from django.db import IntegrityError
-
+from .models import course, assType, assignment
 
 #todo: i think we can get rid of index view and the index.html file -joebediah
 class IndexView(generic.ListView):
@@ -66,7 +65,22 @@ def NewType(request, pk):
                 return HttpResponseRedirect(reverse('grades:toIndCourse', args = (pk,)))
             indCourse.asstype_set.create(course = indCourse, ass_type = request.POST.get('course_name'), grade_percentage = request.POST.get('grade_input'))
             return HttpResponseRedirect(reverse('grades:toIndCourse', args = (pk,)))
-            
+
+def NewAssignment2(request, course_id):
+    IndCourse = get_object_or_404(course, pk = course_id)    
+    if(request.method == 'POST'):
+        form = assignmentForm(request.POST)
+        if form.is_valid():
+            atype = request.POST.get('ass_type')
+            atype1 = get_object_or_404(assType, pk = atype)
+            atype1.assignment_set.create(course = IndCourse, ass_type = atype1, ass_name = request.POST.get('ass_name'), grade = request.POST.get('grade'))
+            CalculateGrade(request, course_id)
+            return HttpResponseRedirect(reverse('grades:toIndCourse', args=(course_id,)))
+        # else:
+            # context = {'indCourse': IndCourse}
+            # template = 'grades/indCourse.html' 
+            # return render(request, template, {'forms':form})
+    return HttpResponseRedirect(reverse('grades:toIndCourse', args=(course_id,)))
 def NewAssignment(request, course_id, asstype_id):
     indCourse = get_object_or_404(course, pk=course_id)
     atype = get_object_or_404(assType, pk = asstype_id)
