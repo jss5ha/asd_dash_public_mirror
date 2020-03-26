@@ -15,12 +15,6 @@ class IndexView(generic.ListView):
     def get_queryset(self):
         return course.objects.all()
 
-class CourseView(generic.ListView):
-    model = course
-    template_name = 'grades/courses.html'
-    def get_queryset(self):
-        return course.objects.all()
-
 def RemoveCourse(request, course_id):
     removed = course.objects.get(id = course_id)
     removed.delete()
@@ -35,15 +29,13 @@ def RemoveAssignment(request, course_id, assignment_id):
 
 def IndCourse(request, course_id):
     indCourse = course.objects.get(id = course_id)
-    # print(indCourse)
-    # print(indCourse.assignment_set.all())
-    # print(indCourse.asstype_set.all())
+   
     context = {'indCourse': indCourse}
     template = 'grades/indCourse.html'
     return render(request, template, context)
    
 def RemoveType(request, course_id, asstype_id):
-    # indCourse = get_object_or_404(course, pk = course_id)
+  
     atype = get_object_or_404(assType, pk = asstype_id)
     for i in atype.assignment_set.all():
         i.delete()
@@ -55,7 +47,7 @@ def NewType(request, pk):
     indCourse = get_object_or_404(course, pk=pk)
     if(request.method == 'POST'):
         form = assTypeForm(request.POST)
-        print(form.is_valid())
+       
         if form.is_valid():
             counter = 0
             counter = int(request.POST.get('grade_percentage'))
@@ -152,14 +144,4 @@ def NewCourse (request):
     # return render(request, 'grades/index.html', {'form': form})
     return HttpResponseRedirect(reverse('grades:index'))
 
-class assView(generic.ListView):
-    model = course
-    template_name = 'grades/assignmentlist.html'
-    def get_queryset(self):
-        return course
 
-class addAssignmentView(generic.ListView):
-    model = course
-    template_name = 'grades/assignments.html'
-    def get_queryset(self):
-        return course
