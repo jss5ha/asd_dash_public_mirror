@@ -2,11 +2,11 @@ from . import models
 from django.forms import ModelForm, ModelChoiceField
 from django import forms
 
-class PointCheckbox(forms.Form):
-    pointscheck = forms.BooleanField(label = '',required = False, widget = forms.CheckboxInput(attrs={'onchange': 'submit();'}))
-    # class Meta:
-        # model = models.course
-        # fields = ('pointbased',)
+class PointCheckbox(ModelForm):
+    pointbased = forms.BooleanField(label = '',required = False, widget = forms.CheckboxInput(attrs={'onchange': 'submit();'}))
+    class Meta:
+        model = models.course
+        fields = ('pointbased',)
 class courseForm(ModelForm):
     class Meta:
         model = models.course

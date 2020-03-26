@@ -40,7 +40,7 @@ def IndCourse(request, course_id):
                 indCourse.save()
                 template = 'grades/indCourse.html'
                 context = {'indCourse': indCourse, 'points': points}
-                return HttpResponseRedirect(reverse('grades:toIndCourse', args = (course_id,)))
+                return HttpResponseRedirect(reverse('grades:toIndCourse', args=(course_id,)))
     context = {'indCourse': indCourse, 'points': points}
     template = 'grades/indCourse.html'
     return render(request, template, context)

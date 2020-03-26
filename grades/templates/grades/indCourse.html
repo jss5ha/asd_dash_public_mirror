@@ -114,6 +114,18 @@
     <div class="container">
         <!-- <div id="curve_chart" style="width: 900px; height: 500px"></div> -->
         {% if user.is_authenticated %}
+        {% if indCourse %}
+        {% if indCourse.pointbased is True %}
+        <script>
+            localStorage.removeItem('pointbased')
+            
+        </script>
+        {% else %}
+        <script>
+            localStorage.removeItem('pointbased')
+            localStorage.setItem('pointbased', 'point')
+        </script>
+        {%endif%}
         <div class="display: inline-block;">
             <div style="float:left;padding-top: 20px;">
                 <a href="{% url 'grades:index' %}"><i class="fa fa-angle-left"></i> Back</a>
@@ -125,15 +137,19 @@
                             {% csrf_token %}
                             <label class="switch">
                                 {{ points }}
-
+                                <!-- {% if indCourse.pointbased %} -->
+                                <!-- <input type="checkbox" checked> -->
+                                <!-- {%else %} -->
+                                <!-- <input type = "checkbox"> -->
+                                <!-- {%endif%} -->
                                 <span class="slider round"></span>
                             </label>
                             <script>
                                 //https://www.sitepoint.com/quick-tip-persist-checkbox-checked-state-after-page-reload/
                                 var checkboxValues = JSON.parse(localStorage.getItem('checkboxValues')) || {};
-
+                                var point = JSON.parse(localStorage.getItem('pointbased')) || {};
                                 var $checkboxes = $("#checkbox-container :checkbox");
-
+                              
                                 $checkboxes.on("change", function () {
                                     $checkboxes.each(function () {
                                         checkboxValues[this.id] = this.checked;
@@ -141,7 +157,11 @@
                                     localStorage.setItem("checkboxValues", JSON.stringify(checkboxValues));
                                 });
                                 $.each(checkboxValues, function (key, value) {
-                                    $("#" + key).prop('checked', value);
+                                    if(point == "point"){
+                                    $("#" + key).prop('checked', false);
+                                    }else{
+                                        $("#" + key).prop('checked', true);
+                                    }
                                 });
                             </script>
                     </div>
@@ -408,7 +428,7 @@
             <button class="btn btn-primary btn-sm" type="submit">Submit form</button>
         </form>
  -->
-
+        {% endif %}
 
         {% else %}
         <h1>Please log in to see your Personal Dashboard</h1>
