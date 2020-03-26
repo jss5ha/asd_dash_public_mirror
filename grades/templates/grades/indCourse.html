@@ -1,3 +1,4 @@
+{% load bootstrap4 %}
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
     integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
@@ -126,61 +127,82 @@
               (in percent)</label>
           <input class="form-control" type="number" name="grade_percentage" id="grade_percentage" style = "width: 75px;"> -->
 
-        </form>
+
         {% endfor %}
         {% endif %}
         {% if indCourse.asstype_set.exists %}
         <h4>Enter New Assignment</h4>
         <form action="{% url 'grades:NewAssignment2' indCourse.id%}" method="post">
             {% csrf_token %}
-            {{ form }}
+            <!-- {{ form }} -->
+
             <div class="form-row">
                 <div class="col-md-4 mb-3">
-                        <div>
-                            <label for="ass_name" >Assignment Name</label>
-                            <input class="form-control" type="text" name="ass_name" id="assname" placeholder="Assignment name" required>
-                            <div class="invalid-feedback">
-                                Please enter a name.
-                            </div>
+                    <div>
+                        <label for="ass_name">Assignment Name</label>
+                        <input class="form-control" type="text" name="ass_name" id="assname"
+                            placeholder="Assignment name" required>
+                        <div class="invalid-feedback">
+                            Please enter a name.
+                        </div>
                     </div>
                 </div>
 
                 <div class="col-md-4 mb-3">
-                        <label for="grade" >Enter Grade Achieved</label>
-                        <input class="form-control" type="number" name="grade" id="grade" placeholder="E.g. 100%" required>
+                    <label for="grade">Enter Grade Achieved</label>
+                    <input class="form-control" type="number" name="grade" id="grade" placeholder="E.g. 100%" required>
                 </div>
 
                 <div class="col-md-4 mb-3">
-                        <label for="ass_type" >Select Assignment Type</label>
-                        <select class="form-control" id="assignment_type_input" name="ass_type" required>
-                            <option value="" disabled selected>Assignment Type</option>
-                            {% for assType in indCourse.asstype_set.all %}
-                            <option value={{ assType.id }}>{{ assType.ass_type }}</option>
-                            {% endfor %}
-                        </select>
+
+                    <label for="ass_type">Select Assignment Type</label>
+                    <select class="form-control" id="assignment_type_input" name="ass_type" required>
+                        <option value="" disabled selected>Assignment Type</option>
+                        {% for assType in indCourse.asstype_set.all %}
+                        <option value={{ assType.id }}>{{ assType.ass_type }}</option>
+                        {% endfor %}
+                    </select>
+                    <!-- </div> -->
+
                 </div>
-                <button class="btn btn-primary btn-sm" type="submit">Submit form</button>
+
+                
             </div>
+            {% if form.errors %}
+            {% for field in form %}
+            {% for error in field.errors %}
+            <div class="alert alert-danger">
+                <strong>{{ error|escape }}</strong>
+            </div>
+            {% endfor %}
+            {% endfor %}
+           
+            {% endif %}
+            
+            <button class="btn btn-primary btn-sm" type="submit">Submit form</button>
         </form>
         {% endif %}
         <h4>Enter New Assignment Type</h4>
         <div>
             <form action="{% url 'grades:NewType' indCourse.id%}" method="post">
                 {% csrf_token %}
-                <label for="name_input" style="font-size:larger;">Enter the type of assignment</label>
-                <input class="form-control " type="text" name="course_name" id="name_input" style="width: 160px;"
+                <div class="form-row">
+                    <div class = "col-md-4 mb-2">
+                <label for="ass_type" >Assignment Type</label>
+                <input class="form-control " type="text" name="ass_type" id="ass_type" 
                     placeholder="E.g. test">
-
-                <label for="grade_input" style="font-size: larger;">How much percent does this assignment type
-                    weigh?</label>
-                <input class="form-control" type="number" name="grade_input" id="grade_input" style="width: 125px;"
+                </div>
+                <div class = "col-md-4 mb-2">
+                <label for="grade_percentage" >Assignment Weight</label>
+                <input class="form-control" type="number" name="grade_percentage" id="grade_percentage" 
                     placeholder="E.g. 25%">
-
+                </div>
                 <!-- <label for="grade_percentage" style="font-size: larger;">How much of your total grade is this assignment worth?
             (in percent)</label>
         <input class="form-control" type="number" name="grade_percentage" id="grade_percentage" style = "width: 75px;"> -->
+                </div>        
                 <br>
-                <input type="submit" value="Add Type" id="NewType" name="NewType">
+                <button class="btn btn-primary btn-sm" type="submit">Submit form</button>
             </form>
         </div>
 

@@ -53,19 +53,20 @@ def RemoveType(request, course_id, asstype_id):
 def NewType(request, pk):
     indCourse = get_object_or_404(course, pk=pk)
     if(request.method == 'POST'):
-        form = courseForm(request.POST)
+        form = assTypeForm(request.POST)
         if form.is_valid():
             counter = 0
-            if int(request.POST.get('grade_input')) < 0:
+            
+            if int(request.POST.get('grade_percentage')) < 0:
                 return HttpResponseRedirect(reverse('grades:toIndCourse', args = (pk,)))
-            counter = int(request.POST.get('grade_input'))
+            counter = int(request.POST.get('grade_percentage'))
             for i in indCourse.asstype_set.all():
                 counter += i.grade_percentage
             if counter > 100 or counter < 0:
                 return HttpResponseRedirect(reverse('grades:toIndCourse', args = (pk,)))
-            indCourse.asstype_set.create(course = indCourse, ass_type = request.POST.get('course_name'), grade_percentage = request.POST.get('grade_input'))
+            indCourse.asstype_set.create(course = indCourse, ass_type = request.POST.get('ass_type'), grade_percentage = request.POST.get('grade_percentage'))
             return HttpResponseRedirect(reverse('grades:toIndCourse', args = (pk,)))
-
+    return HttpResponseRedirect(reverse('grades:toIndCourse', args = (pk,)))
 def NewAssignment2(request, course_id):
     IndCourse = get_object_or_404(course, pk = course_id)    
     if(request.method == 'POST'):
@@ -76,10 +77,9 @@ def NewAssignment2(request, course_id):
             atype1.assignment_set.create(course = IndCourse, ass_type = atype1, ass_name = request.POST.get('ass_name'), grade = request.POST.get('grade'))
             CalculateGrade(request, course_id)
             return HttpResponseRedirect(reverse('grades:toIndCourse', args=(course_id,)))
-        # else:
-            # context = {'indCourse': IndCourse}
-            # template = 'grades/indCourse.html' 
-            # return render(request, template, {'forms':form})
+        else:
+            template = 'grades/indCourse.html' 
+            return render(request, template, {'form':form, 'indCourse': IndCourse})
     return HttpResponseRedirect(reverse('grades:toIndCourse', args=(course_id,)))
 def NewAssignment(request, course_id, asstype_id):
     indCourse = get_object_or_404(course, pk=course_id)

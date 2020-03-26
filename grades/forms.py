@@ -13,7 +13,7 @@ class assTypeForm(ModelForm):
         model = models.assType
         #using a model form for those excluded from this
         #see https://stackoverflow.com/questions/11933548/in-a-form-how-to-display-fields-from-other-models-using-foreign-keys-specially?noredirect=1&lq=1
-        fields = ('course','ass_type','grade_percentage')
+        fields = ('ass_type','grade_percentage')
     # def __init__(self, *args, **kwargs):
         # super().__init__(*args, **kwargs)
    
