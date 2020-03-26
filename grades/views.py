@@ -5,6 +5,7 @@ from django.views import generic
 from django.http import HttpResponseRedirect
 from django.db import IntegrityError
 from .models import course, assType, assignment
+from django import forms
 
 #todo: i think we can get rid of index view and the index.html file -joebediah
 class IndexView(generic.ListView):
@@ -54,19 +55,27 @@ def NewType(request, pk):
     indCourse = get_object_or_404(course, pk=pk)
     if(request.method == 'POST'):
         form = assTypeForm(request.POST)
+        print(form.is_valid())
         if form.is_valid():
             counter = 0
-            
-            if int(request.POST.get('grade_percentage')) < 0:
-                return HttpResponseRedirect(reverse('grades:toIndCourse', args = (pk,)))
             counter = int(request.POST.get('grade_percentage'))
+            
             for i in indCourse.asstype_set.all():
                 counter += i.grade_percentage
-            if counter > 100 or counter < 0:
-                return HttpResponseRedirect(reverse('grades:toIndCourse', args = (pk,)))
+            if counter > 100:
+                # form._errors['grade_percentage'] = ErrorList([u"Grade percentage exceeded max of 100%"])
+                # return HttpResponseRedirect(reverse('grades:toIndCourse', args = (pk,)))
+                errors = form._errors.setdefault(forms.forms.NON_FIELD_ERRORS, forms.utils.ErrorList())
+                errors.append("Grade weights must add up to less than 100%")
+                template = 'grades/indCourse.html'
+                return render(request, template, {'form2': form, 'indCourse': indCourse})
             indCourse.asstype_set.create(course = indCourse, ass_type = request.POST.get('ass_type'), grade_percentage = request.POST.get('grade_percentage'))
             return HttpResponseRedirect(reverse('grades:toIndCourse', args = (pk,)))
+        else:
+            template = 'grades/indCourse.html'
+            return render(request, template, {'form2': form, 'indCourse': indCourse})
     return HttpResponseRedirect(reverse('grades:toIndCourse', args = (pk,)))
+
 def NewAssignment2(request, course_id):
     IndCourse = get_object_or_404(course, pk = course_id)    
     if(request.method == 'POST'):

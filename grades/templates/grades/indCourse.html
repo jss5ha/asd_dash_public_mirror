@@ -39,7 +39,13 @@
     <div class="container">
         <!-- <div id="curve_chart" style="width: 900px; height: 500px"></div> -->
         {% if user.is_authenticated %}
-        <h1 style="text-align: center;"> {{ indCourse.course_name }}</h1>
+        <div class = "display: inline-block;">
+            <div style = "float:left;padding-top: 20px;">
+            <a href="{% url 'grades:index' %}"><i class = "fa fa-angle-left"></i> Back</a>
+        </div>
+        <div style = "text-align: center; font-size: 40px;"><strong>{{ indCourse.course_name }}</strong></div>
+    </div>
+        
         {% if indCourse.course_grade == 0 is True %}
         <div>
             <h2 style="float: left;">Current grade:</h2>
@@ -131,6 +137,7 @@
         {% endfor %}
         {% endif %}
         {% if indCourse.asstype_set.exists %}
+        <div style = "position: relative; bottom: -225;">
         <h4>Enter New Assignment</h4>
         <form action="{% url 'grades:NewAssignment2' indCourse.id%}" method="post">
             {% csrf_token %}
@@ -187,29 +194,43 @@
             <form action="{% url 'grades:NewType' indCourse.id%}" method="post">
                 {% csrf_token %}
                 <div class="form-row">
-                    <div class = "col-md-4 mb-2">
+                    <div class = "col-md-6 mb-2">
                 <label for="ass_type" >Assignment Type</label>
                 <input class="form-control " type="text" name="ass_type" id="ass_type" 
-                    placeholder="E.g. test">
+                    placeholder="E.g. test" required>
                 </div>
-                <div class = "col-md-4 mb-2">
+                <div class = "col-md-6 mb-2">
                 <label for="grade_percentage" >Assignment Weight</label>
                 <input class="form-control" type="number" name="grade_percentage" id="grade_percentage" 
-                    placeholder="E.g. 25%">
+                    placeholder="E.g. 25%" required>
                 </div>
                 <!-- <label for="grade_percentage" style="font-size: larger;">How much of your total grade is this assignment worth?
             (in percent)</label>
         <input class="form-control" type="number" name="grade_percentage" id="grade_percentage" style = "width: 75px;"> -->
                 </div>        
-                <br>
+                {% if form2.errors %}
+            {% for field in form2 %}
+            {% for error in field.errors %}
+            <div class="alert alert-danger">
+                <strong>{{ error|escape }}</strong>
+            </div>
+            {% endfor %}
+            {% endfor %}
+            {% for error in form2.non_field_errors %}
+            <div class="alert alert-danger">
+                <strong>{{ error|escape }}</strong>
+            </div>
+        {% endfor %}
+            {% endif %}
+
                 <button class="btn btn-primary btn-sm" type="submit">Submit form</button>
             </form>
         </div>
+    </div>
 
 
 
-
-        <form class="needs-validation" novalidate>
+        <!-- <form class="needs-validation" novalidate>
             <div class="form-row">
                 <div class="col-md-4 mb-3">
                     <label for="validationCustom01">First name</label>
@@ -277,7 +298,7 @@
             </div>
             <button class="btn btn-primary btn-sm" type="submit">Submit form</button>
         </form>
-
+ -->
 
 
         {% else %}
