@@ -4,6 +4,7 @@ from .forms import courseForm, assTypeForm, assignmentForm
 from django.urls import reverse
 from django.views import generic
 from django.http import HttpResponseRedirect
+from django.contrib.auth.models import User
 from django.db import IntegrityError
 
 #TODO: make queryset based on logged in user
@@ -13,6 +14,7 @@ class IndexView(generic.ListView):
     context_object_name = 'course_list'
 
     def get_queryset(self):
+        #return course.objects.get(owner = 'jss5ha')
         return course.objects.all()
 
 class CourseView(generic.ListView):
@@ -119,6 +121,7 @@ def NewCourse (request):
         form = courseForm(request.POST)
         if form.is_valid():
             post = form.save(commit=False)
+            post.owner = request.user
             # name = course1.course_name.get(pk = request.POST['course'])
             post.save()
             # course.objects.create(course_name = )
