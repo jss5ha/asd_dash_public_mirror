@@ -51,3 +51,8 @@ class assignmentForm(ModelForm):
             self._errors['ass_type'] = self.error_class(['Please select a type'])
 
         return self.cleaned_data
+
+class pointAssignmentForm(ModelForm):
+    class Meta:
+        model = models.pointAssignment
+        fields = ('point_ass_name', 'points_achieved', 'points_total')

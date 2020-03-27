@@ -19,13 +19,15 @@
         {% if course_list %}
         <ul>
             {% for course in course_list %}
+            {% if course.pointbased is False %}
             {% if course.improved is True %}
             <div class="row" style="text-align: center;">
                 <div class="col-sm">
                     <a href="{% url 'grades:toIndCourse' course.id %}">{{ course.course_name }}</a>
                 </div>
                 <div class="col-sm" style="float: left;color: #39d043;">
-                    <strong>{{ course.course_grade }}</strong><i class="fa fa-angle-down"
+                    
+                    <strong>{{ course.course_grade }}</strong><i class="fa fa-angle-up"
                         style="color: #39D043; padding-left: 5px;"></i>
                 </div>
                 <div class ="col-sm">
@@ -61,7 +63,53 @@
                     <a href="{% url 'grades:RemoveCourse' course_id=course.id %}"><i class="fa fa-trash"></i></a>
                 </div>
             </div>
+            {%endif%}
+            {% else %}
+            {% if course.point_improved is True %}
+            <div class="row" style="text-align: center;">
+                <div class="col-sm">
+                    <a href="{% url 'grades:toIndCourse' course.id %}">{{ course.course_name }}</a>
+                </div>
+                <div class="col-sm" style="float: left;color: #39d043;">
+                    
+                    <strong>{{ course.course_grade_points }}</strong><i class="fa fa-angle-up"
+                        style="color: #39D043; padding-left: 5px;"></i>
+                </div>
+                <div class ="col-sm">
+                    {% if course.pointbased is True %}
+                    Point-based
+                    {% else %}
+                    Percentage-based
+                    {% endif %}
+                </div>
+                <div class="col-sm">
+                    <a href="{% url 'grades:RemoveCourse' course_id=course.id %}"><i class="fa fa-trash"></i></a>
+                </div>
+            </div>
+
             {% endif %}
+            {% if course.point_improved is False %}
+            <div class="row" style="text-align: center;">
+                <div class="col-sm">
+                    <a href="{% url 'grades:toIndCourse' course.id %}">{{ course.course_name }}</a>
+                </div>
+                <div class="col-sm" style="float: left;color: red;">
+                    <strong>{{ course.course_grade_points }}</strong><i class="fa fa-angle-down"
+                        style="color: red; padding-left: 5px;"></i>
+                </div>
+                <div class ="col-sm">
+                    {% if course.pointbased is True %}
+                    Point-based
+                    {% else %}
+                    Percentage-based
+                    {% endif %}
+                </div>
+                <div class="col-sm">
+                    <a href="{% url 'grades:RemoveCourse' course_id=course.id %}"><i class="fa fa-trash"></i></a>
+                </div>
+            </div>
+            {%endif%}
+            {%endif%}
             {% endfor %}
             <div style = "position: relative; bottom: -50">
             <form action="{% url 'grades:NewCourse' %}" method="post">

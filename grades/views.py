@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from .forms import courseForm, assTypeForm, assignmentForm, PointCheckbox
+from .forms import courseForm, assTypeForm, assignmentForm, PointCheckbox, pointAssignmentForm
 from django.urls import reverse
 from django.views import generic
 from django.http import HttpResponseRedirect
@@ -27,6 +27,13 @@ def RemoveAssignment(request, course_id, assignment_id):
     CalculateGrade(request, course_id)
     return HttpResponseRedirect(reverse('grades:toIndCourse', args=(course_id,)))
 
+def RemovePointAssignment(request, course_id, assignment_id):
+    indCourse = course.objects.get(id = course_id)
+    removed = indCourse.pointassignment_set.get(id = assignment_id)
+    removed.delete()
+    CalculatePointGrade(request, course_id)
+    return HttpResponseRedirect(reverse('grades:toIndCourse', args=(course_id,)))
+
 def IndCourse(request, course_id):
     indCourse = course.objects.get(id = course_id)
     course_id = indCourse.id
@@ -34,7 +41,7 @@ def IndCourse(request, course_id):
     if(request.method == "POST"):
         if points.is_valid():
             pointschecked = request.POST.get('points')
-            print(pointschecked)
+           
             if pointschecked is None:
                 indCourse.pointbased = not(indCourse.pointbased)
                 indCourse.save()
@@ -93,19 +100,20 @@ def NewAssignment2(request, course_id):
             template = 'grades/indCourse.html' 
             return render(request, template, {'form':form, 'indCourse': IndCourse})
     return HttpResponseRedirect(reverse('grades:toIndCourse', args=(course_id,)))
-def NewAssignment(request, course_id, asstype_id):
+def NewAssignment(request, course_id):
     indCourse = get_object_or_404(course, pk=course_id)
-    atype = get_object_or_404(assType, pk = asstype_id)
+   
     if(request.method == 'POST'):
-        form = courseForm(request.POST)
+        form = pointAssignmentForm(request.POST)
         if form.is_valid():
-            if int(request.POST.get('grade_input')) < 0:
-                return HttpResponseRedirect(reverse('grades:toIndCourse', args=(course_id,)))
-           
-            atype.assignment_set.create(course = indCourse, ass_type = atype, ass_name = request.POST.get("course_name"), grade = request.POST.get('grade_input'))
+            # if int(request.POST.get('grade_input')) < 0:
+                # return HttpResponseRedirect(reverse('grades:toIndCourse', args=(course_id,)))
+
+            indCourse.pointassignment_set.create(course = indCourse, point_ass_name = request.POST.get("point_ass_name"), points_achieved = request.POST.get('points_achieved'), points_total = request.POST.get('points_total'))
                 # indCourse.assignment_set.add(target)
             # except IntegrityError as e:
-            CalculateGrade(request, course_id)
+            # CalculateGrade(request, course_id)
+            CalculatePointGrade(request, course_id)
             return HttpResponseRedirect(reverse('grades:toIndCourse', args=(course_id,)))
                 
     return HttpResponseRedirect(reverse('grades:toIndCourse', args=(course_id,)))
@@ -114,7 +122,8 @@ def CalculateGrade(request, course_id):
     current = indCourse.course_grade
     overall = 0
     total_grade_percent = 0
-    # if indCourse.pointbased is False:
+    if indCourse.pointbased is True:
+        return
     if indCourse.asstype_set.exists() is False:
         indCourse.course_grade = 0
         indCourse.improved = False
@@ -143,7 +152,34 @@ def CalculateGrade(request, course_id):
         indCourse.improved = False
     indCourse.save()
     return
-    
+
+def CalculatePointGrade(request, course_id):
+    indCourse = get_object_or_404(course, pk = course_id)
+    current = indCourse.course_grade_points
+    earned = 0
+    total = 0
+    # if indCourse.pointbased is False:
+    if indCourse.pointassignment_set.exists() is False:
+        indCourse.course_grade_points = 0
+        indCourse.point_improved = False
+        indCourse.save()
+        return
+    # total_grade_percent = 0
+    for i in indCourse.pointassignment_set.all():
+        earned += i.points_achieved
+        total += i.points_total
+            
+       
+  
+    x = float(earned/total) * 100
+    indCourse.course_grade_points = x
+    if x >= current:
+        indCourse.point_improved = True
+    if x < current:
+        indCourse.point_improved = False
+    indCourse.save()
+    return
+
 def NewCourse (request):
     # course1 = get_object_or_404(course)
     print(course.objects.all())

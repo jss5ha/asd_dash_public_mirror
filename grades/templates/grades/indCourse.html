@@ -111,37 +111,38 @@
 </head>
 
 <body>
+    {% if user.is_authenticated %}
+    
     <div class="container">
         <!-- <div id="curve_chart" style="width: 900px; height: 500px"></div> -->
-        {% if user.is_authenticated %}
+       
         {% if indCourse %}
-        {% if indCourse.pointbased is True %}
+            {% if indCourse.pointbased is True %}
         <script>
             localStorage.removeItem('pointbased')
-            
+
         </script>
-        {% else %}
+            {% else %}
         <script>
             localStorage.removeItem('pointbased')
             localStorage.setItem('pointbased', 'point')
         </script>
-        {%endif%}
+            {%endif%}
         <div class="display: inline-block;">
             <div style="float:left;padding-top: 20px;">
                 <a href="{% url 'grades:index' %}"><i class="fa fa-angle-left"></i> Back</a>
             </div>
             <div style="text-align: center; font-size: 40px;"><strong>{{ indCourse.course_name }}</strong>
-                <div style="float: right; padding-top: 20px;">
+                <div class="row" style="float: right; padding-top: 20px;">
+                    <div style="float: left; font-size: 15px; padding-right: 10px; padding-top: 5px;">
+                        Percentage-based
+                    </div>
                     <div id="checkbox-container">
                         <form action="" method="post">
                             {% csrf_token %}
                             <label class="switch">
                                 {{ points }}
-                                <!-- {% if indCourse.pointbased %} -->
-                                <!-- <input type="checkbox" checked> -->
-                                <!-- {%else %} -->
-                                <!-- <input type = "checkbox"> -->
-                                <!-- {%endif%} -->
+                               
                                 <span class="slider round"></span>
                             </label>
                             <script>
@@ -149,7 +150,7 @@
                                 var checkboxValues = JSON.parse(localStorage.getItem('checkboxValues')) || {};
                                 var point = JSON.parse(localStorage.getItem('pointbased')) || {};
                                 var $checkboxes = $("#checkbox-container :checkbox");
-                              
+
                                 $checkboxes.on("change", function () {
                                     $checkboxes.each(function () {
                                         checkboxValues[this.id] = this.checked;
@@ -157,42 +158,49 @@
                                     localStorage.setItem("checkboxValues", JSON.stringify(checkboxValues));
                                 });
                                 $.each(checkboxValues, function (key, value) {
-                                    if(point == "point"){
-                                    $("#" + key).prop('checked', false);
-                                    }else{
+                                    if (point == "point") {
+                                        $("#" + key).prop('checked', false);
+                                    } else {
                                         $("#" + key).prop('checked', true);
                                     }
                                 });
                             </script>
                     </div>
+                    <div style="float: right; font-size: 15px; padding-left: 10px; padding-top: 5px;">
+                        Point-based
+                    </div>
                 </div>
             </div>
 
         </div>
-{{ indCourse.pointbased }}
+
 
         </form>
-        {% if indCourse.course_grade == 0 is True %}
+
+        {% if indCourse.pointbased is False %}
+            {% if indCourse.course_grade == 0 is True %}
         <div>
             <h2 style="float: left;">Current grade:</h2>
             <h2 style="color: black; padding-left: 8em;"> {{ indCourse.course_grade }}%</h2>
         </div>
-        {% elif indCourse.improved is False %}
+            {% elif indCourse.improved is False %}
         <div>
             <h2 style="float: left;">Current grade:</h2>
             <h2 style="color: red; padding-left: 8em;"> {{ indCourse.course_grade }}%<i class="fa fa-angle-down"
                     style="color: red; padding-left: 5px;"></i></h2>
         </div>
-        {% elif indCourse.improved is True %}
+            {% elif indCourse.improved is True %}
         <div>
             <h2 style="float: left;">Current grade:</h2>
             <h2 style="color: #39D043; padding-left: 8em;"> {{ indCourse.course_grade }}%<i class="fa fa-angle-up"
                     style="color: #39D043; padding-left: 5px;"></i></h2>
         </div>
-        {% endif %}
+            {% endif %}
 
-        {% if indCourse %}
-        {% for assType in indCourse.asstype_set.all %}
+            
+           
+        
+                {% for assType in indCourse.asstype_set.all %}
         <div class="container">
             <div class="row" style="display: flexbox; justify-content: space-between; font-size: 24px;">
                 <div style=" float: left; position: relative;">
@@ -205,7 +213,7 @@
                 </div>
             </div>
         </div>
-        
+
         <div class="container">
             <div class="row">
 
@@ -216,8 +224,8 @@
                     {% endif %}
                     <ul>
                         {% for assignment in assType.assignment_set.all %}
-                        <p>{{ assignment.ass_name }}  </p>
-                        
+                        <p>{{ assignment.ass_name }} </p>
+
                         {% endfor %}
 
                     </ul>
@@ -238,38 +246,17 @@
                 </div>
             </div>
         </div>
-        <!-- <h4>Enter New Assignment</h4> -->
-
-        <!-- <form action="{% url 'grades:NewAssignment' indCourse.id assType.id%}" method="post">
-            {% csrf_token %}
-            <div style="display: inline-block;">
-                <div style="float: left;">
-                    <label for="name_input" style="font-size:larger;">Enter New {{ assType.ass_type }} </label>
-                    <input class="form-control" type="text" name="course_name" id="name_input" style="width: 160px;"
-                        placeholder="Assignment name">
-                </div>
-                <div style="float: left; padding-left: 20px;">
-                    <label for="grade_input" style="font-size: larger;">Enter Grade Achieved</label>
-                    <input class="form-control" type="number" name="grade_input" id="grade_input" style="width: 125px;"
-                        placeholder="E.g. 100%">
-                </div>
-                <div style="float: left; padding-left: 20px; padding-top: 40px;">
-                    <input type="submit" value="Submit">
-                </div>
-            </div> -->
-        <!-- <label for="grade_percentage" style="font-size: larger;">How much of your total grade is this assignment worth?
-              (in percent)</label>
-          <input class="form-control" type="number" name="grade_percentage" id="grade_percentage" style = "width: 75px;"> -->
 
 
-        {% endfor %}
-        {% endif %}
-        {% if indCourse.asstype_set.exists %}
+
+                {% endfor %}
+
+            
+                {% if indCourse.asstype_set.exists %}
         <div style="position: relative; bottom: -150;">
             <h4>Enter New Assignment</h4>
             <form action="{% url 'grades:NewAssignment2' indCourse.id%}" method="post">
                 {% csrf_token %}
-                <!-- {{ form }} -->
 
                 <div class="form-row">
                     <div class="col-md-4 mb-3">
@@ -298,7 +285,7 @@
                             <option value={{ assType.id }}>{{ assType.ass_type }}</option>
                             {% endfor %}
                         </select>
-                        <!-- </div> -->
+
 
                     </div>
 
@@ -317,7 +304,7 @@
 
                 <button class="btn btn-primary btn-sm" type="submit">Submit form</button>
             </form>
-            {% endif %}
+                {% endif %}
             <h4>Enter New Assignment Type</h4>
             <div>
                 <form action="{% url 'grades:NewType' indCourse.id%}" method="post">
@@ -333,9 +320,7 @@
                             <input class="form-control" type="number" name="grade_percentage" id="grade_percentage"
                                 placeholder="E.g. 25%" required>
                         </div>
-                        <!-- <label for="grade_percentage" style="font-size: larger;">How much of your total grade is this assignment worth?
-            (in percent)</label>
-        <input class="form-control" type="number" name="grade_percentage" id="grade_percentage" style = "width: 75px;"> -->
+
                     </div>
                     {% if form2.errors %}
                     {% for field in form2 %}
@@ -359,85 +344,132 @@
 
 
 
-        <!-- <form class="needs-validation" novalidate>
-            <div class="form-row">
-                <div class="col-md-4 mb-3">
-                    <label for="validationCustom01">First name</label>
-                    <input type="text" class="form-control" id="validationCustom01" placeholder="First name"
-                        value="Mark" required>
-                    <div class="valid-feedback">
-                        Looks good!
-                    </div>
-                </div>
-                <div class="col-md-4 mb-3">
-                    <label for="validationCustom02">Last name</label>
-                    <input type="text" class="form-control" id="validationCustom02" placeholder="Last name" value="Otto"
-                        required>
-                    <div class="valid-feedback">
-                        Looks good!
-                    </div>
-                </div>
-                <div class="col-md-4 mb-3">
-                    <label for="validationCustomUsername">Username</label>
-                    <div class="input-group">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text" id="inputGroupPrepend">@</span>
-                        </div>
-                        <input type="text" class="form-control" id="validationCustomUsername" placeholder="Username"
-                            aria-describedby="inputGroupPrepend" required>
-                        <div class="invalid-feedback">
-                            Please choose a username.
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="form-row">
-                <div class="col-md-6 mb-3">
-                    <label for="validationCustom03">City</label>
-                    <input type="text" class="form-control" id="validationCustom03" placeholder="City" required>
-                    <div class="invalid-feedback">
-                        Please provide a valid city.
-                    </div>
-                </div>
-                <div class="col-md-3 mb-3">
-                    <label for="validationCustom04">State</label>
-                    <input type="text" class="form-control" id="validationCustom04" placeholder="State" required>
-                    <div class="invalid-feedback">
-                        Please provide a valid state.
-                    </div>
-                </div>
-                <div class="col-md-3 mb-3">
-                    <label for="validationCustom05">Zip</label>
-                    <input type="text" class="form-control" id="validationCustom05" placeholder="Zip" required>
-                    <div class="invalid-feedback">
-                        Please provide a valid zip.
-                    </div>
-                </div>
-            </div>
-            <div class="form-group">
-                <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="" id="invalidCheck" required>
-                    <label class="form-check-label" for="invalidCheck">
-                        Agree to terms and conditions
-                    </label>
-                    <div class="invalid-feedback">
-                        You must agree before submitting.
-                    </div>
-                </div>
-            </div>
-            <button class="btn btn-primary btn-sm" type="submit">Submit form</button>
-        </form>
- -->
-        {% endif %}
 
-        {% else %}
+            {% else %}
+
+            {% if indCourse.course_grade_points == 0 is True %}
+            <div>
+                <h2 style="float: left;">Current grade:</h2>
+                <h2 style="color: black; padding-left: 8em;"> {{ indCourse.course_grade_points }}%</h2>
+            </div>
+                {% elif indCourse.point_improved is False %}
+            <div>
+                <h2 style="float: left;">Current grade:</h2>
+                <h2 style="color: red; padding-left: 8em;"> {{ indCourse.course_grade_points }}%<i class="fa fa-angle-down"
+                        style="color: red; padding-left: 5px;"></i></h2>
+            </div>
+                {% elif indCourse.point_improved is True %}
+            <div>
+                <h2 style="float: left;">Current grade:</h2>
+                <h2 style="color: #39D043; padding-left: 8em;"> {{ indCourse.course_grade_points }}%<i class="fa fa-angle-up"
+                        style="color: #39D043; padding-left: 5px;"></i></h2>
+            </div>
+                {% endif %}
+
+        <div class="container">
+            <div class="row">
+                    
+
+                <div class="col-sm" style="width: 100;">
+                    {% if indCourse.pointassignment_set.exists %}
+                    Assignment Name<br>
+                    {% endif %}
+                    <ul>
+                        {% for assignment in indCourse.pointassignment_set.all %}
+                        <p>{{ assignment.point_ass_name }} </p>
+
+                        {% endfor %}
+
+                    </ul>
+                </div>
+
+                <div class="col-sm" style="width: 100;">
+                    {% if indCourse.pointassignment_set.exists %}
+                    Points Earned<br>
+                    {% endif %}
+                    <ul>
+                        {% for assignment in indCourse.pointassignment_set.all %}
+                        <p> {{ assignment.points_achieved }}
+                            </p>
+                        {% endfor %}
+                    </ul>
+                </div>
+                <div class="col-sm" style="width: 100;">
+                    {% if indCourse.pointassignment_set.exists %}
+                    Total Points<br>
+                    {% endif %}
+                    <ul>
+                        {% for assignment in indCourse.pointassignment_set.all %}
+                        <p> {{ assignment.points_total }}
+                            <a
+                                href="{% url 'grades:RemovePointAssignment' course_id=indCourse.id assignment_id=assignment.id%}"><i
+                                    class="fa fa-trash"></i></a></p>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+
+
+              
+
+            <form action="{% url 'grades:NewAssignment' indCourse.id%}" method="post">
+                {% csrf_token %}
+
+                <div class="form-row">
+                    <div class="col-md-4 mb-3">
+                        <div>
+                            <label for="point_ass_name">Assignment Name</label>
+                            <input class="form-control" type="text" name="point_ass_name" id="assname"
+                                placeholder="Assignment name" required>
+                            <div class="invalid-feedback">
+                                Please enter a name.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4 mb-3">
+                        <label for="points_achieved">Enter Points Achieved</label>
+                        <input class="form-control" type="number" name="points_achieved" id="grade" placeholder="E.g. 100"
+                            required>
+                    </div>
+
+                    <div class="col-md-4 mb-3">
+                        <label for="points_total">Enter Total Points</label>
+                        <input class="form-control" type="number" name="points_total" id="grade" placeholder="E.g. 100"
+                            required>
+                    </div>
+
+
+
+                </div>
+                {% if form.errors %}
+                {% for field in form %}
+                {% for error in field.errors %}
+                <div class="alert alert-danger">
+                    <strong>{{ error|escape }}</strong>
+                </div>
+                {% endfor %}
+                {% endfor %}
+
+                {% endif %}
+
+                <button class="btn btn-primary btn-sm" type="submit">Submit form</button>
+            </form>
+
+            {% endif %}
+        {% endif %}
+        
+    </div>
+    
+    {% else %}
         <h1>Please log in to see your Personal Dashboard</h1>
         <a href="{% url 'social:begin' 'google-oauth2' %}">
             Login
         </a>
         {% endif %}
-    </div>
-
 </body>
 
 </html>
+
