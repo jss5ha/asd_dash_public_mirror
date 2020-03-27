@@ -305,6 +305,7 @@
                 <button class="btn btn-primary btn-sm" type="submit">Submit form</button>
             </form>
                 {% endif %}
+                <div style = "padding-top: 22px;">
             <h4>Enter New Assignment Type</h4>
             <div>
                 <form action="{% url 'grades:NewType' indCourse.id%}" method="post">
@@ -341,7 +342,7 @@
                 </form>
             </div>
         </div>
-
+    </div>
 
 
 
@@ -409,11 +410,8 @@
                 </div>
             </div>
         </div>
-
-
-
               
-
+            <h4>Enter New Assignment</h4>
             <form action="{% url 'grades:NewAssignment' indCourse.id%}" method="post">
                 {% csrf_token %}
 
@@ -436,7 +434,7 @@
                     </div>
 
                     <div class="col-md-4 mb-3">
-                        <label for="points_total">Enter Total Points</label>
+                        <label for="points_total">Enter Total Points for Assignment</label>
                         <input class="form-control" type="number" name="points_total" id="grade" placeholder="E.g. 100"
                             required>
                     </div>
