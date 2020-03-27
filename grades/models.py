@@ -5,7 +5,6 @@ from django.contrib.auth.models import User
 #TODO: give course a foriegn key with users as the key
 
 # Create your models here.
-
 class course (models.Model):
     #TODO: figureout how to make the foreign key an oauth user
     owner = models.ForeignKey(User, null=True, unique=False, on_delete=models.CASCADE)

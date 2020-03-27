@@ -14,8 +14,7 @@ class IndexView(generic.ListView):
     context_object_name = 'course_list'
 
     def get_queryset(self):
-        #return course.objects.get(owner = 'jss5ha')
-        return course.objects.all()
+        return course.objects.filter(owner=self.request.user)
 
 class CourseView(generic.ListView):
     model = course
