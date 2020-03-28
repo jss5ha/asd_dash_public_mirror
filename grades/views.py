@@ -20,7 +20,7 @@ class CourseView(generic.ListView):
     model = course
     template_name = 'grades/courses.html'
     def get_queryset(self):
-        return course.objects.all()
+        return course.objects.filter(owner=self.request.user)
 
 def RemoveCourse(request, course_id):
     removed = course.objects.get(id = course_id)
@@ -35,13 +35,17 @@ def RemoveAssignment(request, course_id, assignment_id):
     return HttpResponseRedirect(reverse('grades:toIndCourse', args=(course_id,)))
 
 def IndCourse(request, course_id):
-    indCourse = course.objects.get(id = course_id)
-    # print(indCourse)
-    # print(indCourse.assignment_set.all())
-    # print(indCourse.asstype_set.all())
-    context = {'indCourse': indCourse}
-    template = 'grades/indCourse.html'
-    return render(request, template, context)
+    try:
+        indCourse = course.objects.filter(owner=request.user).get(id = course_id)
+        # print(indCourse)
+        # print(indCourse.assignment_set.all())
+        # print(indCourse.asstype_set.all())
+        context = {'indCourse': indCourse}
+        template = 'grades/indCourse.html'
+        return render(request, template, context)
+    except:
+        # TODO: REPLACE THIS WITH AN ERROR
+        return HttpResponseRedirect(reverse('grades:index'))
    
 def RemoveType(request, course_id, asstype_id):
     # indCourse = get_object_or_404(course, pk = course_id)
