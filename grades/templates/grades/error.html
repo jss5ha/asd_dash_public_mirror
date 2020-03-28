@@ -9,7 +9,8 @@
     <div class = "container" style = "text-align:left;">
 {% if user.is_authenticated %}
         <label style = "font-size:x-large;">You tried to access a course that does not belong to you! </label>
-     <!-- <br>
+        <a href="{%url 'grades:index'%}"> Click here to go back to the course index page.</a>
+        <!-- <br>
         <label for="suggestion_input">Enter your suggestion</label>
        <input class = "form-control" type="text" name="body" id="suggestion_input"> -->
     </div>
