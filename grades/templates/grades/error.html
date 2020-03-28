@@ -1,0 +1,26 @@
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+<!DOCTYPE html>
+<html>
+    <head>
+    </head>
+    <body>
+
+    <div class = "container" style = "text-align:left;">
+{% if user.is_authenticated %}
+        <label style = "font-size:x-large;">You tried to access a course that does not belong to you! </label>
+     <!-- <br>
+        <label for="suggestion_input">Enter your suggestion</label>
+       <input class = "form-control" type="text" name="body" id="suggestion_input"> -->
+    </div>
+        {% else %}
+        <h1>Please log in to see your Personal Dashboard</h1>
+        <a href="{% url 'social:begin' 'google-oauth2' %}">
+                Login
+                </a>
+        {% endif %}
+</div>
+
+    </body>
+
+</html>

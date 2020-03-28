@@ -45,7 +45,7 @@ def IndCourse(request, course_id):
         return render(request, template, context)
     except:
         # TODO: REPLACE THIS WITH AN ERROR
-        return HttpResponseRedirect(reverse('grades:index'))
+        return HttpResponseRedirect(reverse('grades:error'))
    
 def RemoveType(request, course_id, asstype_id):
     # indCourse = get_object_or_404(course, pk = course_id)
@@ -146,3 +146,6 @@ class addAssignmentView(generic.ListView):
     template_name = 'grades/assignments.html'
     def get_queryset(self):
         return course
+
+def errormeth(request):
+    return render(request=request, template_name='grades/error.html')
