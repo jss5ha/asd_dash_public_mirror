@@ -1,8 +1,13 @@
 from django.db import models
 from django.core.validators import MaxValueValidator, MinValueValidator
+from django.contrib.auth.models import User
+
+#TODO: give course a foriegn key with users as the key
 
 # Create your models here.
 class course (models.Model):
+    #TODO: figureout how to make the foreign key an oauth user
+    owner = models.ForeignKey(User, null=True, unique=False, on_delete=models.CASCADE)
     improved = models.BooleanField(blank=True, default=False)
     course_name = models.CharField(max_length=75)
     course_grade = models.DecimalField(max_digits=5, decimal_places=2, default = 0, validators=[MaxValueValidator(200), MinValueValidator(0)])

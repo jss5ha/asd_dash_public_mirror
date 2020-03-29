@@ -4,6 +4,7 @@ from . import views
 app_name = 'grades'
 urlpatterns = [
     path('', views.IndexView.as_view(), name='index'),
+    path('error/', views.errormeth, name='error'),
     path('courses/', views.CourseView.as_view(), name = 'courses'),
     path('courses/<int:course_id>/', views.IndCourse, name = 'toIndCourse'),
     path('courses/<int:course_id>/remove/<int:assignment_id>', views.RemoveAssignment, name = 'RemoveAssignment'),

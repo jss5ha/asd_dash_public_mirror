@@ -1,6 +1,7 @@
 from . import models
 from django.forms import ModelForm, ModelChoiceField
 
+
 class courseForm(ModelForm):
     class Meta:
         model = models.course
