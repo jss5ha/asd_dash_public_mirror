@@ -3,17 +3,23 @@ from .forms import courseForm, assTypeForm, assignmentForm, PointCheckbox, point
 from django.urls import reverse
 from django.views import generic
 from django.http import HttpResponseRedirect
+from django.contrib.auth.models import User
 from django.db import IntegrityError
+
 from .models import course, assType, assignment
 from django import forms
 
-#todo: i think we can get rid of index view and the index.html file -joebediah
+
+#TODO: make queryset based on logged in user
+
+
 class IndexView(generic.ListView):
     template_name = 'grades/index.html'
     context_object_name = 'course_list'
-    
+
     def get_queryset(self):
-        return course.objects.all()
+        return course.objects.filter(owner=self.request.user)
+
 
 def RemoveCourse(request, course_id):
     removed = course.objects.get(id = course_id)
@@ -35,22 +41,34 @@ def RemovePointAssignment(request, course_id, assignment_id):
     return HttpResponseRedirect(reverse('grades:toIndCourse', args=(course_id,)))
 
 def IndCourse(request, course_id):
-    indCourse = course.objects.get(id = course_id)
-    course_id = indCourse.id
-    points = PointCheckbox(request.POST or None)
-    if(request.method == "POST"):
-        if points.is_valid():
-            pointschecked = request.POST.get('points')
+
+    try:
+        indCourse = course.objects.filter(owner=request.user).get(id = course_id)
+        course_id = indCourse.id
+        points = PointCheckbox(request.POST or None)
+        if(request.method == "POST"):
+            if points.is_valid():
+                pointschecked = request.POST.get('points')
            
-            if pointschecked is None:
-                indCourse.pointbased = not(indCourse.pointbased)
-                indCourse.save()
-                template = 'grades/indCourse.html'
-                context = {'indCourse': indCourse, 'points': points}
-                return HttpResponseRedirect(reverse('grades:toIndCourse', args=(course_id,)))
-    context = {'indCourse': indCourse, 'points': points}
-    template = 'grades/indCourse.html'
-    return render(request, template, context)
+                if pointschecked is None:
+                    indCourse.pointbased = not(indCourse.pointbased)
+                    indCourse.save()
+                    template = 'grades/indCourse.html'
+                    context = {'indCourse': indCourse, 'points': points}
+                    return HttpResponseRedirect(reverse('grades:toIndCourse', args=(course_id,)))
+        context = {'indCourse': indCourse, 'points': points}
+        template = 'grades/indCourse.html'
+        return render(request, template, context)
+        # print(indCourse)
+        # print(indCourse.assignment_set.all())
+        # print(indCourse.asstype_set.all())
+#         context = {'indCourse': indCourse}
+#         template = 'grades/indCourse.html'
+#         return render(request, template, context)
+    except:
+        # TODO: REPLACE THIS WITH AN ERROR
+        return HttpResponseRedirect(reverse('grades:error'))
+
    
 def RemoveType(request, course_id, asstype_id):
   
@@ -187,6 +205,7 @@ def NewCourse (request):
         form = courseForm(request.POST)
         if form.is_valid():
             post = form.save(commit=False)
+            post.owner = request.user
             # name = course1.course_name.get(pk = request.POST['course'])
             post.save()
             # course.objects.create(course_name = )
@@ -197,4 +216,6 @@ def NewCourse (request):
     # return render(request, 'grades/index.html', {'form': form})
     return HttpResponseRedirect(reverse('grades:index'))
 
+def errormeth(request):
+    return render(request=request, template_name='grades/error.html')
 
