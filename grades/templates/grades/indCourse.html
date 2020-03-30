@@ -4,6 +4,17 @@
     integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
     crossorigin="anonymous"></script>
 <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js">
+</script>
+<script src="https://code.jquery.com/jquery-2.2.3.min.js">
+// $('#pointscheck').change(function(){
+//     $('#points').submit()
+// });
+// $("#checkbox-container :checkbox").on("change",function(){
+//     alert("bro");
+// })
+</script>
+
 <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"> -->
 <html>
 <!-- <head>
@@ -34,37 +45,177 @@
         </script>
       </head> -->
 
+<head>
+    <style>
+        /* https://www.w3schools.com/howto/howto_css_switch.asp */
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 60px;
+            height: 34px;
+        }
+
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            -webkit-transition: .4s;
+            transition: .4s;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 26px;
+            width: 26px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            -webkit-transition: .4s;
+            transition: .4s;
+        }
+
+        input:checked+.slider {
+            background-color: #2196F3;
+        }
+
+        input:focus+.slider {
+            box-shadow: 0 0 1px #2196F3;
+        }
+
+        input:checked+.slider:before {
+            -webkit-transform: translateX(26px);
+            -ms-transform: translateX(26px);
+            transform: translateX(26px);
+        }
+
+        /* Rounded sliders */
+        .slider.round {
+            border-radius: 34px;
+        }
+
+        .slider.round:before {
+            border-radius: 50%;
+        }
+    </style>
+</head>
+
 <body>
+    {% if user.is_authenticated %}
+    
     <div class="container">
         <!-- <div id="curve_chart" style="width: 900px; height: 500px"></div> -->
-        {% if user.is_authenticated %}
-        <h1 style="text-align: center;"> {{ indCourse.course_name }}</h1>
-        {% if indCourse.course_grade == 0 is True %}
+       
+        {% if indCourse %}
+            {% if indCourse.pointbased is True %}
+        <script>
+            localStorage.removeItem('pointbased')
+
+        </script>
+            {% else %}
+        <script>
+            localStorage.removeItem('pointbased')
+            localStorage.setItem('pointbased', 'point')
+        </script>
+            {%endif%}
+        <div class="display: inline-block;">
+            <div style="float:left;padding-top: 20px;">
+                <a href="{% url 'grades:index' %}"><i class="fa fa-angle-left"></i> Back</a>
+            </div>
+            <div style="text-align: center; font-size: 40px;"><strong>{{ indCourse.course_name }}</strong>
+                <div class="row" style="float: right; padding-top: 20px;">
+                    <div style="float: left; font-size: 15px; padding-right: 10px; padding-top: 5px;">
+                        Percentage-based
+                    </div>
+                    <div id="checkbox-container">
+                        <form action="" method="post">
+                            {% csrf_token %}
+                            <label class="switch">
+                                {{ points }}
+                               
+                                <span class="slider round"></span>
+                            </label>
+                            <script>
+                                //https://www.sitepoint.com/quick-tip-persist-checkbox-checked-state-after-page-reload/
+                                var checkboxValues = JSON.parse(localStorage.getItem('checkboxValues')) || {};
+                                var point = JSON.parse(localStorage.getItem('pointbased')) || {};
+                                var $checkboxes = $("#checkbox-container :checkbox");
+
+                                $checkboxes.on("change", function () {
+                                    $checkboxes.each(function () {
+                                        checkboxValues[this.id] = this.checked;
+                                    });
+                                    localStorage.setItem("checkboxValues", JSON.stringify(checkboxValues));
+                                });
+                                $.each(checkboxValues, function (key, value) {
+                                    if (point == "point") {
+                                        $("#" + key).prop('checked', false);
+                                    } else {
+                                        $("#" + key).prop('checked', true);
+                                    }
+                                });
+                            </script>
+                    </div>
+                    <div style="float: right; font-size: 15px; padding-left: 10px; padding-top: 5px;">
+                        Point-based
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+
+        </form>
+
+        {% if indCourse.pointbased is False %}
+            {% if indCourse.course_grade == 0 is True %}
         <div>
             <h2 style="float: left;">Current grade:</h2>
             <h2 style="color: black; padding-left: 8em;"> {{ indCourse.course_grade }}%</h2>
         </div>
-        {% elif indCourse.improved is False %}
+            {% elif indCourse.improved is False %}
         <div>
             <h2 style="float: left;">Current grade:</h2>
             <h2 style="color: red; padding-left: 8em;"> {{ indCourse.course_grade }}%<i class="fa fa-angle-down"
                     style="color: red; padding-left: 5px;"></i></h2>
         </div>
-        {% elif indCourse.improved is True %}
+            {% elif indCourse.improved is True %}
         <div>
             <h2 style="float: left;">Current grade:</h2>
             <h2 style="color: #39D043; padding-left: 8em;"> {{ indCourse.course_grade }}%<i class="fa fa-angle-up"
                     style="color: #39D043; padding-left: 5px;"></i></h2>
         </div>
-        {% endif %}
+            {% endif %}
+
+            
+           
         
-        {% if indCourse %}
-        {% for assType in indCourse.asstype_set.all %}
-        <p>Assignment Type: {{ assType.ass_type }} Worth: {{ assType.grade_percentage }}% <a
-                href="{% url 'grades:RemoveType' course_id=indCourse.id asstype_id=assType.id%}"><i
-                    class="fa fa-trash"></i> </a></p>
+                {% for assType in indCourse.asstype_set.all %}
         <div class="container">
-            <div class= "row">
+            <div class="row" style="display: flexbox; justify-content: space-between; font-size: 24px;">
+                <div style=" float: left; position: relative;">
+                    <p>Assignment Type: {{ assType.ass_type }} </p>
+                </div>
+                <div style="width: 200px; float: right; position:relative;">
+                    <p>Worth: {{ assType.grade_percentage }}%
+                        <a href="{% url 'grades:RemoveType' course_id=indCourse.id asstype_id=assType.id%}"><i
+                                class="fa fa-trash"></i> </a></p>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
 
 
                 <div class="col-sm" style="width: 100;">
@@ -74,6 +225,7 @@
                     <ul>
                         {% for assignment in assType.assignment_set.all %}
                         <p>{{ assignment.ass_name }} </p>
+
                         {% endfor %}
 
                     </ul>
@@ -90,63 +242,232 @@
                                 href="{% url 'grades:RemoveAssignment' course_id=indCourse.id assignment_id=assignment.id%}"><i
                                     class="fa fa-trash"></i></a></p>
                         {% endfor %}
-                        <!-- <a href="/grades/assignments"> Add an assignment here </a> -->
                     </ul>
                 </div>
             </div>
         </div>
-        <!-- <h4>Enter New Assignment</h4> -->
 
-        <form action="{% url 'grades:NewAssignment' indCourse.id assType.id%}" method="post">
-            {% csrf_token %}
-            <div style="display: inline-block;">
-                <div style="float: left;">
-                    <label for="name_input" style="font-size:larger;">Enter New {{ assType.ass_type }} </label>
-                    <input class="form-control" type="text" name="course_name" id="name_input" style="width: 160px;"
-                        placeholder="Assignment name">
+
+
+                {% endfor %}
+
+            
+                {% if indCourse.asstype_set.exists %}
+        <div style="position: relative; bottom: -150;">
+            <h4>Enter New Assignment</h4>
+            <form action="{% url 'grades:NewAssignment2' indCourse.id%}" method="post">
+                {% csrf_token %}
+
+                <div class="form-row">
+                    <div class="col-md-4 mb-3">
+                        <div>
+                            <label for="ass_name">Assignment Name</label>
+                            <input class="form-control" type="text" name="ass_name" id="assname"
+                                placeholder="Assignment name" required>
+                            <div class="invalid-feedback">
+                                Please enter a name.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4 mb-3">
+                        <label for="grade">Enter Grade Achieved</label>
+                        <input class="form-control" type="number" name="grade" id="grade" placeholder="E.g. 100%"
+                            required>
+                    </div>
+
+                    <div class="col-md-4 mb-3">
+
+                        <label for="ass_type">Select Assignment Type</label>
+                        <select class="form-control" id="assignment_type_input" name="ass_type" required>
+                            <option value="" disabled selected>Assignment Type</option>
+                            {% for assType in indCourse.asstype_set.all %}
+                            <option value={{ assType.id }}>{{ assType.ass_type }}</option>
+                            {% endfor %}
+                        </select>
+
+
+                    </div>
+
+
                 </div>
-                <div style="float: left; padding-left: 20px;">
-                    <label for="grade_input" style="font-size: larger;">Enter Grade Achieved</label>
-                    <input class="form-control" type="number" name="grade_input" id="grade_input" style="width: 125px;"
-                        placeholder="E.g. 100%">
+                {% if form.errors %}
+                {% for field in form %}
+                {% for error in field.errors %}
+                <div class="alert alert-danger">
+                    <strong>{{ error|escape }}</strong>
                 </div>
-                <div style="float: left; padding-left: 20px; padding-top: 40px;">
-                    <input type="submit" value="Submit">
+                {% endfor %}
+                {% endfor %}
+
+                {% endif %}
+
+                <button class="btn btn-primary btn-sm" type="submit">Submit form</button>
+            </form>
+                {% endif %}
+                <div style = "padding-top: 22px;">
+            <h4>Enter New Assignment Type</h4>
+            <div>
+                <form action="{% url 'grades:NewType' indCourse.id%}" method="post">
+                    {% csrf_token %}
+                    <div class="form-row">
+                        <div class="col-md-6 mb-2">
+                            <label for="ass_type">Assignment Type</label>
+                            <input class="form-control " type="text" name="ass_type" id="ass_type"
+                                placeholder="E.g. test" required>
+                        </div>
+                        <div class="col-md-6 mb-2">
+                            <label for="grade_percentage">Assignment Weight</label>
+                            <input class="form-control" type="number" name="grade_percentage" id="grade_percentage"
+                                placeholder="E.g. 25%" required>
+                        </div>
+
+                    </div>
+                    {% if form2.errors %}
+                    {% for field in form2 %}
+                    {% for error in field.errors %}
+                    <div class="alert alert-danger">
+                        <strong>{{ error|escape }}</strong>
+                    </div>
+                    {% endfor %}
+                    {% endfor %}
+                    {% for error in form2.non_field_errors %}
+                    <div class="alert alert-danger">
+                        <strong>{{ error|escape }}</strong>
+                    </div>
+                    {% endfor %}
+                    {% endif %}
+
+                    <button class="btn btn-primary btn-sm" type="submit">Submit form</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+
+            {% else %}
+
+            {% if indCourse.course_grade_points == 0 is True %}
+            <div>
+                <h2 style="float: left;">Current grade:</h2>
+                <h2 style="color: black; padding-left: 8em;"> {{ indCourse.course_grade_points }}%</h2>
+            </div>
+                {% elif indCourse.point_improved is False %}
+            <div>
+                <h2 style="float: left;">Current grade:</h2>
+                <h2 style="color: red; padding-left: 8em;"> {{ indCourse.course_grade_points }}%<i class="fa fa-angle-down"
+                        style="color: red; padding-left: 5px;"></i></h2>
+            </div>
+                {% elif indCourse.point_improved is True %}
+            <div>
+                <h2 style="float: left;">Current grade:</h2>
+                <h2 style="color: #39D043; padding-left: 8em;"> {{ indCourse.course_grade_points }}%<i class="fa fa-angle-up"
+                        style="color: #39D043; padding-left: 5px;"></i></h2>
+            </div>
+                {% endif %}
+
+        <div class="container">
+            <div class="row">
+                    
+
+                <div class="col-sm" style="width: 100;">
+                    {% if indCourse.pointassignment_set.exists %}
+                    Assignment Name<br>
+                    {% endif %}
+                    <ul>
+                        {% for assignment in indCourse.pointassignment_set.all %}
+                        <p>{{ assignment.point_ass_name }} </p>
+
+                        {% endfor %}
+
+                    </ul>
+                </div>
+
+                <div class="col-sm" style="width: 100;">
+                    {% if indCourse.pointassignment_set.exists %}
+                    Points Earned<br>
+                    {% endif %}
+                    <ul>
+                        {% for assignment in indCourse.pointassignment_set.all %}
+                        <p> {{ assignment.points_achieved }}
+                            </p>
+                        {% endfor %}
+                    </ul>
+                </div>
+                <div class="col-sm" style="width: 100;">
+                    {% if indCourse.pointassignment_set.exists %}
+                    Total Points<br>
+                    {% endif %}
+                    <ul>
+                        {% for assignment in indCourse.pointassignment_set.all %}
+                        <p> {{ assignment.points_total }}
+                            <a
+                                href="{% url 'grades:RemovePointAssignment' course_id=indCourse.id assignment_id=assignment.id%}"><i
+                                    class="fa fa-trash"></i></a></p>
+                        {% endfor %}
+                    </ul>
                 </div>
             </div>
-            <!-- <label for="grade_percentage" style="font-size: larger;">How much of your total grade is this assignment worth?
-              (in percent)</label>
-          <input class="form-control" type="number" name="grade_percentage" id="grade_percentage" style = "width: 75px;"> -->
+        </div>
+              
+            <h4>Enter New Assignment</h4>
+            <form action="{% url 'grades:NewAssignment' indCourse.id%}" method="post">
+                {% csrf_token %}
 
-        </form>
-        {% endfor %}
+                <div class="form-row">
+                    <div class="col-md-4 mb-3">
+                        <div>
+                            <label for="point_ass_name">Assignment Name</label>
+                            <input class="form-control" type="text" name="point_ass_name" id="assname"
+                                placeholder="Assignment name" required>
+                            <div class="invalid-feedback">
+                                Please enter a name.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4 mb-3">
+                        <label for="points_achieved">Enter Points Achieved</label>
+                        <input class="form-control" type="number" name="points_achieved" id="grade" placeholder="E.g. 100"
+                            required>
+                    </div>
+
+                    <div class="col-md-4 mb-3">
+                        <label for="points_total">Enter Total Points for Assignment</label>
+                        <input class="form-control" type="number" name="points_total" id="grade" placeholder="E.g. 100"
+                            required>
+                    </div>
+
+
+
+                </div>
+                {% if form.errors %}
+                {% for field in form %}
+                {% for error in field.errors %}
+                <div class="alert alert-danger">
+                    <strong>{{ error|escape }}</strong>
+                </div>
+                {% endfor %}
+                {% endfor %}
+
+                {% endif %}
+
+                <button class="btn btn-primary btn-sm" type="submit">Submit form</button>
+            </form>
+
+            {% endif %}
         {% endif %}
-        <h4>Enter New Assignment Type</h4>
-
-        <form action="{% url 'grades:NewType' indCourse.id%}" method="post">
-            {% csrf_token %}
-            <label for="name_input" style="font-size:larger;">Enter the type of assignment</label>
-            <input class="form-control" type="text" name="course_name" id="name_input" style="width: 160px;"
-                placeholder="E.g. test">
-
-            <label for="grade_input" style="font-size: larger;">How much percent does this assignment type
-                weigh?</label>
-            <input class="form-control" type="number" name="grade_input" id="grade_input" style="width: 125px;"
-                placeholder="E.g. 25%">
-
-            <!-- <label for="grade_percentage" style="font-size: larger;">How much of your total grade is this assignment worth?
-            (in percent)</label>
-        <input class="form-control" type="number" name="grade_percentage" id="grade_percentage" style = "width: 75px;"> -->
-            <br>
-            <input type="submit" value="Submit">
-        </form>
-        {% else %}
+        
+    </div>
+    
+    {% else %}
         <h1>Please log in to see your Personal Dashboard</h1>
         <a href="{% url 'social:begin' 'google-oauth2' %}">
             Login
         </a>
         {% endif %}
-    </div>
 </body>
 
 </html>
+
