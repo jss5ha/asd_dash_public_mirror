@@ -52,7 +52,6 @@ SOCIAL_AUTH_URL_NAMESPACE = 'social'
 INSTALLED_APPS = [
     #make sure we look at oscial django support when debugging bc some stuff doesnt
     #seem v compatible w/it
-    'bootstrap4',
     'nested_inline',
     'social_django',
     'grades.apps.GradesConfig',
