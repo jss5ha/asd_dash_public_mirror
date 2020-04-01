@@ -69,17 +69,6 @@
 					</div>
 				</div>
 			</div>
-
-					<ul class="list-group t20," >
-						{% for todo in todo_list %}
-							{% if todo.complete %}
-							<a href="{% url 'deselect' todo.id %}"><li class="list-group-item todo-completed">{{todo.due_date}} -- {{ todo.text }} Done</li>
-							{% else %}
-							<a href="{% url 'complete' todo.id %}"><li class="list-group-item">{{todo.due_date}} -- {{ todo.text }}</li></a>
-							{% endif %}
-						{% endfor %}
-					</ul>
-				</div>
 			</div>
 
 
