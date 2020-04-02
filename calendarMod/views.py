@@ -15,7 +15,7 @@ from google.auth.transport.requests import Request
 
 # Create your views here.
 class IndexView(generic.ListView):
-    template_name = 'calendar/index.html'
+    #template_name = 'calendar/index.html'
     
     def list_calendar(self):
         #SOURCE: this code comes from https://developers.google.com/calendar/quickstart/python

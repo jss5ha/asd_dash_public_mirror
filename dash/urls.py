@@ -23,6 +23,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('todo/', include('todo.urls')),
     path('grades/', include('grades.urls')),
+    path('calendar/', include('calendarMod.urls')),
     path('', include('social_django.urls', namespace='social')),
     path('', views.home, name = 'home'),
     path(
