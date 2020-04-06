@@ -9,7 +9,7 @@ from .forms import TodoForm
 def index(request):
     todo_list = Todo.objects.filter(owner=request.user).order_by('due_date')
     form = TodoForm()
-    context = {'todo_list' : todo_list, 'form' : form}
+    context = {'todo_list': todo_list, 'form': form}
     return render(request, 'todo/index.html', context)
 
 

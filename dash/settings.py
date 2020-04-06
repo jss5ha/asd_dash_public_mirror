@@ -34,7 +34,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'asd-dash.herokuapp.com', 'ghost-dash.herokuapp.com']
 
-#stuff used for social auth
+# stuff used for social auth
 AUTHENTICATION_BACKENDS = (
     'social_core.backends.google.GoogleOAuth2',
     'django.contrib.auth.backends.ModelBackend',
@@ -50,8 +50,8 @@ SOCIAL_AUTH_URL_NAMESPACE = 'social'
 # Application definition
 
 INSTALLED_APPS = [
-    #make sure we look at oscial django support when debugging bc some stuff doesnt
-    #seem v compatible w/it
+    # make sure we look at oscial django support when debugging bc some stuff doesnt
+    # seem v compatible w/it
     'nested_inline',
     'social_django',
     'grades.apps.GradesConfig',
@@ -66,6 +66,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -79,7 +80,7 @@ ROOT_URLCONF = 'dash.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': ['project-102-asdfghjk/templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -155,3 +156,5 @@ try:
     from .local_settings import *
 except ImportError:
     pass
+
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
