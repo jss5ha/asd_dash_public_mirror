@@ -4,8 +4,17 @@ from django.http import HttpResponseRedirect
 from django.contrib.auth.models import User
 from django.urls import reverse
 
+
+
+from django.http import HttpResponse
+
+from django.utils.safestring import mark_safe
+
+from .models import *
+from .utils import Calendar
+
 #from here
-import datetime
+from datetime import datetime 
 import pickle
 import os.path
 from googleapiclient.discovery import build
@@ -85,19 +94,28 @@ def main(request):
     service = build('calendar', 'v3', credentials=creds)
 
     # Call the Calendar API
-    now = datetime.datetime.utcnow().isoformat() + 'Z' # 'Z' indicates UTC time
+    now = datetime.utcnow().isoformat() + 'Z' # 'Z' indicates UTC time
     print('Getting the upcoming 10 events')
     events_result = service.events().list(calendarId='primary', timeMin=now,
                                         maxResults=10, singleEvents=True,
                                         orderBy='startTime').execute()
     events = events_result.get('items', [])
+    eventlist = []
 
     if not events:
         print('No upcoming events found.')
     for event in events:
         start = event['start'].get('dateTime', event['start'].get('date'))
+        eventdetails = []
+        eventdetails.append(event['summary'])
+        eventdetails.append(start)
+        eventlist.append(eventdetails)
         print(start, event['summary'])
-    return HttpResponseRedirect(reverse('index'))
+        
+    # return HttpResponseRedirect(reverse('index'))
+    context = {'eventlist': eventlist}
+    template = 'calendar/index.html'
+    return render(request, template, context)
 
 
 # def google_calendar_connection():
@@ -124,3 +142,27 @@ def main(request):
 #         service = discovery.build('calendar', 'v3', http=http)
         
 #         return service
+
+class CalendarView(generic.ListView):
+    model = Event
+    template_name = 'calendar/calendar.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        # use today's date for the calendar
+        d = get_date(self.request.GET.get('day', None))
+
+        # Instantiate our calendar class with today's year and date
+        cal = Calendar(d.year, d.month)
+
+        # Call the formatmonth method, which returns our calendar as a table
+        html_cal = cal.formatmonth(withyear=True)
+        context['calendar'] = mark_safe(html_cal)
+        return context
+
+def get_date(req_day):
+    if req_day:
+        year, month = (int(x) for x in req_day.split('-'))
+        return date(year, month, day=1)
+    return datetime.today()
