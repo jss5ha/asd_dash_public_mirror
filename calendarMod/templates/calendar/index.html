@@ -1,0 +1,18 @@
+<!-- api key AIzaSyBCBOTV6WEVNtHjOycaI5mbpCd_Fmqzd4U -->
+Test
+
+<form action="{% url 'events' %}" method="post">
+    {% csrf_token %}
+        <button class="btn btn-primary btn-sm" type="submit">View events</button>
+    </div>
+</form>
+<p>Here are your upcoming events:</p>
+{% for i in eventlist%}
+<p>{% for details in i %}
+{{ details }}
+{%endfor%}
+</p>
+{%endfor%}
+
+<a href="{% url 'calendar' %}" >View calendar</a>
+    

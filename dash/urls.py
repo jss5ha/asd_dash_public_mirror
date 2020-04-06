@@ -22,6 +22,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('todo/', include('todo.urls')),
     path('grades/', include('grades.urls')),
+    path('calendar/', include('calendarMod.urls')),
     path('', include('social_django.urls', namespace='social')),
     path('', views.home, name='home'),  # when nothing is matched, default to home inside todo/templates
     path('logout/', LogoutView.as_view(template_name=settings.LOGOUT_REDIRECT_URL), name='logout'),
