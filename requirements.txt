@@ -25,4 +25,4 @@ sqlparse==0.3.0
 urllib3==1.25.8
 whitenoise==5.0.1
 django-nested-inline
-psycopg2-binary=2.8.5
+psycopg2-binary==2.8.5
