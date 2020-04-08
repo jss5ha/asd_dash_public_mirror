@@ -1,16 +1,17 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.views import generic
 from django.http import HttpResponseRedirect
 from django.contrib.auth.models import User
 from django.urls import reverse
-
+import google.oauth2.credentials
+import google_auth_oauthlib.flow
 import iso8601
 import pytz
 # import dateutil.parser
 from django.http import HttpResponse
 
 from django.utils.safestring import mark_safe
-
+import os
 from .models import *
 from .utils import Calendar
 
@@ -36,9 +37,9 @@ class IndexView(generic.ListView):
         # The file token.pickle stores the user's access and refresh tokens, 
         # and is created automatically when the authorization flow completes 
         # for the first time.
-        if os.path.exists('token.pickle'):
-            with open('token.pickle', 'rb') as token:
-                creds = pickle.load(token)
+        # if os.path.exists('token.pickle'):
+            # with open('token.pickle', 'rb') as token:
+                # creds = pickle.load(token)
         # If there are no (valid) credentials available, let the user log in.
         if not creds or not creds.valid:
             if creds and creds.expired and creds.refresh_token:
@@ -67,36 +68,94 @@ class IndexView(generic.ListView):
 
         #I'm not sure if it's okay for this to not return 
         # anything so I'm trying it
+flow = google_auth_oauthlib.flow.Flow.from_client_secrets_file('credentials.json', SCOPES)
+flow.redirect_uri = "http://localhost:8000/oauth2callback"
 
+def authorize(request):
+    flow = google_auth_oauthlib.flow.Flow.from_client_secrets_file('credentials.json', SCOPES)
+    flow.redirect_uri = "https://localhost:8000/oauth2callback"
+    authorization_url, state = flow.authorization_url(access_type = 'offline', include_granted_scopes='true')
+    return HttpResponseRedirect(authorization_url)
 
+# # @login_required
+# def connect(request):
+#     # if request.method == "POST":
+#     flow = google_auth_oauthlib.flow.Flow.from_client_secrets_file('credentials.json', SCOPES)
+#     flow.redirect_uri = "http://localhost:8000/oauth2callback"
+#     authorization_url, state = flow.authorization_url(access_type = 'offline', include_granted_scopes='true')
+#     return HttpResponseRedirect(authorization_url)
+
+# def endpoint(request):
+#     state = request.GET.get('state', None)
+#     flow = google_auth_oauthlib.flow.Flow.from_client_secrets_file('credentials.json', SCOPES)
+#     flow.redirect_uri = "http://localhost:8000/oauth2callback"
+#     authorization_response = request.build_absolute_uri()
+#     credentials = flow.credentials
+#     service = build('calendar', 'v3', credentials=credentials)
+#     manager = get_active_manager(request.user)
+#     temp = save_credentials(manager,credentials)
+#     return HttpResponse("localhost:8000/calendar")
+
+# def save_credentials(manager,credentials,valid=True):
+#     try:
+#         creds = Gmail_Connection_Token.objects.get(manager=manager)
+#     except Gmail_Connection_Token.DoesNotExist:
+#         creds = Gmail_Connection_Token()
+#         creds.manager = manager
+    
+#     temp = {
+#         'token': credentials.token,
+#         'refresh_token': credentials.refresh_token,
+#         'id_token':credentials.id_token,
+#         'token_uri': credentials.token_uri,
+#         'client_id': credentials.client_id,
+#         'client_secret': credentials.client_secret,
+#         'scopes': credentials.scopes,
+#         'expiry':datetime.datetime.strftime(credentials.expiry,'%Y-%m-%d %H:%M:%S')
+#     }
+#     creds.json_string = json.dump(temp)
+#     creds.valid = valid
+#     creds.save()
+#     return temp
 def main(request):
     """Shows basic usage of the Google Calendar API.
     Prints the start and name of the next 10 events on the user's calendar.
     """
+    authorize(request)
+    state = request.GET.get('state', None)
+    flow = google_auth_oauthlib.flow.Flow.from_client_secrets_file('credentials.json', scopes=SCOPES, state=state)
+    flow.redirect_uri = "https://localhost:8000/oauth2callback"
+    authorization_response = request.build_absolute_uri()
+    print(authorization_response)
+    flow.fetch_token(authorization_response = authorization_response)
+    credentials = flow.credentials
+    service = build('calendar', 'v3', credentials=credentials)
     for e in Event.objects.all():
         if e.from_google is True:
             e.delete()
-    creds = None
+    # creds = None
     # The file token.pickle stores the user's access and refresh tokens, and is
     # created automatically when the authorization flow completes for the first
     # time.
-    if os.path.exists('token.pickle'):
-        with open('token.pickle', 'rb') as token:
-            creds = pickle.load(token)
+    # if os.path.exists('token.pickle'):
+        # with open('token.pickle', 'rb') as token:
+            # creds = pickle.load(token)
     # If there are no (valid) credentials available, let the user log in.
-    if not creds or not creds.valid:
-        if creds and creds.expired and creds.refresh_token:
-            creds.refresh(Request())
-        else:
-            # flow = InstalledAppFlow.from_client_secrets_file(
-            #     'credentials.json', SCOPES)
-            # creds = flow.run_local_server(port=0)
-            cred = os.path.join(settings.BASE_DIR, 'credentials.json')
-        # Save the credentials for the next run
-        with open('token.pickle', 'wb') as token:
-            pickle.dump(creds, token)
-
-    service = build('calendar', 'v3', credentials=creds)
+    # if not creds or not creds.valid:
+    #     if creds and creds.expired and creds.refresh_token:
+    #         creds.refresh(Request())
+    #     else:
+    #         # flow = InstalledAppFlow.from_client_secrets_file(
+    #         #     'credentials.json', SCOPES)
+    #         # creds = flow.run_local_server(port=0)
+    #         # creds = os.path.join(BASE_DIR, 'credentials.json')
+    #         # authorization_response = input('https://localhost:8000/')
+    #         # creds = flow.fetch_token(authorization_response = authorization_response)
+    #     # Save the credentials for the next run
+    #     with open('token.pickle', 'wb') as token:
+    #         pickle.dump(creds, token)
+    # print("ok")
+    # service = build('calendar', 'v3', credentials=creds)
 
     # Call the Calendar API
     now = datetime.utcnow().isoformat() + 'Z' # 'Z' indicates UTC time
@@ -109,15 +168,13 @@ def main(request):
 
     for event in events:
         start = event['start'].get('dateTime', event['start'].get('date'))
-        print(event['start'])
-        # parsedDate = dateutil.parser.parse(start)
-        # print(parsedDate)
-        # date = datetime.strptime(event['start'].get('dateTime'), "%Y-%m-%d-%z")
+     
+       
         end = event['end'].get('dateTime', event['end'].get('date'))
         endtime = iso8601.parse_date(end)
-        # print(date)
+        
         starttime = iso8601.parse_date(start)
-        # starttime = starttime.replace(tzinfo=None)
+       
         #https://medium.com/@pritishmishra_72667/converting-rfc3339-timestamp-to-utc-timestamp-in-python-8dfa485358ff
 
         startminute = str(starttime.minute).zfill(2)
@@ -128,7 +185,7 @@ def main(request):
         startmonth = starttime.strftime("%B")
         Event.objects.create(title = event['summary'], start_time = starttime, end_time = endtime, start_month_name = startmonth, from_google = True, startminute = startminute, endminute = endminute)
         eventlist.append(eventdetails)
-        print(start, event['summary'])
+     
         
     # return HttpResponseRedirect(reverse('index'))
     context = {'eventlist': eventlist, 'event': Event.objects.all()}
