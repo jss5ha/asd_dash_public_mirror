@@ -151,11 +151,12 @@ def CalculateGrade(request, course_id):
     for i in indCourse.asstype_set.all():
         if(i.assignment_set.exists()):
             num_of_assignments = 0
+            assignment_type_sum= 0
             for j in i.assignment_set.all():
-                overall += j.grade * i.grade_percentage
+                assignment_type_sum += j.grade 
                 num_of_assignments += 1
-            overall = overall / num_of_assignments
-
+            assignment_type_sum = assignment_type_sum * i.grade_percentage / num_of_assignments
+            overall += assignment_type_sum
         total_grade_percent += i.grade_percentage
     # if indCourse.pointbased is True:
     #     for i in indCourse.assignment_set.all():

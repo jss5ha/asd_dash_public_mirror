@@ -103,3 +103,29 @@ class usertests(TestCase):
             context,
             []
         )
+
+# class gradeCalculationTests(TestCase):
+#     def create_ass_type(course, ass_type, grade_percentage):
+#         return course.objects.create(course = course, ass_type=ass_type, grade_percentage = grade_percentage)
+#     def create_ass(ass_type, ass_name, course, grade):
+#         return course.objects.create(course = course, ass_type=ass_type, ass_name=ass_name, grade = grade)
+#     def setUp(self):
+#         self.factory = RequestFactory()
+#         self.user = User.objects.create_user(username = 'test')
+#     def test_percentbased(self):
+#         create_course_with_user('course1', self.user)
+#         create_ass_type('course1', 'hw', 60)
+#         create_ass_type('course1', 'midterm', 20)
+#         create_ass_type('course1', 'final', 20)
+#         create_ass('hw', 'hw0', 'course1', 100)
+#         create_ass('hw', 'hw1', 'course1', 85)
+#         create_ass('hw', 'hw2', 'course1', 90)
+#         create_ass('midterm', 'midterm', 'course1', 88)
+#         create_ass('final', 'final', 'course1', 90)
+#         request.user = self.user
+        
+#         view = IndexView()
+#         view.setup(request=request)
+#         context = view.get_queryset()
+#         self.assertEquals(context, 90.6)
+      
