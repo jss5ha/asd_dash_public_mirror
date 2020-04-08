@@ -10,6 +10,12 @@ class calendar (models.Model):
 
 class Event(models.Model):
     title = models.CharField(max_length=200)
-    description = models.TextField()
+    # description = models.TextField()
     start_time = models.DateTimeField()
     end_time = models.DateTimeField()
+    start_month_name = models.TextField()
+    from_google = models.BooleanField(default=False)
+    startminute = models.TextField(default="")
+    endminute = models.TextField(default = "")
+    def __str__(self):
+        return self.title
