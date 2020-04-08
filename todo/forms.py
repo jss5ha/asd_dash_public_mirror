@@ -7,13 +7,23 @@ from . import models
 class DataInput(forms.DateInput):
     input_type = 'date'
 
+
+
 class TodoForm(forms.Form):
-    text = forms.CharField(max_length=40, widget=forms.TextInput(
+    GROUP_CHOICES = (
+        ('school', 'School'),
+        ('leisure', 'Leisure'),
+        ('financial', 'Financial'),
+        ('misc', 'Miscellaneous')
+    )
+
+    text = forms.CharField(max_length=200, widget=forms.TextInput(
             attrs={'class': 'form-control',
                    'placeholder': 'Enter todo e.g. Delete junk files',
                    'aria-label': 'Todo',
                    'aria-describedby': 'add-btn'}))
     date = forms.DateField(widget=DataInput)
+    group = forms.ChoiceField(label="category", widget=forms.Select, choices=GROUP_CHOICES)
 
     # def clean_date(self):
     #     date = self.cleaned_data['date']
