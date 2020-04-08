@@ -7,7 +7,7 @@ from .forms import TodoForm
 
 
 def index(request):
-    todo_list = Todo.objects.order_by('due_date')
+    todo_list = Todo.objects.filter(owner=request.user).order_by('due_date')
     form = TodoForm()
     context = {'todo_list' : todo_list, 'form' : form}
     return render(request, 'todo/index.html', context)
@@ -19,6 +19,7 @@ def addTodo(request):
 
     if form.is_valid():
         new_todo = Todo(text=request.POST['text'], due_date=request.POST['date'], group=request.POST['group'])
+        new_todo.owner = request.user
         new_todo.save()
     else:
         print(form.errors)

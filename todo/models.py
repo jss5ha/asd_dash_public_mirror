@@ -10,6 +10,7 @@ import datetime
 #     )
 
 class Todo(models.Model):
+    owner = models.ForeignKey(User, null=True, unique=False, on_delete=models.CASCADE)
     text = models.CharField(max_length=100)
     complete = models.BooleanField(default=False)
     due_date = models.DateField(default=datetime.datetime.now)
