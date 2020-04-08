@@ -1,4 +1,5 @@
 from django.db import models
+from django.utils import timezone
 import datetime
 #
 # GROUP_CHOICES = (
@@ -11,7 +12,7 @@ import datetime
 class Todo(models.Model):
     text = models.CharField(max_length=100)
     complete = models.BooleanField(default=False)
-    due_date = models.DateField(default=datetime.datetime.now())
+    due_date = models.DateField(default=datetime.datetime.now)
     group = models.CharField(max_length=100, default="school")
 
     def __str__(self):
