@@ -12,7 +12,8 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 
 import os
 import django_heroku
-
+import psycopg2
+import dj_database_url
 '''
 used this tutorial to help set up google oauth
 https://dev.to/codetricity/how-to-set-up-django-with-central-oauth2-login-1co
@@ -32,7 +33,7 @@ SECRET_KEY = '3$*rou8bp)mk2z@e6&3$ehq&2lg0=o&!bj(@)d6*=kcy#ow@9j'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'asd-dash.herokuapp.com', 'ghost-dash.herokuapp.com']
+ALLOWED_HOSTS = ['*']
 
 # stuff used for social auth
 AUTHENTICATION_BACKENDS = (
@@ -102,11 +103,21 @@ WSGI_APPLICATION = 'dash.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'dash',
+        'USER': 'postgres',
+        'PASSWORD': 'meme',
+        'HOST': '127.0.0.1',
+        'PORT': '5432',
     }
 }
 
+db_config = dj_database_url.config(conn_max_age=600, ssl_require=True)
+if db_config:
+    DATABASES['default'] = db_config
+
+# Honor the 'X-Forwarded-Proto' header for request.is_secure()
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 # Password validation
 # https://docs.djangoproject.com/en/3.0/ref/settings/#auth-password-validators
@@ -159,3 +170,4 @@ except ImportError:
     pass
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
