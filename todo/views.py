@@ -19,6 +19,7 @@ def addTodo(request):
 
     if form.is_valid():
         new_todo = Todo(text=request.POST['text'], due_date=request.POST['date'], group=request.POST['group'])
+        new_todo.owner = request.user
         new_todo.save()
     else:
         print(form.errors)
