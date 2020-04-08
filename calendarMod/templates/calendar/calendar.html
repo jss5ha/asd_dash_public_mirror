@@ -1,0 +1,8 @@
+<!-- cal/templates/cal/calendar.html -->
+
+{% extends 'calendar/base.html' %}
+
+{% block content %}
+{% csrf_token %}
+{{ calendar }}
+{% endblock %}
