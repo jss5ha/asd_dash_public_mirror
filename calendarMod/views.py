@@ -4,8 +4,9 @@ from django.http import HttpResponseRedirect
 from django.contrib.auth.models import User
 from django.urls import reverse
 
-
-
+import iso8601
+import pytz
+# import dateutil.parser
 from django.http import HttpResponse
 
 from django.utils.safestring import mark_safe
@@ -28,7 +29,7 @@ class IndexView(generic.ListView):
     template_name = 'calendar/index.html'
     # context = list_calendar()
     def get_queryset(self):
-        return 
+        return Event.objects.all()
     def list_calendar(self):
         #SOURCE: this code comes from https://developers.google.com/calendar/quickstart/python
         creds = None
@@ -72,6 +73,9 @@ def main(request):
     """Shows basic usage of the Google Calendar API.
     Prints the start and name of the next 10 events on the user's calendar.
     """
+    for e in Event.objects.all():
+        if e.from_google is True:
+            e.delete()
     creds = None
     # The file token.pickle stores the user's access and refresh tokens, and is
     # created automatically when the authorization flow completes for the first
@@ -95,25 +99,38 @@ def main(request):
 
     # Call the Calendar API
     now = datetime.utcnow().isoformat() + 'Z' # 'Z' indicates UTC time
-    print('Getting the upcoming 10 events')
+  
     events_result = service.events().list(calendarId='primary', timeMin=now,
-                                        maxResults=10, singleEvents=True,
+                                        singleEvents=True,
                                         orderBy='startTime').execute()
     events = events_result.get('items', [])
     eventlist = []
 
-    if not events:
-        print('No upcoming events found.')
     for event in events:
         start = event['start'].get('dateTime', event['start'].get('date'))
+        print(event['start'])
+        # parsedDate = dateutil.parser.parse(start)
+        # print(parsedDate)
+        # date = datetime.strptime(event['start'].get('dateTime'), "%Y-%m-%d-%z")
+        end = event['end'].get('dateTime', event['end'].get('date'))
+        endtime = iso8601.parse_date(end)
+        # print(date)
+        starttime = iso8601.parse_date(start)
+        # starttime = starttime.replace(tzinfo=None)
+        #https://medium.com/@pritishmishra_72667/converting-rfc3339-timestamp-to-utc-timestamp-in-python-8dfa485358ff
+
+        startminute = str(starttime.minute).zfill(2)
+        endminute = str(endtime.minute).zfill(2)
+        
         eventdetails = []
         eventdetails.append(event['summary'])
-        eventdetails.append(start)
+        startmonth = starttime.strftime("%B")
+        Event.objects.create(title = event['summary'], start_time = starttime, end_time = endtime, start_month_name = startmonth, from_google = True, startminute = startminute, endminute = endminute)
         eventlist.append(eventdetails)
         print(start, event['summary'])
         
     # return HttpResponseRedirect(reverse('index'))
-    context = {'eventlist': eventlist}
+    context = {'eventlist': eventlist, 'event': Event.objects.all()}
     template = 'calendar/index.html'
     return render(request, template, context)
 
