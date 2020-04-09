@@ -9,7 +9,7 @@ import iso8601
 import pytz
 # import dateutil.parser
 from django.http import HttpResponse
-
+from django.conf import settings
 from django.utils.safestring import mark_safe
 import os
 from .models import *
@@ -26,7 +26,11 @@ from google.auth.transport.requests import Request
 #and I'm not sure it's right for this place
 SCOPES = ['https://www.googleapis.com/auth/calendar.readonly']
 # Create your views here.
-
+if settings.DEBUG is True:
+    REDIRECT_URI = "https://localhost:8000/calendar/events"
+    os.environ['OAUTHLIB_INSECURE_TRANSPORT'] = '1'
+else:
+    REDIRECT_URI = "https://asd-dash.herokuapp.com/calendar/events"
 class IndexView(generic.ListView):
     template_name = 'calendar/index.html'
     context_object_name = 'event'
@@ -70,54 +74,13 @@ class IndexView(generic.ListView):
         #I'm not sure if it's okay for this to not return 
         # anything so I'm trying it
 flow = google_auth_oauthlib.flow.Flow.from_client_secrets_file('credentials.json', SCOPES)
-flow.redirect_uri = "http://localhost:8000/oauth2callback"
+flow.redirect_uri = REDIRECT_URI
 
 def authorize(request):
     flow = google_auth_oauthlib.flow.Flow.from_client_secrets_file('credentials.json', SCOPES)
-    flow.redirect_uri = "https://localhost:8000/calendar/events"
+    flow.redirect_uri = REDIRECT_URI
     authorization_url, state = flow.authorization_url(access_type = 'offline', include_granted_scopes='true')
     return HttpResponseRedirect(authorization_url)
-
-# # @login_required
-# def connect(request):
-#     # if request.method == "POST":
-#     flow = google_auth_oauthlib.flow.Flow.from_client_secrets_file('credentials.json', SCOPES)
-#     flow.redirect_uri = "http://localhost:8000/oauth2callback"
-#     authorization_url, state = flow.authorization_url(access_type = 'offline', include_granted_scopes='true')
-#     return HttpResponseRedirect(authorization_url)
-
-# def endpoint(request):
-#     state = request.GET.get('state', None)
-#     flow = google_auth_oauthlib.flow.Flow.from_client_secrets_file('credentials.json', SCOPES)
-#     flow.redirect_uri = "http://localhost:8000/oauth2callback"
-#     authorization_response = request.build_absolute_uri()
-#     credentials = flow.credentials
-#     service = build('calendar', 'v3', credentials=credentials)
-#     manager = get_active_manager(request.user)
-#     temp = save_credentials(manager,credentials)
-#     return HttpResponse("localhost:8000/calendar")
-
-# def save_credentials(manager,credentials,valid=True):
-#     try:
-#         creds = Gmail_Connection_Token.objects.get(manager=manager)
-#     except Gmail_Connection_Token.DoesNotExist:
-#         creds = Gmail_Connection_Token()
-#         creds.manager = manager
-    
-#     temp = {
-#         'token': credentials.token,
-#         'refresh_token': credentials.refresh_token,
-#         'id_token':credentials.id_token,
-#         'token_uri': credentials.token_uri,
-#         'client_id': credentials.client_id,
-#         'client_secret': credentials.client_secret,
-#         'scopes': credentials.scopes,
-#         'expiry':datetime.datetime.strftime(credentials.expiry,'%Y-%m-%d %H:%M:%S')
-#     }
-#     creds.json_string = json.dump(temp)
-#     creds.valid = valid
-#     creds.save()
-#     return temp
 
 
 # https://www.geeksforgeeks.org/python-django-google-authentication-and-fetching-mails-from-scratch/
@@ -129,7 +92,7 @@ def main(request):
 
     state = request.GET.get('state', None)
     flow = google_auth_oauthlib.flow.Flow.from_client_secrets_file('credentials.json', scopes=None, state=state)
-    flow.redirect_uri = "https://localhost:8000/calendar/events"
+    flow.redirect_uri = REDIRECT_URI
     authorization_response = request.build_absolute_uri()
     # print(authorization_response)
     flow.fetch_token(authorization_response = authorization_response)
