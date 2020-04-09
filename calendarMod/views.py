@@ -1,16 +1,17 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.views import generic
 from django.http import HttpResponseRedirect
 from django.contrib.auth.models import User
 from django.urls import reverse
-
+import google.oauth2.credentials
+import google_auth_oauthlib.flow
 import iso8601
 import pytz
 # import dateutil.parser
 from django.http import HttpResponse
-
+from django.conf import settings
 from django.utils.safestring import mark_safe
-
+import os
 from .models import *
 from .utils import Calendar
 
@@ -25,78 +26,106 @@ from google.auth.transport.requests import Request
 #and I'm not sure it's right for this place
 SCOPES = ['https://www.googleapis.com/auth/calendar.readonly']
 # Create your views here.
+# https://stackoverflow.com/questions/48242761/how-do-i-use-oauth2-and-refresh-tokens-with-the-google-api
+if settings.DEBUG is True:
+    REDIRECT_URI = "https://localhost:8000/calendar/events"
+    os.environ['OAUTHLIB_INSECURE_TRANSPORT'] = '1'
+else:
+    REDIRECT_URI = "https://asd-dash.herokuapp.com/calendar/events"
 class IndexView(generic.ListView):
     template_name = 'calendar/index.html'
-    # context = list_calendar()
+    context_object_name = 'event'
     def get_queryset(self):
         return Event.objects.all()
-    def list_calendar(self):
-        #SOURCE: this code comes from https://developers.google.com/calendar/quickstart/python
-        creds = None
-        # The file token.pickle stores the user's access and refresh tokens, 
-        # and is created automatically when the authorization flow completes 
-        # for the first time.
-        if os.path.exists('token.pickle'):
-            with open('token.pickle', 'rb') as token:
-                creds = pickle.load(token)
-        # If there are no (valid) credentials available, let the user log in.
-        if not creds or not creds.valid:
-            if creds and creds.expired and creds.refresh_token:
-                creds.refresh(Request())
-            else:
-                flow = InstalledAppFlow.from_client_secrets_file(
-                    'credentials.json', SCOPES)
-                creds = flow.run_local_server(port=0)
-            # Save the credentials for the next run
-            with open('token.pickle', 'wb') as token:
-                pickle.dump(creds, token)
+    # def list_calendar(self):
+    #     #SOURCE: this code comes from https://developers.google.com/calendar/quickstart/python
+    #     creds = None
+    #     # The file token.pickle stores the user's access and refresh tokens, 
+    #     # and is created automatically when the authorization flow completes 
+    #     # for the first time.
+    #     # if os.path.exists('token.pickle'):
+    #         # with open('token.pickle', 'rb') as token:
+    #             # creds = pickle.load(token)
+    #     # If there are no (valid) credentials available, let the user log in.
+    #     if not creds or not creds.valid:
+    #         if creds and creds.expired and creds.refresh_token:
+    #             creds.refresh(Request())
+    #         else:
+    #             flow = InstalledAppFlow.from_client_secrets_file(
+    #                 'credentials.json', SCOPES)
+    #             creds = flow.run_local_server(port=0)
+    #         # Save the credentials for the next run
+    #         with open('token.pickle', 'wb') as token:
+    #             pickle.dump(creds, token)
 
-        service = build('calendar', 'v3', credentials=creds)
+    #     service = build('calendar', 'v3', credentials=creds)
 
-        # Call the Calendar API
-        now = datetime.datetime.utcnow().isoformat()
-        events_result = service.events().list(calendarId='primary', timeMin=now,
-                                        maxResults=10, singleEvents=True,
-                                        orderBy='startTime').execute()
-        events = events_result.get('items', [])
-        if not events:
-            print('No upcoming events found.')
-        for event in events:
-            start = event['start'].get('dateTime', event['start'].get('date'))
-            print(start, event['summary'])
+    #     # Call the Calendar API
+    #     now = datetime.datetime.utcnow().isoformat()
+    #     events_result = service.events().list(calendarId='primary', timeMin=now,
+    #                                     maxResults=10, singleEvents=True,
+    #                                     orderBy='startTime').execute()
+    #     events = events_result.get('items', [])
+    #     if not events:
+    #         print('No upcoming events found.')
+    #     for event in events:
+    #         start = event['start'].get('dateTime', event['start'].get('date'))
+    #         print(start, event['summary'])
 
         #I'm not sure if it's okay for this to not return 
         # anything so I'm trying it
+flow = google_auth_oauthlib.flow.Flow.from_client_secrets_file('credentials.json', SCOPES)
+flow.redirect_uri = REDIRECT_URI
+
+def authorize(request):
+    # https://developers.google.com/identity/protocols/oauth2/web-server
+    flow = google_auth_oauthlib.flow.Flow.from_client_secrets_file('credentials.json', SCOPES)
+    flow.redirect_uri = REDIRECT_URI
+    authorization_url, state = flow.authorization_url(access_type = 'offline', include_granted_scopes='true')
+    return HttpResponseRedirect(authorization_url)
 
 
+# https://www.geeksforgeeks.org/python-django-google-authentication-and-fetching-mails-from-scratch/
+# https://stackoverflow.com/questions/48242761/how-do-i-use-oauth2-and-refresh-tokens-with-the-google-api
 def main(request):
     """Shows basic usage of the Google Calendar API.
     Prints the start and name of the next 10 events on the user's calendar.
     """
+
+    state = request.GET.get('state', None)
+    flow = google_auth_oauthlib.flow.Flow.from_client_secrets_file('credentials.json', scopes=None, state=state)
+    flow.redirect_uri = REDIRECT_URI
+    authorization_response = request.build_absolute_uri()
+    # print(authorization_response)
+    flow.fetch_token(authorization_response = authorization_response)
+    credentials = flow.credentials
+    service = build('calendar', 'v3', credentials=credentials)
     for e in Event.objects.all():
         if e.from_google is True:
             e.delete()
-    creds = None
+    # creds = None
     # The file token.pickle stores the user's access and refresh tokens, and is
     # created automatically when the authorization flow completes for the first
     # time.
-    if os.path.exists('token.pickle'):
-        with open('token.pickle', 'rb') as token:
-            creds = pickle.load(token)
+    # if os.path.exists('token.pickle'):
+        # with open('token.pickle', 'rb') as token:
+            # creds = pickle.load(token)
     # If there are no (valid) credentials available, let the user log in.
-    if not creds or not creds.valid:
-        if creds and creds.expired and creds.refresh_token:
-            creds.refresh(Request())
-        else:
-            # flow = InstalledAppFlow.from_client_secrets_file(
-            #     'credentials.json', SCOPES)
-            # creds = flow.run_local_server(port=0)
-            cred = os.path.join(settings.BASE_DIR, 'credentials.json')
-        # Save the credentials for the next run
-        with open('token.pickle', 'wb') as token:
-            pickle.dump(creds, token)
-
-    service = build('calendar', 'v3', credentials=creds)
+    # if not creds or not creds.valid:
+    #     if creds and creds.expired and creds.refresh_token:
+    #         creds.refresh(Request())
+    #     else:
+    #         # flow = InstalledAppFlow.from_client_secrets_file(
+    #         #     'credentials.json', SCOPES)
+    #         # creds = flow.run_local_server(port=0)
+    #         # creds = os.path.join(BASE_DIR, 'credentials.json')
+    #         # authorization_response = input('https://localhost:8000/')
+    #         # creds = flow.fetch_token(authorization_response = authorization_response)
+    #     # Save the credentials for the next run
+    #     with open('token.pickle', 'wb') as token:
+    #         pickle.dump(creds, token)
+    # print("ok")
+    # service = build('calendar', 'v3', credentials=creds)
 
     # Call the Calendar API
     now = datetime.utcnow().isoformat() + 'Z' # 'Z' indicates UTC time
@@ -109,15 +138,13 @@ def main(request):
 
     for event in events:
         start = event['start'].get('dateTime', event['start'].get('date'))
-        print(event['start'])
-        # parsedDate = dateutil.parser.parse(start)
-        # print(parsedDate)
-        # date = datetime.strptime(event['start'].get('dateTime'), "%Y-%m-%d-%z")
+     
+       
         end = event['end'].get('dateTime', event['end'].get('date'))
         endtime = iso8601.parse_date(end)
-        # print(date)
+        
         starttime = iso8601.parse_date(start)
-        # starttime = starttime.replace(tzinfo=None)
+       
         #https://medium.com/@pritishmishra_72667/converting-rfc3339-timestamp-to-utc-timestamp-in-python-8dfa485358ff
 
         startminute = str(starttime.minute).zfill(2)
@@ -128,38 +155,14 @@ def main(request):
         startmonth = starttime.strftime("%B")
         Event.objects.create(title = event['summary'], start_time = starttime, end_time = endtime, start_month_name = startmonth, from_google = True, startminute = startminute, endminute = endminute)
         eventlist.append(eventdetails)
-        print(start, event['summary'])
+     
         
     # return HttpResponseRedirect(reverse('index'))
     context = {'eventlist': eventlist, 'event': Event.objects.all()}
     template = 'calendar/index.html'
-    return render(request, template, context)
+    return HttpResponseRedirect(reverse('index2'))
 
 
-# def google_calendar_connection():
-#         """
-#         This method used for connect with google calendar api.
-#         """
-        
-#         flags = tools.argparser.parse_args([])
-#         FLOW = OAuth2WebServerFlow(
-#             client_id='xxxxxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxx.apps.googleusercontent.com',
-#             client_secret='xxxxxx',
-#             scope='https://www.googleapis.com/auth/calendar',
-#             user_agent='<application name>'
-#             )
-#         storage = Storage('calendar.dat')
-#         credentials = storage.get()
-#         if credentials is None or credentials.invalid == True:
-#             credentials = tools.run_flow(FLOW, storage, flags)
-        
-#         # Create an httplib2.Http object to handle our HTTP requests and authorize it
-#         # with our good Credentials.
-#         http = httplib2.Http()
-#         http = credentials.authorize(http)
-#         service = discovery.build('calendar', 'v3', http=http)
-        
-#         return service
 
 class CalendarView(generic.ListView):
     model = Event

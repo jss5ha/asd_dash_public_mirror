@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/3.0/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.0/ref/settings/
 """
-
+import sys
 import os
 import django_heroku
 import psycopg2
@@ -31,7 +31,8 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '3$*rou8bp)mk2z@e6&3$ehq&2lg0=o&!bj(@)d6*=kcy#ow@9j'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+# https://stackoverflow.com/questions/12027545/determine-if-django-is-running-under-the-development-server/12028260
+DEBUG = (sys.argv[1] == 'runserver' or sys.argv[1] == 'runsslserver')
 
 ALLOWED_HOSTS = ['*']
 
@@ -53,6 +54,7 @@ SOCIAL_AUTH_URL_NAMESPACE = 'social'
 INSTALLED_APPS = [
     # make sure we look at oscial django support when debugging bc some stuff doesnt
     # seem v compatible w/it
+    "sslserver",
     'nested_inline',
     'social_django',
     'grades.apps.GradesConfig',
@@ -97,7 +99,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'dash.wsgi.application'
 
-
+TESTING = len(sys.argv) > 1 and sys.argv[1] == 'test'
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 

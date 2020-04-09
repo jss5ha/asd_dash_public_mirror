@@ -50,7 +50,8 @@
         </div>
     </div>
 </div>
-<form action="{% url 'events' %}" method="post">
+
+<form action="{% url 'auth' %}" method="post">
     {% csrf_token %}
         <button class="btn btn-primary btn-sm" type="submit">View events</button>
    
