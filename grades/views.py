@@ -17,7 +17,7 @@ class IndexView(generic.ListView):
     template_name = 'grades/index.html'
     context_object_name = 'course_list'
 
-    def get_queryset(self):
+    def get_queryset(self): 
         return course.objects.filter(owner=self.request.user)
 
 
