@@ -26,6 +26,7 @@ from google.auth.transport.requests import Request
 #and I'm not sure it's right for this place
 SCOPES = ['https://www.googleapis.com/auth/calendar.readonly']
 # Create your views here.
+# https://stackoverflow.com/questions/48242761/how-do-i-use-oauth2-and-refresh-tokens-with-the-google-api
 if settings.DEBUG is True:
     REDIRECT_URI = "https://localhost:8000/calendar/events"
     os.environ['OAUTHLIB_INSECURE_TRANSPORT'] = '1'
@@ -77,6 +78,7 @@ flow = google_auth_oauthlib.flow.Flow.from_client_secrets_file('credentials.json
 flow.redirect_uri = REDIRECT_URI
 
 def authorize(request):
+    # https://developers.google.com/identity/protocols/oauth2/web-server
     flow = google_auth_oauthlib.flow.Flow.from_client_secrets_file('credentials.json', SCOPES)
     flow.redirect_uri = REDIRECT_URI
     authorization_url, state = flow.authorization_url(access_type = 'offline', include_granted_scopes='true')
