@@ -27,7 +27,7 @@ from google.auth.transport.requests import Request
 SCOPES = ['https://www.googleapis.com/auth/calendar.readonly']
 # Create your views here.
 # https://stackoverflow.com/questions/48242761/how-do-i-use-oauth2-and-refresh-tokens-with-the-google-api
-if settings.DEBUG is True:
+if settings.TEST_SERVER is True:
     REDIRECT_URI = "https://localhost:8000/calendar/events"
     os.environ['OAUTHLIB_INSECURE_TRANSPORT'] = '1'
 else:
