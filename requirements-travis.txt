@@ -29,3 +29,4 @@ psycopg2-binary==2.8.5
 google-api-python-client
 google-auth-oauthlib
 iso8601
+django-sslserver
