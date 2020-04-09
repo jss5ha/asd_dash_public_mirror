@@ -26,9 +26,10 @@ from google.auth.transport.requests import Request
 #and I'm not sure it's right for this place
 SCOPES = ['https://www.googleapis.com/auth/calendar.readonly']
 # Create your views here.
+
 class IndexView(generic.ListView):
     template_name = 'calendar/index.html'
-    # context = list_calendar()
+    context_object_name = 'event'
     def get_queryset(self):
         return Event.objects.all()
     # def list_calendar(self):
@@ -73,7 +74,7 @@ flow.redirect_uri = "http://localhost:8000/oauth2callback"
 
 def authorize(request):
     flow = google_auth_oauthlib.flow.Flow.from_client_secrets_file('credentials.json', SCOPES)
-    flow.redirect_uri = "https://localhost:8000/oauth2callback"
+    flow.redirect_uri = "https://localhost:8000/calendar/events"
     authorization_url, state = flow.authorization_url(access_type = 'offline', include_granted_scopes='true')
     return HttpResponseRedirect(authorization_url)
 
@@ -118,18 +119,20 @@ def authorize(request):
 #     creds.save()
 #     return temp
 
+
+# https://www.geeksforgeeks.org/python-django-google-authentication-and-fetching-mails-from-scratch/
 # https://stackoverflow.com/questions/48242761/how-do-i-use-oauth2-and-refresh-tokens-with-the-google-api
 def main(request):
     """Shows basic usage of the Google Calendar API.
     Prints the start and name of the next 10 events on the user's calendar.
     """
-    authorize(request)
+
     state = request.GET.get('state', None)
-    flow = google_auth_oauthlib.flow.Flow.from_client_secrets_file('credentials.json', scopes=SCOPES, state=state)
-    flow.redirect_uri = "https://localhost:8000/oauth2callback"
+    flow = google_auth_oauthlib.flow.Flow.from_client_secrets_file('credentials.json', scopes=None, state=state)
+    flow.redirect_uri = "https://localhost:8000/calendar/events"
     authorization_response = request.build_absolute_uri()
-    print(authorization_response)
-    flow.fetch_token(code = authorization_response)
+    # print(authorization_response)
+    flow.fetch_token(authorization_response = authorization_response)
     credentials = flow.credentials
     service = build('calendar', 'v3', credentials=credentials)
     for e in Event.objects.all():
@@ -192,33 +195,9 @@ def main(request):
     # return HttpResponseRedirect(reverse('index'))
     context = {'eventlist': eventlist, 'event': Event.objects.all()}
     template = 'calendar/index.html'
-    return render(request, template, context)
+    return HttpResponseRedirect(reverse('index2'))
 
 
-# def google_calendar_connection():
-#         """
-#         This method used for connect with google calendar api.
-#         """
-        
-#         flags = tools.argparser.parse_args([])
-#         FLOW = OAuth2WebServerFlow(
-#             client_id='xxxxxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxx.apps.googleusercontent.com',
-#             client_secret='xxxxxx',
-#             scope='https://www.googleapis.com/auth/calendar',
-#             user_agent='<application name>'
-#             )
-#         storage = Storage('calendar.dat')
-#         credentials = storage.get()
-#         if credentials is None or credentials.invalid == True:
-#             credentials = tools.run_flow(FLOW, storage, flags)
-        
-#         # Create an httplib2.Http object to handle our HTTP requests and authorize it
-#         # with our good Credentials.
-#         http = httplib2.Http()
-#         http = credentials.authorize(http)
-#         service = discovery.build('calendar', 'v3', http=http)
-        
-#         return service
 
 class CalendarView(generic.ListView):
     model = Event
