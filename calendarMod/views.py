@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.views import generic
 from django.http import HttpResponseRedirect
 from django.contrib.auth.models import User
@@ -14,7 +14,7 @@ from django.utils.safestring import mark_safe
 import os
 from .models import *
 from .utils import Calendar
-
+from .forms import *
 #from here
 import datetime
 from datetime import datetime, date
@@ -225,3 +225,15 @@ def get_date(req_day):
         return date(year, month, day=1)
     return datetime.today()
 
+def event(request, event_id=None):
+    instance = Event()
+    if event_id:
+        instance = get_object_or_404(Event, pk=event_id)
+    else:
+        instance = Event()
+    
+    form = EventForm(request.POST or None, instance=instance)
+    if request.POST and form.is_valid():
+        form.save()
+        return HttpResponseRedirect(reverse('calendar'))
+    return render(request, 'calendar/event.html', {'form': form})

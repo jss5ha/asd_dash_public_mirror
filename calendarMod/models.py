@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
-
+from django.urls import reverse
 # Create your models here.
 class calendar (models.Model):
     owner = models.OneToOneField(User, on_delete=models.CASCADE)
@@ -17,5 +17,9 @@ class Event(models.Model):
     from_google = models.BooleanField(default=False)
     startminute = models.TextField(default="")
     endminute = models.TextField(default = "")
+    @property
+    def get_html_url(self):
+        url = reverse('edit_event', args=(self.id,))
+        return f'<a href = "{url}"> {self.title} </a>'
     def __str__(self):
         return self.title
