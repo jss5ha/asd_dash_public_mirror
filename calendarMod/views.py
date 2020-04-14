@@ -16,7 +16,9 @@ from .models import *
 from .utils import Calendar
 
 #from here
-from datetime import datetime 
+import datetime
+from datetime import datetime, date
+from datetime import timedelta
 import pickle
 import os.path
 from googleapiclient.discovery import build
@@ -24,7 +26,7 @@ from google_auth_oauthlib.flow import InstalledAppFlow
 from google.auth.transport.requests import Request
 #to here, this came from https://developers.google.com/calendar/quickstart/python
 #and I'm not sure it's right for this place
-SCOPES = ['https://www.googleapis.com/auth/calendar.readonly']
+SCOPES = ['https://www.googleapis.com/auth/calendar']
 # Create your views here.
 # https://stackoverflow.com/questions/48242761/how-do-i-use-oauth2-and-refresh-tokens-with-the-google-api
 if settings.TEST_SERVER is True:
@@ -184,18 +186,42 @@ class CalendarView(generic.ListView):
         context = super().get_context_data(**kwargs)
 
         # use today's date for the calendar
-        d = get_date(self.request.GET.get('day', None))
+        d = get_date(self.request.GET.get('month'))
+        # print(self.request.GET.get('day'))
 
+        
         # Instantiate our calendar class with today's year and date
         cal = Calendar(d.year, d.month)
 
         # Call the formatmonth method, which returns our calendar as a table
         html_cal = cal.formatmonth(withyear=True)
         context['calendar'] = mark_safe(html_cal)
+        
+        context['prev_month'] = prev_month(d)
+        context['next_month'] = next_month(d)
         return context
+
+
+def prev_month(d):
+    first = d.replace(day=1)
+    prev_month = first - timedelta(days=1)
+    month = 'month=' + str(prev_month.year) + '-' + str(prev_month.month)
+    return month
+
+def next_month(d):
+    # days_in_month = calendar.monthrange(d.year, d.month)[1]
+    days_per_month = [0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
+    if(d.year % 4 == 0):
+        days_per_month[2] = 29
+    days_in_month = days_per_month[d.month]
+    last = d.replace(day=days_in_month)
+    next_month = last + timedelta(days=1)
+    month = 'month=' + str(next_month.year) + '-' + str(next_month.month)
+    return month
 
 def get_date(req_day):
     if req_day:
         year, month = (int(x) for x in req_day.split('-'))
         return date(year, month, day=1)
     return datetime.today()
+
