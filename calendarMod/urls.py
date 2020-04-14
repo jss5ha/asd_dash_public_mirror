@@ -8,4 +8,6 @@ urlpatterns = [
     path('auth', views.authorize, name = "auth"),
     path('new/', views.event, name = 'new_event'),
     path('edit/<int:event_id>', views.event, name = 'edit_event'),
+    path('delete/', views.deleteall, name = 'delete_all'),
+    path('delete/<int:event_id>', views.delete_event, name = 'delete_event'),
 ]

@@ -7,6 +7,7 @@ import google.oauth2.credentials
 import google_auth_oauthlib.flow
 import iso8601
 import pytz
+from django.utils.timezone import localtime
 # import dateutil.parser
 from django.http import HttpResponse
 from django.conf import settings
@@ -151,14 +152,21 @@ def main(request):
     eventlist = []
 
     for event in e:
+        # localtime(event.start_time)
         start = event['start'].get('dateTime', event['start'].get('date'))
      
        
         end = event['end'].get('dateTime', event['end'].get('date'))
+        # localtime(start)
+        # print(start)
+        # localtime(start)
         endtime = iso8601.parse_date(end)
         
         starttime = iso8601.parse_date(start)
-       
+        # print(starttime)
+        # localtime(endtime.start_time)
+        # localtime(starttime.start_time)
+        print(starttime)
         #https://medium.com/@pritishmishra_72667/converting-rfc3339-timestamp-to-utc-timestamp-in-python-8dfa485358ff
 
         startminute = str(starttime.minute).zfill(2)
@@ -224,7 +232,14 @@ def get_date(req_day):
         year, month = (int(x) for x in req_day.split('-'))
         return date(year, month, day=1)
     return datetime.today()
-
+def deleteall(request):
+    events = Event.objects.all()
+    events.delete()
+    return HttpResponseRedirect(reverse('index2'))
+def delete_event(request, event_id):
+    event = Event.objects.get(id = event_id)
+    event.delete()
+    return HttpResponseRedirect(reverse('index2'))
 def event(request, event_id=None):
     instance = Event()
     if event_id:
@@ -234,6 +249,26 @@ def event(request, event_id=None):
     
     form = EventForm(request.POST or None, instance=instance)
     if request.POST and form.is_valid():
-        form.save()
+        title = request.POST.get('title')
+        start = request.POST.get('start_time')
+        end = request.POST.get('end_time')
+        endtime = iso8601.parse_date(end)
+        # localtime(start.start_time)
+        starttime = iso8601.parse_date(start)
+        
+        startminute = str(starttime.minute).zfill(2)
+        endminute = str(endtime.minute).zfill(2)
+        
+        startmonth = starttime.strftime("%B")
+        if(event_id is None):
+            Event.objects.create(title = title, start_time = start, end_time = end, start_month_name = startmonth, from_google = False, startminute = startminute, endminute = endminute)
+        else:
+            instance.title = title
+            instance.start_time = start
+            instance.end_time = end
+            instance.start_month_name = startmonth
+            instance.startminute = startminute
+            instance.endminute = endminute
+            instance.save()
         return HttpResponseRedirect(reverse('calendar'))
     return render(request, 'calendar/event.html', {'form': form})
