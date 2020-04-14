@@ -129,14 +129,26 @@ def main(request):
 
     # Call the Calendar API
     now = datetime.utcnow().isoformat() + 'Z' # 'Z' indicates UTC time
-  
-    events_result = service.events().list(calendarId='primary', timeMin=now,
-                                        singleEvents=True,
-                                        orderBy='startTime').execute()
-    events = events_result.get('items', [])
+    calendar_list = service.calendarList().list(pageToken = None).execute()
+    e = []
+    for calendar_ID in calendar_list['items']:
+        
+        # if(calendar_ID.get('selected') is True or calendar_ID.get('accessRole') == 'reader'):
+        if(calendar_ID.get('selected') is True):
+            events_result = service.events().list(calendarId=calendar_ID['id'], timeMin=now,
+                                                singleEvents=True,
+                                                orderBy='startTime').execute()
+            # if(events_result is not None):
+            events = events_result.get('items',[])
+       
+
+            for event in events:
+                # print(event)
+                e.append(event)
+    # events = events_result.get('items', [])
     eventlist = []
 
-    for event in events:
+    for event in e:
         start = event['start'].get('dateTime', event['start'].get('date'))
      
        
@@ -163,7 +175,7 @@ def main(request):
     return HttpResponseRedirect(reverse('index2'))
 
 
-
+# tutorial followed by https://www.huiwenteo.com/normal/2018/07/29/django-calendar-ii.html
 class CalendarView(generic.ListView):
     model = Event
     template_name = 'calendar/calendar.html'

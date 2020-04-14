@@ -32,7 +32,7 @@
             {% endif %}
             <ul>
                 {% for i in event %}
-                <p> {{ i.start_month_name }} {{ i.start_time.day }}, {{ i.start_time.hour}}:{{i.startminute}} </p>
+                <p> {{ i.start_month_name }} {{ i.start_time.day }}, {{ i.start_time.hour}}:{{i.startminute}}, {{ i.start_time.year }} </p>
                     
                 {% endfor %}
             </ul>
@@ -43,7 +43,7 @@
             {% endif %}
             <ul>
                 {% for i in event %}
-                <p> {{ i.start_month_name }} {{ i.end_time.day }}, {{ i.end_time.hour}}:{{i.endminute}} </p>
+                <p> {{ i.start_month_name }} {{ i.end_time.day }}, {{ i.end_time.hour}}:{{i.endminute}}, {{ i.end_time.year }} </p>
                     
                 {% endfor %}
             </ul>
@@ -51,6 +51,7 @@
     </div>
 </div>
 
+Get upcoming events from your currently selected calendars on Google Calendar!
 <form action="{% url 'auth' %}" method="post">
     {% csrf_token %}
         <button class="btn btn-primary btn-sm" type="submit">View events</button>
