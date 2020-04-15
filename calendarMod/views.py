@@ -268,7 +268,7 @@ def event(request, event_id=None):
         
         startmonth = starttime.strftime("%B")
         if(event_id is None):
-            Event.objects.create(title = title, start_time = start, end_time = end, start_month_name = startmonth, from_google = False, startminute = startminute, endminute = endminute)
+            Event.objects.create(title = title, owner=request.user,start_time = start, end_time = end, start_month_name = startmonth, from_google = False, startminute = startminute, endminute = endminute)
         else:
             instance.title = title
             instance.start_time = start
