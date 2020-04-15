@@ -3,15 +3,16 @@ from calendar import HTMLCalendar
 from .models import Event
 # tutorial followed by https://www.huiwenteo.com/normal/2018/07/29/django-calendar-ii.html
 class Calendar(HTMLCalendar):
-	def __init__(self, year=None, month=None):
+	def __init__(self, year=None, month=None, user=None):
 		self.year = year
 		self.month = month
+		self.user=user
 		super(Calendar, self).__init__()
 
 	# formats a day as a td
 	# filter events by day
 	def formatday(self, day, events):
-		events_per_day = events.filter(start_time__day=day)
+		events_per_day = events.filter(start_time__day=day, owner=self.user)
 		d = ''
 		for event in events_per_day:
 			# d += f'<li> {event.title} </li>'
