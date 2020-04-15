@@ -8,12 +8,31 @@ body{
   font:normal 75% Arial, Helvetica, sans-serif;
 }
 
-canvas{
-  display:block;
-}  
-  #particles-js {
-    background: #ffffff;
-    height: 100%;
-    width: 100%;
-    z-index: -5;
-  }
+.LoginContainer{
+    width: 100%;  
+    min-height: 100vh;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    padding: 15px;
+    
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;;
+}
+
+.loginInner{
+    width: 680px;
+    background: #fff;
+    border-radius: 10px;
+    position: relative;
+    padding-left: 110px;
+    padding-right: 110px;
+    padding-top: 62px;
+    padding-bottom: 33px;
+}
