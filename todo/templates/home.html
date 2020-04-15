@@ -494,70 +494,46 @@
   </div>
 
         {% else %}
-        
-                <div class="limiter">
-                    <div class="container-login100">
-                        <div class="wrap-login100 p-l-110 p-r-110 p-t-62 p-b-33">
-                            <form class="login100-form validate-form flex-sb flex-w">
-                                
-                                <span class="login100-form-title p-b-53">
-                                    Welcome to Dash
-                                </span>
-                                
 
-                                <a href="{% url 'social:begin' 'google-oauth2' %}" class="btn-google m-b-20">
-                                    <img src= "https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/512px-Google_%22G%22_Logo.svg.png">
-                                    Continue with Google
-                                </a>
-                                
-                                <div class="p-t-31 p-b-9">
-                                    <span class="txt1">
-                                        Username
-                                    </span>
-                                </div>
-                                <div class="wrap-input100 validate-input" data-validate = "Username is required">
-                                    <input class="input100" type="text" name="username" >
-                                    <span class="focus-input100"></span>
-                                </div>
-                                
-                                <div class="p-t-13 p-b-9">
-                                    <span class="txt1">
-                                        Password
-                                    </span>
-            
-                                    <a href="#" class="txt2 bo1 m-l-5">
-                                        Forgot?
-                                    </a>
-                                </div>
-                                <div class="wrap-input100 validate-input" data-validate = "Password is required">
-                                    <input class="input100" type="password" name="pass" >
-                                    <span class="focus-input100"></span>
-                                </div>
-            
-                                <div class="container-login100-form-btn m-t-17">
-                                    <button class="login100-form-btn">
-                                        Sign In
-                                    </button>
-                                </div>
-            
-                                <div class="w-full text-center p-t-55">
-                                    <span class="txt2">
-                                        Not a member?
-                                    </span>
-            
-                                    <a href="#" class="txt2 bo1">
-                                        Sign up now
-                                    </a>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
+                <head>
+                  <!-- <link rel="stylesheet" media="screen" href="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/demo/css/style.css"> -->
+                  <link rel="stylesheet" href="static/css/login.css">
+                </head>
+          
+        <!-- particles.js container -->
+        <div id="particles-js">
+          <div class="limiter">
+            <div class="container-login100">
+                <div class="wrap-login100 p-l-110 p-r-110 p-t-62 p-b-33">
+                    <form class="login100-form validate-form flex-sb flex-w">
+                        <span class="login100-form-title p-b-53">
+                            Welcome to Dash
+                        </span>
+                        <a href="{% url 'social:begin' 'google-oauth2' %}" class="btn-google m-b-20">
+                            <img src= "https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/512px-Google_%22G%22_Logo.svg.png">
+                            Continue with Google
+                        </a>
+                    </form>
                 </div>
-                
+            </div>
+        </div>
+        
+        </div>
+        
+        <!-- scripts -->
+        <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/demo/js/app.js"></script>
+        
+        <!-- stats.js -->
+        <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/demo/js/lib/stats.js"></script>
+        <script>
+          particlesJS.load('particles-js', 'static/particles.json', function() {
+          console.log('callback - particles.js config loaded');
+        });
+          requestAnimationFrame(update);
+        </script>
             
-                <div id="dropDownSelect1"></div>
         {% endif %}
-    </div>
     
     </body>
     </html>
