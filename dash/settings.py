@@ -9,10 +9,11 @@ https://docs.djangoproject.com/en/3.0/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.0/ref/settings/
 """
-
+import sys
 import os
 import django_heroku
-
+import psycopg2
+import dj_database_url
 '''
 used this tutorial to help set up google oauth
 https://dev.to/codetricity/how-to-set-up-django-with-central-oauth2-login-1co
@@ -30,9 +31,10 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '3$*rou8bp)mk2z@e6&3$ehq&2lg0=o&!bj(@)d6*=kcy#ow@9j'
 
 # SECURITY WARNING: don't run with debug turned on in production!
+# https://stackoverflow.com/questions/12027545/determine-if-django-is-running-under-the-development-server/12028260
 DEBUG = True
-
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'asd-dash.herokuapp.com', 'ghost-dash.herokuapp.com']
+TEST_SERVER = (sys.argv[1] == 'runserver' or sys.argv[1] == 'runsslserver')
+ALLOWED_HOSTS = ['*']
 
 # stuff used for social auth
 AUTHENTICATION_BACKENDS = (
@@ -52,6 +54,8 @@ SOCIAL_AUTH_URL_NAMESPACE = 'social'
 INSTALLED_APPS = [
     # make sure we look at oscial django support when debugging bc some stuff doesnt
     # seem v compatible w/it
+    
+    "sslserver",
     'nested_inline',
     'social_django',
     'grades.apps.GradesConfig',
@@ -62,6 +66,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'todo.apps.TodoConfig',
+    'calendarMod.apps.CalendarmodConfig',
 ]
 
 MIDDLEWARE = [
@@ -95,17 +100,27 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'dash.wsgi.application'
 
-
+TESTING = len(sys.argv) > 1 and sys.argv[1] == 'test'
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'dash',
+        'USER': 'postgres',
+        'PASSWORD': 'meme',
+        'HOST': '127.0.0.1',
+        'PORT': '5432',
     }
 }
 
+db_config = dj_database_url.config(conn_max_age=600, ssl_require=True)
+if db_config:
+    DATABASES['default'] = db_config
+
+# Honor the 'X-Forwarded-Proto' header for request.is_secure()
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 # Password validation
 # https://docs.djangoproject.com/en/3.0/ref/settings/#auth-password-validators
@@ -137,7 +152,7 @@ USE_I18N = True
 
 USE_L10N = True
 
-USE_TZ = True
+USE_TZ = False
 
 
 # Static files (CSS, JavaScript, Images)
@@ -158,3 +173,4 @@ except ImportError:
     pass
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+

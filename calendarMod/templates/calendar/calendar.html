@@ -1,0 +1,14 @@
+<!-- cal/templates/cal/calendar.html -->
+<!-- tutorial followed by https://www.huiwenteo.com/normal/2018/07/29/django-calendar-ii.html -->
+{% extends 'calendar/base.html' %}
+
+{% block content %}
+{% csrf_token %}
+<div class="clearfix">
+    <a class="btn btn-info left" href="{% url 'calendar' %}?{{ prev_month }}"> Previous Month </a>
+    <a class="btn btn-info middle" href="{% url 'index2' %}"> List View</a>
+    <a class="btn btn-info right" href="{% url 'calendar' %}?{{ next_month }}"> Next Month </a>
+    
+</div>
+{{ calendar }}
+{% endblock %}
