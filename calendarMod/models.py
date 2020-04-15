@@ -9,6 +9,7 @@ class calendar (models.Model):
         return self.upcoming_events
 
 class Event(models.Model):
+    owner = models.ForeignKey(User, null=True, unique=False, on_delete=models.CASCADE)
     title = models.CharField(max_length=200)
     # description = models.TextField()
     start_time = models.DateTimeField()
