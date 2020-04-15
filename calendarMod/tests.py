@@ -5,8 +5,8 @@ from django.contrib.auth.models import User
 from .views import IndexView
 # Create your tests here.
 
-def create_event(title, start_time, end_time, start_month_name, from_google, startminute, endminute):
-    return Event.objects.create(title = title,  start_time = start_time, end_time = end_time, start_month_name = start_month_name, from_google = from_google, startminute = startminute, endminute = endminute)
+def create_event(title, start_time, user, end_time, start_month_name, from_google, startminute, endminute):
+    return Event.objects.create(title = title, owner = user, start_time = start_time, end_time = end_time, start_month_name = start_month_name, from_google = from_google, startminute = startminute, endminute = endminute)
 
 def create_event_with_user(title, description, start_time, end_time, start_month_name, from_google, startminute, endminute ,user):
     return Event.objects.create(title = title,  start_time = start_time, end_time = end_time, start_month_name = start_month_name, from_google = from_google, startminute = startminute, endminute = endminute, owner = user)
@@ -30,7 +30,7 @@ class CourseTests(TestCase):
         )
 
     def test_add_event(self):
-        E = create_event('date', "2000-01-01 01:00", "2000-01-01 02:00", "May", False, "20", "20")
+        E = create_event('date', "2000-01-01 01:00", self.user,"2000-01-01 02:00", "May", False, "20", "20")
         request = self.factory.get('/calendar')
         request.user = self.user
         view = IndexView()
@@ -43,7 +43,7 @@ class CourseTests(TestCase):
         
 
     def test_check_from_google(self):
-        E = create_event('date',"2000-01-01 01:00", "2000-01-01 02:00", "May", False, "20", "20")
+        E = create_event('date',"2000-01-01 01:00", self.user, "2000-01-01 02:00", "May", False, "20", "20")
         request = self.factory.get('/calendar')
         request.user = self.user
         view = IndexView()
@@ -52,7 +52,7 @@ class CourseTests(TestCase):
         self.assertFalse(E.from_google)
 
     def test_check_start_time(self):
-        E = create_event('date', "2000-01-01 01:00", "2000-01-01 02:00", "May", False, "20", "20")
+        E = create_event('date', "2000-01-01 01:00", self.user,"2000-01-01 02:00", "May", False, "20", "20")
         request = self.factory.get('/calendar')
         request.user = self.user
         view = IndexView()
@@ -61,7 +61,7 @@ class CourseTests(TestCase):
         self.assertTrue(E.start_time == "2000-01-01 01:00")
     
     def test_check_start_time2(self):
-        E = create_event('date', "2000-01-01 01:00", "2000-01-01 02:00", "May", False, "20", "20")
+        E = create_event('date', "2000-01-01 01:00", self.user, "2000-01-01 02:00", "May", False, "20", "20")
         request = self.factory.get('/calendar')
         request.user = self.user
         view = IndexView()
@@ -70,7 +70,7 @@ class CourseTests(TestCase):
         self.assertFalse(E.start_time == "2000-01-01 02:00")
 
     def test_check_end_time(self):
-        E = create_event('date', "2000-01-01 01:00", "2000-01-01 02:00", "May", False, "20", "20")
+        E = create_event('date', "2000-01-01 01:00", self.user,"2000-01-01 02:00", "May", False, "20", "20")
         request = self.factory.get('/calendar')
         request.user = self.user
         view = IndexView()
@@ -79,7 +79,7 @@ class CourseTests(TestCase):
         self.assertTrue(E.end_time == "2000-01-01 02:00")
     
     def test_check_month_name(self):
-        E = create_event('date', "2000-01-01 01:00", "2000-01-01 02:00", "May", False, "20", "20")
+        E = create_event('date', "2000-01-01 01:00", self.user,"2000-01-01 02:00", "May", False, "20", "20")
         request = self.factory.get('/calendar')
         request.user = self.user
         view = IndexView()
@@ -101,7 +101,7 @@ class CourseTests(TestCase):
         )
 
     def test_add_event_then_add_improper(self):
-        E = create_event('date', "2000-01-01 01:00", "2000-01-01 02:00", "May", False, "20", "20")
+        E = create_event('date', "2000-01-01 01:00", self.user,"2000-01-01 02:00", "May", False, "20", "20")
         with self.assertRaises(TypeError):
             create_event('')
         request = self.factory.get('/calendar')

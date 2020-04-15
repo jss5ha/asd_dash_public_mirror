@@ -17,8 +17,11 @@ class IndexView(generic.ListView):
     template_name = 'grades/index.html'
     context_object_name = 'course_list'
 
-    def get_queryset(self): 
-        return course.objects.filter(owner=self.request.user)
+    def get_queryset(self):
+        if not (self.request.user.is_anonymous):
+            return course.objects.filter(owner=self.request.user)
+        else:
+            return course.objects.none()
 
 
 def RemoveCourse(request, course_id):
