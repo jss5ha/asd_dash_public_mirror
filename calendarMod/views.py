@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.views import generic
 from django.http import HttpResponseRedirect
 from django.contrib.auth.models import User
@@ -7,6 +7,7 @@ import google.oauth2.credentials
 import google_auth_oauthlib.flow
 import iso8601
 import pytz
+from django.utils.timezone import localtime
 # import dateutil.parser
 from django.http import HttpResponse
 from django.conf import settings
@@ -14,10 +15,14 @@ from django.utils.safestring import mark_safe
 import os
 from .models import *
 from .utils import Calendar
+
+from .forms import *
 from django.contrib.auth.models import User
 
 #from here
-from datetime import datetime 
+import datetime
+from datetime import datetime, date
+from datetime import timedelta
 import pickle
 import os.path
 from googleapiclient.discovery import build
@@ -25,7 +30,7 @@ from google_auth_oauthlib.flow import InstalledAppFlow
 from google.auth.transport.requests import Request
 #to here, this came from https://developers.google.com/calendar/quickstart/python
 #and I'm not sure it's right for this place
-SCOPES = ['https://www.googleapis.com/auth/calendar.readonly']
+SCOPES = ['https://www.googleapis.com/auth/calendar']
 # Create your views here.
 # https://stackoverflow.com/questions/48242761/how-do-i-use-oauth2-and-refresh-tokens-with-the-google-api
 if settings.TEST_SERVER is True:
@@ -133,22 +138,41 @@ def main(request):
 
     # Call the Calendar API
     now = datetime.utcnow().isoformat() + 'Z' # 'Z' indicates UTC time
-  
-    events_result = service.events().list(calendarId='primary', timeMin=now,
-                                        singleEvents=True,
-                                        orderBy='startTime').execute()
-    events = events_result.get('items', [])
+    calendar_list = service.calendarList().list(pageToken = None).execute()
+    e = []
+    for calendar_ID in calendar_list['items']:
+        
+        # if(calendar_ID.get('selected') is True or calendar_ID.get('accessRole') == 'reader'):
+        if(calendar_ID.get('selected') is True):
+            events_result = service.events().list(calendarId=calendar_ID['id'], timeMin=now,
+                                                singleEvents=True,
+                                                orderBy='startTime').execute()
+            # if(events_result is not None):
+            events = events_result.get('items',[])
+       
+
+            for event in events:
+                # print(event)
+                e.append(event)
+    # events = events_result.get('items', [])
     eventlist = []
 
-    for event in events:
+    for event in e:
+        # localtime(event.start_time)
         start = event['start'].get('dateTime', event['start'].get('date'))
      
        
         end = event['end'].get('dateTime', event['end'].get('date'))
+        # localtime(start)
+        # print(start)
+        # localtime(start)
         endtime = iso8601.parse_date(end)
         
         starttime = iso8601.parse_date(start)
-       
+        # print(starttime)
+        # localtime(endtime.start_time)
+        # localtime(starttime.start_time)
+        print(starttime)
         #https://medium.com/@pritishmishra_72667/converting-rfc3339-timestamp-to-utc-timestamp-in-python-8dfa485358ff
 
         startminute = str(starttime.minute).zfill(2)
@@ -168,7 +192,7 @@ def main(request):
     return HttpResponseRedirect(reverse('index2'))
 
 
-
+# tutorial followed by https://www.huiwenteo.com/normal/2018/07/29/django-calendar-ii.html
 class CalendarView(generic.ListView):
     model = Event
     template_name = 'calendar/calendar.html'
@@ -177,18 +201,81 @@ class CalendarView(generic.ListView):
         context = super().get_context_data(**kwargs)
 
         # use today's date for the calendar
-        d = get_date(self.request.GET.get('day', None))
+        d = get_date(self.request.GET.get('month'))
+        # print(self.request.GET.get('day'))
 
+        
         # Instantiate our calendar class with today's year and date
         cal = Calendar(d.year, d.month)
 
         # Call the formatmonth method, which returns our calendar as a table
         html_cal = cal.formatmonth(withyear=True)
         context['calendar'] = mark_safe(html_cal)
+        
+        context['prev_month'] = prev_month(d)
+        context['next_month'] = next_month(d)
         return context
+
+
+def prev_month(d):
+    first = d.replace(day=1)
+    prev_month = first - timedelta(days=1)
+    month = 'month=' + str(prev_month.year) + '-' + str(prev_month.month)
+    return month
+
+def next_month(d):
+    # days_in_month = calendar.monthrange(d.year, d.month)[1]
+    days_per_month = [0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
+    if(d.year % 4 == 0):
+        days_per_month[2] = 29
+    days_in_month = days_per_month[d.month]
+    last = d.replace(day=days_in_month)
+    next_month = last + timedelta(days=1)
+    month = 'month=' + str(next_month.year) + '-' + str(next_month.month)
+    return month
 
 def get_date(req_day):
     if req_day:
         year, month = (int(x) for x in req_day.split('-'))
         return date(year, month, day=1)
     return datetime.today()
+def deleteall(request):
+    events = Event.objects.all()
+    events.delete()
+    return HttpResponseRedirect(reverse('index2'))
+def delete_event(request, event_id):
+    event = Event.objects.get(id = event_id)
+    event.delete()
+    return HttpResponseRedirect(reverse('index2'))
+def event(request, event_id=None):
+    instance = Event()
+    if event_id:
+        instance = get_object_or_404(Event, pk=event_id)
+    else:
+        instance = Event()
+    
+    form = EventForm(request.POST or None, instance=instance)
+    if request.POST and form.is_valid():
+        title = request.POST.get('title')
+        start = request.POST.get('start_time')
+        end = request.POST.get('end_time')
+        endtime = iso8601.parse_date(end)
+        # localtime(start.start_time)
+        starttime = iso8601.parse_date(start)
+        
+        startminute = str(starttime.minute).zfill(2)
+        endminute = str(endtime.minute).zfill(2)
+        
+        startmonth = starttime.strftime("%B")
+        if(event_id is None):
+            Event.objects.create(title = title, start_time = start, end_time = end, start_month_name = startmonth, from_google = False, startminute = startminute, endminute = endminute)
+        else:
+            instance.title = title
+            instance.start_time = start
+            instance.end_time = end
+            instance.start_month_name = startmonth
+            instance.startminute = startminute
+            instance.endminute = endminute
+            instance.save()
+        return HttpResponseRedirect(reverse('calendar'))
+    return render(request, 'calendar/event.html', {'form': form})
