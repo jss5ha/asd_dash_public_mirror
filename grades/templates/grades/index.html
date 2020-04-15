@@ -11,9 +11,9 @@
 </head>
 
 <body>
-    
+    {% if user.is_authenticated %}
     <div class="container">
-        {% if user.is_authenticated %}
+
         <h4 class="display-4" style="text-align: center; font-size: 45px;">Welcome {{ user }}</h4>
         <h4 class="display-4" style="text-align: left; font-size:30px; ">Here are your courses:</h4>
         {% if course_list %}
@@ -136,6 +136,9 @@
                 </div>
             </form>
         </ul>
+
+
+    </div>
         {% endif %}
         {% else %}
         <h1>Please log in to see your Personal Dashboard</h1>
@@ -143,8 +146,6 @@
             Login
         </a>
         {% endif %}
-
-    </div>
 </body>
 
 </html>

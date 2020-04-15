@@ -14,6 +14,7 @@ from django.utils.safestring import mark_safe
 import os
 from .models import *
 from .utils import Calendar
+from django.contrib.auth.models import User
 
 #from here
 from datetime import datetime 
@@ -36,7 +37,10 @@ class IndexView(generic.ListView):
     template_name = 'calendar/index.html'
     context_object_name = 'event'
     def get_queryset(self):
-        return Event.objects.all()
+        if not (self.request.user.is_anonymous):
+            return Event.objects.filter(owner=self.request.user)
+        else:
+            return Event.objects.none()
     # def list_calendar(self):
     #     #SOURCE: this code comes from https://developers.google.com/calendar/quickstart/python
     #     creds = None
@@ -104,7 +108,7 @@ def main(request):
         if e.from_google is True:
             e.delete()
     # creds = None
-    # The file token.pickle stores the user's access and refresh tokens, and is
+    # The file token.pickle stores the user's access and r   efresh tokens, and is
     # created automatically when the authorization flow completes for the first
     # time.
     # if os.path.exists('token.pickle'):
@@ -153,12 +157,13 @@ def main(request):
         eventdetails = []
         eventdetails.append(event['summary'])
         startmonth = starttime.strftime("%B")
-        Event.objects.create(title = event['summary'], start_time = starttime, end_time = endtime, start_month_name = startmonth, from_google = True, startminute = startminute, endminute = endminute)
+        Event.objects.create(title = event['summary'], owner= request.user, start_time = starttime, end_time = endtime, start_month_name = startmonth, from_google = True, startminute = startminute, endminute = endminute)
+        #add a user to the event here?
         eventlist.append(eventdetails)
      
         
     # return HttpResponseRedirect(reverse('index'))
-    context = {'eventlist': eventlist, 'event': Event.objects.all()}
+    context = {'eventlist': eventlist, 'event': Event.objects.filter(owner=request.user)}
     template = 'calendar/index.html'
     return HttpResponseRedirect(reverse('index2'))
 
