@@ -5,18 +5,19 @@
     <meta charset="UTF-8">
     <title>Dash</title>
 
-    <!-- Custom fonts for this template-->
-  <link href="static/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
-  <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
-
-  <!-- Custom styles for this template-->
-  <link href="static/css/sb-admin-2.min.css" rel="stylesheet">
-
 </head>
 <body>
+
+        {% if user.is_authenticated %}
+    <!-- Custom fonts for this template-->
+    <link href="static/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+  
+    <!-- Custom styles for this template-->
+    <link href="static/css/sb-admin-2.min.css" rel="stylesheet">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!--===============================================================================================-->	
-        <link rel="icon" type="image/png" href="static/images/icons/favicon.ico"/>
+        <link rel="icon" type="image/png" href="static/images/icons/dash_logo.png"/>
     <!--===============================================================================================-->
         <link rel="stylesheet" type="text/css" href="static/vendor/bootstrap/css/bootstrap.min.css">
     <!--===============================================================================================-->
@@ -71,12 +72,6 @@
   <!-- Page level custom scripts -->
   <script src="static/js/demo/chart-area-demo.js"></script>
   <script src="static/js/demo/chart-pie-demo.js"></script>
-
-    <div class="container pt-5">
-
-
-        {% if user.is_authenticated %}
-
         <!-- Page Wrapper -->
   <div id="wrapper">
 
@@ -246,36 +241,75 @@
     </div>
   </div>
         {% else %}
-        <head>
+        <link href="static/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+        <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+      
+        <!-- Custom styles for this template-->
+        <link href="static/css/sb-admin-2.min.css" rel="stylesheet">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!--===============================================================================================-->	
+            <link rel="icon" type="image/png" href="static/images/icons/dash_logo.png"/>
+        <!--===============================================================================================-->
+            <link rel="stylesheet" type="text/css" href="static/vendor/bootstrap/css/bootstrap.min.css">
+        <!--===============================================================================================-->
+            <link rel="stylesheet" type="text/css" href="static/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+        <!--===============================================================================================-->
+            <link rel="stylesheet" type="text/css" href="static/fonts/Linearicons-Free-v1.0.0/icon-font.min.css">
+        <!--===============================================================================================-->
+            <link rel="stylesheet" type="text/css" href="static/vendor/animate/animate.css">
+        <!--===============================================================================================-->	
+            <link rel="stylesheet" type="text/css" href="static/vendor/css-hamburgers/hamburgers.min.css">
+        <!--===============================================================================================-->
+            <link rel="stylesheet" type="text/css" href="static/vendor/animsition/css/animsition.min.css">
+        <!--===============================================================================================-->
+            <link rel="stylesheet" type="text/css" href="static/vendor/select2/select2.min.css">
+        <!--===============================================================================================-->	
+            <link rel="stylesheet" type="text/css" href="static/vendor/daterangepicker/daterangepicker.css">
+        <!--===============================================================================================-->
+            <link rel="stylesheet" type="text/css" href="static/css/util.css">
+            <link rel="stylesheet" type="text/css" href="static/css/main.css">
+        <!--===============================================================================================-->
+    
+        <!--===============================================================================================-->
+            <script src="static/vendor/jquery/jquery-3.2.1.min.js"></script>
+        <!--===============================================================================================-->
+            <script src="static/vendor/animsition/js/animsition.min.js"></script>
+        <!--===============================================================================================-->
+            <script src="static/vendor/bootstrap/js/popper.js"></script>
+            <script src="static/vendor/bootstrap/js/bootstrap.min.js"></script>
+        <!--===============================================================================================-->
+            <script src="static/vendor/select2/select2.min.js"></script>
+        <!--===============================================================================================-->
+            <script src="static/vendor/daterangepicker/moment.min.js"></script>
+            <script src="static/vendor/daterangepicker/daterangepicker.js"></script>
+        <!--===============================================================================================-->
+            <script src="static/vendor/countdowntime/countdowntime.js"></script>
+        <!--===============================================================================================-->
+            <script src="static/js/main.js"></script>
+        
+        <!-- Bootstrap core JavaScript-->
+      <script src="static/vendor/jquery/jquery.min.js"></script>
+      <script src="static/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    
+      <!-- Core plugin JavaScript-->
+      <script src="static/vendor/jquery-easing/jquery.easing.min.js"></script>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
         <!-- <link rel="stylesheet" media="screen" href="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/demo/css/style.css"> -->
-        <link rel="stylesheet" href="static/css/login.css">
-        </head>
-        <!-- particles.js container -->
-
-          <div class="LoginContainer">
+        <link rel="stylesheet" media="screen" href="static/css/login.css">
+        <div id="particles-js">
+          <div class="LoginContainer gradient-border"  id="box">
             <div class="loginInner">
                 <form class="login100-form validate-form flex-sb flex-w">
-                    <span class="login100-form-title p-b-53">
-                      <div id="particles-js"></div>
-
-                          Welcome to Dash
-                      </span>
+                    <span class="login100-form-title p-b-53">Welcome to Dash</span>
                       <a href="{% url 'social:begin' 'google-oauth2' %}" class="btn-google m-b-20">
-                          <img src= "https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/512px-Google_%22G%22_Logo.svg.png">
-                          Login with Google
-                      </a>
+                          <img src= "https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/512px-Google_%22G%22_Logo.svg.png">Login with Google</a>
                   </form>
               </div>
           </div>
-      
-
-
-
         </div>
+      </div>
 
-        
-        
-        
+
         
         <!-- scripts -->
         <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
