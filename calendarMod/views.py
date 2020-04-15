@@ -37,7 +37,10 @@ class IndexView(generic.ListView):
     template_name = 'calendar/index.html'
     context_object_name = 'event'
     def get_queryset(self):
-        return Event.objects.filter(owner=self.request.user)
+        if not (self.request.user.is_anonymous):
+            return Event.objects.filter(owner=self.request.user)
+        else:
+            return Event.objects.none()
     # def list_calendar(self):
     #     #SOURCE: this code comes from https://developers.google.com/calendar/quickstart/python
     #     creds = None
