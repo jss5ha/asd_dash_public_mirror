@@ -13,7 +13,7 @@
 <body>
     {% if user.is_authenticated %}
     <div class="container">
-
+        <a href = "{% url 'grades:gohome' %}">Back</a>
         <h4 class="display-4" style="text-align: center; font-size: 45px;">Welcome {{ user }}</h4>
         <h4 class="display-4" style="text-align: left; font-size:30px; ">Here are your courses:</h4>
         {% if course_list %}

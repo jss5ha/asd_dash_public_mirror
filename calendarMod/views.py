@@ -206,12 +206,12 @@ class CalendarView(generic.ListView):
 
         
         # Instantiate our calendar class with today's year and date
-        cal = Calendar(d.year, d.month)
+        cal = Calendar(d.year, d.month, user = self.request.user)
 
         # Call the formatmonth method, which returns our calendar as a table
         html_cal = cal.formatmonth(withyear=True)
+        #context['event'] = Event.objects.filter(owner=self.request.user)
         context['calendar'] = mark_safe(html_cal)
-        
         context['prev_month'] = prev_month(d)
         context['next_month'] = next_month(d)
         return context
@@ -240,7 +240,7 @@ def get_date(req_day):
         return date(year, month, day=1)
     return datetime.today()
 def deleteall(request):
-    events = Event.objects.all()
+    events = Event.objects.filter(owner = request.user)
     events.delete()
     return HttpResponseRedirect(reverse('index2'))
 def delete_event(request, event_id):
@@ -268,7 +268,7 @@ def event(request, event_id=None):
         
         startmonth = starttime.strftime("%B")
         if(event_id is None):
-            Event.objects.create(title = title, start_time = start, end_time = end, start_month_name = startmonth, from_google = False, startminute = startminute, endminute = endminute)
+            Event.objects.create(title = title, owner=request.user,start_time = start, end_time = end, start_month_name = startmonth, from_google = False, startminute = startminute, endminute = endminute)
         else:
             instance.title = title
             instance.start_time = start

@@ -201,7 +201,8 @@ def CalculatePointGrade(request, course_id):
         indCourse.point_improved = False
     indCourse.save()
     return
-
+def go_home(request):
+    return redirect('/')
 def NewCourse (request):
     # course1 = get_object_or_404(course)
     print(course.objects.all())
