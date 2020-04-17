@@ -32,7 +32,7 @@ SECRET_KEY = '3$*rou8bp)mk2z@e6&3$ehq&2lg0=o&!bj(@)d6*=kcy#ow@9j'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 # https://stackoverflow.com/questions/12027545/determine-if-django-is-running-under-the-development-server/12028260
-DEBUG = True
+DEBUG = False
 TEST_SERVER = (sys.argv[1] == 'runserver' or sys.argv[1] == 'runsslserver')
 ALLOWED_HOSTS = ['*']
 
@@ -81,8 +81,13 @@ MIDDLEWARE = [
 ]
 
 # https://help.heroku.com/J2R1S4T8/can-heroku-force-an-application-to-use-ssl-tls
+<<<<<<< HEAD
 # SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 # SECURE_SSL_REDIRECT = True
+=======
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https',)
+SECURE_SSL_REDIRECT = True
+>>>>>>> 4c4e23afffaaf8fdd3fb2415f1434e0deeed7ed3
 
 ROOT_URLCONF = 'dash.urls'
 
@@ -166,6 +171,9 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static")
 ]
+
+STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.StaticFilesStorage'
+
 # Activate Django-Heroku.
 # django_heroku.settings(locals())
 if 'HEROKU' in os.environ:
