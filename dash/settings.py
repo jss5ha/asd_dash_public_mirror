@@ -81,13 +81,8 @@ MIDDLEWARE = [
 ]
 
 # https://help.heroku.com/J2R1S4T8/can-heroku-force-an-application-to-use-ssl-tls
-<<<<<<< HEAD
 # SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 # SECURE_SSL_REDIRECT = True
-=======
-SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https',)
-SECURE_SSL_REDIRECT = True
->>>>>>> 4c4e23afffaaf8fdd3fb2415f1434e0deeed7ed3
 
 ROOT_URLCONF = 'dash.urls'
 
