@@ -54,4 +54,5 @@ def deleteAll(request):
     Todo.objects.all().delete()
 
     return redirect('index')
-
+def gohome3(request):
+    return redirect('/')

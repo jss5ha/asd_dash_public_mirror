@@ -279,3 +279,6 @@ def event(request, event_id=None):
             instance.save()
         return HttpResponseRedirect(reverse('calendar'))
     return render(request, 'calendar/event.html', {'form': form})
+
+def gohome2(request):
+    return redirect('/')
