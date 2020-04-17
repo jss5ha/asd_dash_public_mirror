@@ -81,7 +81,7 @@ MIDDLEWARE = [
 ]
 
 # https://help.heroku.com/J2R1S4T8/can-heroku-force-an-application-to-use-ssl-tls
-SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https',)
 SECURE_SSL_REDIRECT = True
 
 ROOT_URLCONF = 'dash.urls'
@@ -166,6 +166,9 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static")
 ]
+
+STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.StaticFilesStorage'
+
 # Activate Django-Heroku.
 # django_heroku.settings(locals())
 if 'HEROKU' in os.environ:
