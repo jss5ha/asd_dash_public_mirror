@@ -15,6 +15,8 @@ class course (models.Model):
     pointbased = models.BooleanField(blank=False, default=False)
     course_grade_points = models.DecimalField(max_digits=5, decimal_places=2, default = 0, validators=[MaxValueValidator(200), MinValueValidator(0)])
     point_improved = models.BooleanField(blank=True, default=False)
+    total_points = models.IntegerField(default = 0)
+    earned_points = models.IntegerField(default = 0)
     def __str__(self):
         return self.course_name
 

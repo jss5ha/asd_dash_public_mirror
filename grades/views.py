@@ -45,7 +45,7 @@ def RemovePointAssignment(request, course_id, assignment_id):
 
 def IndCourse(request, course_id):
 
-    try:
+
         indCourse = course.objects.filter(owner=request.user).get(id = course_id)
         course_id = indCourse.id
         points = PointCheckbox(request.POST or None)
@@ -68,9 +68,7 @@ def IndCourse(request, course_id):
 #         context = {'indCourse': indCourse}
 #         template = 'grades/indCourse.html'
 #         return render(request, template, context)
-    except:
-        # TODO: REPLACE THIS WITH AN ERROR
-        return HttpResponseRedirect(reverse('grades:error'))
+   
 
    
 def RemoveType(request, course_id, asstype_id):
@@ -183,6 +181,8 @@ def CalculatePointGrade(request, course_id):
     # if indCourse.pointbased is False:
     if indCourse.pointassignment_set.exists() is False:
         indCourse.course_grade_points = 0
+        indCourse.total_points = 0
+        indCourse.earned_points = 0
         indCourse.point_improved = False
         indCourse.save()
         return
@@ -191,8 +191,8 @@ def CalculatePointGrade(request, course_id):
         earned += i.points_achieved
         total += i.points_total
             
-       
-  
+    indCourse.earned_points = earned
+    indCourse.total_points = total
     x = float(earned/total) * 100
     indCourse.course_grade_points = x
     if x >= current:
