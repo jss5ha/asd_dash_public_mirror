@@ -1,3 +1,4 @@
+{% load static %}
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
     integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
@@ -8,144 +9,108 @@
 <html>
 
 <head>
+    <link rel="stylesheet" href="{% static 'grades/styles.css' %}" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 
-<body>
+<body class = "bruh">
     {% if user.is_authenticated %}
     <div class="container">
-        <a href = "{% url 'grades:gohome' %}">Back</a>
-        <h4 class="display-4" style="text-align: center; font-size: 45px;">Welcome {{ user }}</h4>
-        <h4 class="display-4" style="text-align: left; font-size:30px; ">Here are your courses:</h4>
-        {% if course_list %}
-        <ul>
-            {% for course in course_list %}
-            {% if course.pointbased is False %}
-            {% if course.improved is True %}
-            <div class="row" style="text-align: center;">
-                <div class="col-sm">
-                    <a href="{% url 'grades:toIndCourse' course.id %}">{{ course.course_name }}</a>
-                </div>
-                <div class="col-sm" style="float: left;color: #39d043;">
+        <div class="container">
+            <div class="container">
+                <a href="{% url 'grades:gohome' %}">Back</a>
+                <h4 class="display-4" style="text-align: center; font-size: 45px;">Welcome {{ user.get_short_name }}</h4>
+                <h4 class="display-4" style="text-align: left; font-size:30px; ">Here are your courses:</h4>
+                {% if course_list %}
+                <ul class="list-group">
+                    {% for course in course_list %}
                     
-                    <strong>{{ course.course_grade }}</strong><i class="fa fa-angle-up"
-                        style="color: #39D043; padding-left: 5px;"></i>
-                </div>
-                <div class ="col-sm">
-                    {% if course.pointbased is True %}
-                    Point-based
-                    {% else %}
-                    Percentage-based
-                    {% endif %}
-                </div>
-                <div class="col-sm">
-                    <a href="{% url 'grades:RemoveCourse' course_id=course.id %}"><i class="fa fa-trash"></i></a>
-                </div>
-            </div>
+                        <a href="{% url 'grades:toIndCourse' course.id %}"
+                            class="list-group-item list-group-item-action">
+                        <div class = "row" style = "text-align:center;">
+                            <div class="col-sm" style = "margin: auto;">
+                                {{ course.course_name }}
+                            </div>
+                            {% if course.pointbased is False %}
+                            {% if course.improved is True %}
+                            <div class="col-sm" style="float: left;color: #39d043; margin: auto;">
+                                <strong>{{ course.course_grade }}%</strong><i class="fa fa-angle-up"
+                                    style="color: #39D043; padding-left: 5px;"></i>
+                            </div>
+                            {% else %}
+                            <div class="col-sm" style="float: left;color: red; margin: auto;">
+                                <strong>{{ course.course_grade }}%</strong><i class="fa fa-angle-down"
+                                    style="color: red; padding-left: 5px;"></i>
+                            </div>
+                            {% endif %}
+                            {% endif %}
+                            {% if course.pointbased is True %}
+                            {% if course.point_improved is True %}
+                            <div class="col-sm" style="float: left;color: #39d043; margin: auto;">
+                                <strong>{{ course.course_grade_points }}%</strong><i class="fa fa-angle-up"
+                                    style="color: #39D043; padding-left: 5px;"></i>
+                            </div>
+                            {% else %}
+                            <div class="col-sm" style="float: left;color: red; margin: auto;">
+                                <strong>{{ course.course_grade_points }}%</strong><i class="fa fa-angle-down"
+                                    style="color: red; padding-left: 5px;"></i>
+                            </div>
+                            {% endif %}
+                            {% endif %}
 
-            {% endif %}
-            {% if course.improved is False %}
-            <div class="row" style="text-align: center;">
-                <div class="col-sm">
-                    <a href="{% url 'grades:toIndCourse' course.id %}">{{ course.course_name }}</a>
-                </div>
-                <div class="col-sm" style="float: left;color: red;">
-                    <strong>{{ course.course_grade }}</strong><i class="fa fa-angle-down"
-                        style="color: red; padding-left: 5px;"></i>
-                </div>
-                <div class ="col-sm">
-                    {% if course.pointbased is True %}
-                    Point-based
-                    {% else %}
-                    Percentage-based
-                    {% endif %}
-                </div>
-                <div class="col-sm">
-                    <a href="{% url 'grades:RemoveCourse' course_id=course.id %}"><i class="fa fa-trash"></i></a>
-                </div>
-            </div>
-            {%endif%}
-            {% else %}
-            {% if course.point_improved is True %}
-            <div class="row" style="text-align: center;">
-                <div class="col-sm">
-                    <a href="{% url 'grades:toIndCourse' course.id %}">{{ course.course_name }}</a>
-                </div>
-                <div class="col-sm" style="float: left;color: #39d043;">
-                    
-                    <strong>{{ course.course_grade_points }}</strong><i class="fa fa-angle-up"
-                        style="color: #39D043; padding-left: 5px;"></i>
-                </div>
-                <div class ="col-sm">
-                    {% if course.pointbased is True %}
-                    Point-based
-                    {% else %}
-                    Percentage-based
-                    {% endif %}
-                </div>
-                <div class="col-sm">
-                    <a href="{% url 'grades:RemoveCourse' course_id=course.id %}"><i class="fa fa-trash"></i></a>
-                </div>
-            </div>
+                            <div class="col-sm" style = "margin: auto;">
+                                {% if course.pointbased is True %}
+                                Point-based
+                                {% else %}
+                                Percentage-based
+                                {% endif %}
+                            </div>
+                            <div class = "col-sm">    
+                                <form action="{% url 'grades:RemoveCourse' course_id=course.id %}" method="post" style = "margin: auto; ">
+                                    {% csrf_token %}
+                                    <button class="btn btn-primary btn-sm" type="submit" style = "background-color: red; border-color: red;"><i class="fa fa-close"></i></button>
+                                    </form>
+                            </div>
+                        </div>   
+                    </a>
 
-            {% endif %}
-            {% if course.point_improved is False %}
-            <div class="row" style="text-align: center;">
-                <div class="col-sm">
-                    <a href="{% url 'grades:toIndCourse' course.id %}">{{ course.course_name }}</a>
-                </div>
-                <div class="col-sm" style="float: left;color: red;">
-                    <strong>{{ course.course_grade_points }}</strong><i class="fa fa-angle-down"
-                        style="color: red; padding-left: 5px;"></i>
-                </div>
-                <div class ="col-sm">
-                    {% if course.pointbased is True %}
-                    Point-based
-                    {% else %}
-                    Percentage-based
-                    {% endif %}
-                </div>
-                <div class="col-sm">
-                    <a href="{% url 'grades:RemoveCourse' course_id=course.id %}"><i class="fa fa-trash"></i></a>
-                </div>
+                    {% endfor %}
+                    <div style="position: relative; bottom: -50">
+                        <form action="{% url 'grades:NewCourse' %}" method="post">
+                            {% csrf_token %}
+                            <label for="name_input" style="font-size:x-large;">Create a New Course</label>
+                            <input class="form-control" type="text" name="course_name" id="name_input"
+                                placeholder="Course name" style="width: 150px;">
+                            <div style="padding-top: 10px;">
+                                <button class="btn btn-primary btn-sm" type="submit">Submit form</button>
+                            </div>
+                        </form>
+                    </div>
+                </ul>
+                {% else %}
+                <ul>
+                    <p>You have no courses.</p>
+                    <form action="{% url 'grades:NewCourse' %}" method="post">
+                        {% csrf_token %}
+                        <label for="name_input" style="font-size:x-large;">Create a New Course</label>
+                        <input class="form-control" type="text" name="course_name" id="name_input"
+                            placeholder="Course name" style="width: 150px;">
+                        <div style="padding-top: 10px;">
+                            <button class="btn btn-primary btn-sm" type="submit">Submit form</button>
+                        </div>
+                    </form>
+                </ul>
+
             </div>
-            {%endif%}
-            {%endif%}
-            {% endfor %}
-            <div style = "position: relative; bottom: -50">
-            <form action="{% url 'grades:NewCourse' %}" method="post">
-                {% csrf_token %}
-                <label for="name_input" style="font-size:x-large;">Create a New Course</label>
-                <input class="form-control" type="text" name="course_name" id="name_input" placeholder="Course name"
-                    style="width: 150px;">
-                <div style="padding-top: 10px;">
-                    <button class="btn btn-primary btn-sm" type="submit">Submit form</button>
-                </div>
-            </form>
         </div>
-        </ul>
-        {% else %}
-        <ul>
-            <p>You have no courses.</p>
-            <form action="{% url 'grades:NewCourse' %}" method="post">
-                {% csrf_token %}
-                <label for="name_input" style="font-size:x-large;">Create a New Course</label>
-                <input class="form-control" type="text" name="course_name" id="name_input" placeholder="Course name"
-                    style="width: 150px;">
-                <div style="padding-top: 10px;">
-                    <button class="btn btn-primary btn-sm" type="submit">Submit form</button>
-                </div>
-            </form>
-        </ul>
-
-
     </div>
-        {% endif %}
-        {% else %}
-        <h1>Please log in to see your Personal Dashboard</h1>
-        <a href="{% url 'social:begin' 'google-oauth2' %}">
-            Login
-        </a>
-        {% endif %}
+    {% endif %}
+    {% else %}
+    <h1>Please log in to see your Personal Dashboard</h1>
+    <a href="{% url 'social:begin' 'google-oauth2' %}">
+        Login
+    </a>
+    {% endif %}
 </body>
 
 </html>
