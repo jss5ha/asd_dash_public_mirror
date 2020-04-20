@@ -1,9 +1,13 @@
+@font-face {
+    font-family: Poppins-Regular;
+    src: url('../fonts/poppins/Poppins-Regular.ttf'); 
+  }
 body {
 	background: rgba(1, 61, 80, 0.8);
-	font-family: 'Times New Roman', Times, serif;
+	font-family: Poppins-Regular;
 }
 #wrapper {
-	margin-top: 10% !important;
+	/* margin-top: 10% !important; */
 }
 #content {
 	background: beige;
@@ -26,7 +30,8 @@ body {
 }
 footer {
 	margin-top: 20px;
-	color: white;
+    color: black;
+  
 }
 .list-group-item {
 	color: black;
