@@ -1,23 +1,28 @@
 {% load static %}
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+	integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+	integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+	crossorigin="anonymous"></script>
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-		<meta charset="utf-8">
-		<meta http-equiv="X-UA-Compatible" content="IE=edge">
-		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<title>To-do View  </title>
 
-		<link href="https://fonts.googleapis.com/css?family=Oswald" rel="stylesheet">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>To-do View </title>
 
-		<!-- Bootstrap CSS -->
-		<link rel="stylesheet" href="{% static 'todo/bs/css/flatly.min.css' %}" />
-		<link rel="stylesheet" href="{% static 'todo/styles.css' %}" />
-	</head>
-	<body>
-		<div class = "container">
-			<a href = "{% url 'gohome3' %}">Back</a>
+	<link href="https://fonts.googleapis.com/css?family=Oswald" rel="stylesheet">
+
+	<!-- Bootstrap CSS -->
+	<link rel="stylesheet" href="{% static 'todo/bs/css/flatly.min.css' %}" />
+	<link rel="stylesheet" href="{% static 'todo/styles.css' %}" />
+</head>
+
+<body>
+	<div class="container">
+		<a href="{% url 'gohome3' %}">Back</a>
 		<div class="container-fluid" id="wrapper">
 			{% if user.is_authenticated %}
 			<div class="page-content page-container" id="page-content">
@@ -28,90 +33,122 @@
 								<div class="card-body">
 									<h4 class="card-title">Todo list</h4>
 
-										<form action="{% url 'add' %}" method="POST" role="form">
-											{% csrf_token %}
-											<div class="form-group">
-												<div class="input-group">
-												  {{ form.text }}
+									<form action="{% url 'add' %}" method="POST" role="form">
+										{% csrf_token %}
+										<div class="form-group">
+											<div class="input-group">
+												<div style = "width: 100%; margin-bottom: 10px;">{{ form.text }}
+												</div>
 													{{form.date}}
+												<div style = "margin-left: 5px;"> </div>
 													{{form.group}}
-												  <span class="input-group-btn">
-													  <button type="submit" class="add btn btn-primary font-weight-bold todo-list-add-btn">ADD</button>
-													  <div class="btn-group">
-														<a href="{% url 'deletecomplete' %}"><button type="button" class="btn btn-warning">
-															<i class="glyphicon glyphicon-trash"></i> DELETE COMPLETED
-														</button></a>
-													</div>
-													<div class="btn-group">
-														<a href="{% url 'deleteall' %}"><button type="button" class="btn btn-warning">
-															<i class="glyphicon glyphicon-trash"></i> DELETE ALL
-														</button></a>
-												  </span>
+												
+												<div style = "margin: auto; margin-left: 50px;">
+													<span class="input-group-btn">
+														<button type="submit"
+															class="add btn btn-primary font-weight-bold todo-list-add-btn">ADD</button>
+														<div class="btn-group">
+															<a href="{% url 'deletecomplete' %}"><button type="button"
+																	class="btn btn-warning">
+																	<i class="glyphicon glyphicon-trash"></i> DELETE
+																	COMPLETED
+																</button></a>
+														</div>
+														<div class="btn-group">
+															<a href="{% url 'deleteall' %}"><button type="button"
+																	class="btn btn-warning">
+																	<i class="glyphicon glyphicon-trash"></i> DELETE ALL
+																</button></a>
+													</span>
 												</div>
 											</div>
-										</form>
+										</div>
+									</form>
 
-									<div class="card-group">
+									<div class="card-group" style = "margin-top: 20px;">
 										<div class="card text-center" style="width: 18rem;">
 											<div class="card-header">
 												School
-											  </div>
+											</div>
 											{% for todo in todo_list %}
-												{% if todo.group == "school" %}
-													{% if todo.complete %}
-													<a href="{% url 'deselect' todo.id %}"><li class="list-group-item todo-completed form-check list-group t20">{{todo.due_date}} -- {{ todo.text }} -- {{todo.group}}Done</li>
-													{% else %}
-													<a href="{% url 'complete' todo.id %}"><li class="list-group-item form-check list-group t20">{{todo.due_date}} -- {{ todo.text }} -- {{todo.group}}</li></a>
-													{% endif %}
-												{% endif %}
+											{% if todo.group == "school" %}
+											{% if todo.complete %}
+											<a href="{% url 'deselect' todo.id %}">
+												<li class="list-group-item todo-completed">{{todo.due_date}} --
+													{{ todo.text }} -- {{todo.group}}</li>
+											</a>
+											{% else %}
+											<a href="{% url 'complete' todo.id %}">
+												<li class="list-group-item">{{todo.due_date}} -- {{ todo.text }} --
+													{{todo.group}}</li>
+											</a>
+											{% endif %}
+											{% endif %}
 											{% endfor %}
 										</div>
 
 										<div class="card text-center" style="width: 18rem;">
 											<div class="card-header">
 												Leisure
-											  </div>
+											</div>
 											{% for todo in todo_list %}
-												{% if todo.group == "leisure" %}
-													{% if todo.complete %}
-													<a href="{% url 'deselect' todo.id %}"><li class="list-group-item todo-completed form-check list-group t20">{{todo.due_date}} -- {{ todo.text }} -- {{todo.group}}Done</li>
-													{% else %}
-													<a href="{% url 'complete' todo.id %}"><li class="list-group-item form-check list-group t20">{{todo.due_date}} -- {{ todo.text }} -- {{todo.group}}</li></a>
-													{% endif %}
-												{% endif %}
+											{% if todo.group == "leisure" %}
+											{% if todo.complete %}
+											<a href="{% url 'deselect' todo.id %}">
+												<li class="list-group-item todo-completed">{{todo.due_date}} --
+													{{ todo.text }} -- {{todo.group}}</li>
+											</a>
+											{% else %}
+											<a href="{% url 'complete' todo.id %}">
+												<li class="list-group-item">{{todo.due_date}} -- {{ todo.text }} --
+													{{todo.group}}</li>
+											</a>
+											{% endif %}
+											{% endif %}
 											{% endfor %}
 										</div>
 
 										<div class="card text-center" style="width: 18rem;">
 											<div class="card-header">
 												Financial
-											  </div>
+											</div>
 											{% for todo in todo_list %}
-												{% if todo.group == "financial" %}
-													{% if todo.complete %}
-													<a href="{% url 'deselect' todo.id %}"><li class="list-group-item todo-completed form-check list-group t20">{{todo.due_date}} -- {{ todo.text }} -- {{todo.group}}Done</li>
-													{% else %}
-													<a href="{% url 'complete' todo.id %}"><li class="list-group-item form-check list-group t20">{{todo.due_date}} -- {{ todo.text }} -- {{todo.group}}</li></a>
-													{% endif %}
-												{% endif %}
+											{% if todo.group == "financial" %}
+											{% if todo.complete %}
+											<a href="{% url 'deselect' todo.id %}">
+												<li class="list-group-item todo-completed">{{todo.due_date}} --
+													{{ todo.text }} -- {{todo.group}}Done</li>
+											</a>
+											{% else %}
+											<a href="{% url 'complete' todo.id %}">
+												<li class="list-group-item">{{todo.due_date}} -- {{ todo.text }} --
+													{{todo.group}}</li>
+											</a>
+											{% endif %}
+											{% endif %}
 											{% endfor %}
 										</div>
 
 										<div class="card text-center" style="width: 18rem;">
 											<div class="card-header">
 												Miscellaneous
-											  </div>
-												{% for todo in todo_list %}
-													{% if todo.group == "misc" %}
-														{% if todo.complete %}
-														<a href="{% url 'deselect' todo.id %}"><li class="list-group-item todo-completed form-check list-group t20">{{todo.due_date}} -- {{ todo.text }} -- {{todo.group}}Done</li>
-														{% else %}
-														<a href="{% url 'complete' todo.id %}"><li class="list-group-item form-check list-group t20">{{todo.due_date}} -- {{ todo.text }} -- {{todo.group}}</li></a>
-														{% endif %}
-													{% endif %}
-												{% endfor %}
 											</div>
-									  </div>
+											{% for todo in todo_list %}
+											{% if todo.group == "misc" %}
+											{% if todo.complete %}
+											<a href="{% url 'deselect' todo.id %}">
+												<li class="list-group-item todo-completed">{{todo.due_date}} --
+													{{ todo.text }} -- {{todo.group}}Done</li>
+											</a>
+											{% else %}
+											<a href="{% url 'complete' todo.id %}">
+												<li class="list-group-item">{{todo.due_date}} -- {{ todo.text }} --
+													{{todo.group}}</li>
+											</a>
+											{% endif %}
+											{% endif %}
+											{% endfor %}
+										</div>
 									</div>
 								</div>
 							</div>
@@ -119,25 +156,27 @@
 					</div>
 				</div>
 			</div>
-			</div>
-
-
-
-				{% else %}
-        		<h1>Please log in to see your Personal Dashboard</h1>
-        		<a href="{% url 'social:begin' 'google-oauth2' %}">
-                Login
-                </a>
-				{%endif%}
-
-			<footer>
-				<div class="row pad">
-					<div class="col-lg-12 text-center">
-						Copyright &copy; 2020 <strong>DASH</strong>
-					</div>
-				</div>
-			</div>
-			</footer>
 		</div>
-	</body>
+	</div>
+
+
+
+	{% else %}
+	<h1>Please log in to see your Personal Dashboard</h1>
+	<a href="{% url 'social:begin' 'google-oauth2' %}">
+		Login
+	</a>
+	{%endif%}
+
+	<footer>
+		<div class="row pad">
+			<div class="col-lg-12 text-center">
+				Copyright &copy; Dash 2020
+			</div>
+		</div>
+
+	</footer>
+
+</body>
+
 </html>

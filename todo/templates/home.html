@@ -1,62 +1,66 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <title>Dash</title>
+  <meta charset="UTF-8">
+  <title>Dash</title>
 
 </head>
+
 <body>
 
-        {% if user.is_authenticated %}
-    <!-- Custom fonts for this template-->
-    <link href="static/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
-    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
-  
-    <!-- Custom styles for this template-->
-    <link href="static/css/sb-admin-2.min.css" rel="stylesheet">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!--===============================================================================================-->	
-        <link rel="icon" type="image/png" href="static/images/icons/dash_logo.png"/>
-    <!--===============================================================================================-->
-        <link rel="stylesheet" type="text/css" href="static/vendor/bootstrap/css/bootstrap.min.css">
-    <!--===============================================================================================-->
-        <link rel="stylesheet" type="text/css" href="static/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
-    <!--===============================================================================================-->
-        <link rel="stylesheet" type="text/css" href="static/fonts/Linearicons-Free-v1.0.0/icon-font.min.css">
-    <!--===============================================================================================-->
-        <link rel="stylesheet" type="text/css" href="static/vendor/animate/animate.css">
-    <!--===============================================================================================-->	
-        <link rel="stylesheet" type="text/css" href="static/vendor/css-hamburgers/hamburgers.min.css">
-    <!--===============================================================================================-->
-        <link rel="stylesheet" type="text/css" href="static/vendor/animsition/css/animsition.min.css">
-    <!--===============================================================================================-->
-        <link rel="stylesheet" type="text/css" href="static/vendor/select2/select2.min.css">
-    <!--===============================================================================================-->	
-        <link rel="stylesheet" type="text/css" href="static/vendor/daterangepicker/daterangepicker.css">
-    <!--===============================================================================================-->
-        <link rel="stylesheet" type="text/css" href="static/css/util.css">
-        <link rel="stylesheet" type="text/css" href="static/css/main.css">
-    <!--===============================================================================================-->
+  {% if user.is_authenticated %}
+  <!-- Custom fonts for this template-->
+  <link href="static/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+  <link
+    href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+    rel="stylesheet">
 
-    <!--===============================================================================================-->
-        <script src="static/vendor/jquery/jquery-3.2.1.min.js"></script>
-    <!--===============================================================================================-->
-        <script src="static/vendor/animsition/js/animsition.min.js"></script>
-    <!--===============================================================================================-->
-        <script src="static/vendor/bootstrap/js/popper.js"></script>
-        <script src="static/vendor/bootstrap/js/bootstrap.min.js"></script>
-    <!--===============================================================================================-->
-        <script src="static/vendor/select2/select2.min.js"></script>
-    <!--===============================================================================================-->
-        <script src="static/vendor/daterangepicker/moment.min.js"></script>
-        <script src="static/vendor/daterangepicker/daterangepicker.js"></script>
-    <!--===============================================================================================-->
-        <script src="static/vendor/countdowntime/countdowntime.js"></script>
-    <!--===============================================================================================-->
-        <script src="static/js/main.js"></script>
-    
-    <!-- Bootstrap core JavaScript-->
+  <!-- Custom styles for this template-->
+  <link href="static/css/sb-admin-2.min.css" rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!--===============================================================================================-->
+  <link rel="icon" type="image/png" href="static/images/icons/dash_logo.png" />
+  <!--===============================================================================================-->
+  <link rel="stylesheet" type="text/css" href="static/vendor/bootstrap/css/bootstrap.min.css">
+  <!--===============================================================================================-->
+  <link rel="stylesheet" type="text/css" href="static/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+  <!--===============================================================================================-->
+  <link rel="stylesheet" type="text/css" href="static/fonts/Linearicons-Free-v1.0.0/icon-font.min.css">
+  <!--===============================================================================================-->
+  <link rel="stylesheet" type="text/css" href="static/vendor/animate/animate.css">
+  <!--===============================================================================================-->
+  <link rel="stylesheet" type="text/css" href="static/vendor/css-hamburgers/hamburgers.min.css">
+  <!--===============================================================================================-->
+  <link rel="stylesheet" type="text/css" href="static/vendor/animsition/css/animsition.min.css">
+  <!--===============================================================================================-->
+  <link rel="stylesheet" type="text/css" href="static/vendor/select2/select2.min.css">
+  <!--===============================================================================================-->
+  <link rel="stylesheet" type="text/css" href="static/vendor/daterangepicker/daterangepicker.css">
+  <!--===============================================================================================-->
+  <link rel="stylesheet" type="text/css" href="static/css/util.css">
+  <link rel="stylesheet" type="text/css" href="static/css/main.css">
+  <!--===============================================================================================-->
+
+  <!--===============================================================================================-->
+  <script src="static/vendor/jquery/jquery-3.2.1.min.js"></script>
+  <!--===============================================================================================-->
+  <script src="static/vendor/animsition/js/animsition.min.js"></script>
+  <!--===============================================================================================-->
+  <script src="static/vendor/bootstrap/js/popper.js"></script>
+  <script src="static/vendor/bootstrap/js/bootstrap.min.js"></script>
+  <!--===============================================================================================-->
+  <script src="static/vendor/select2/select2.min.js"></script>
+  <!--===============================================================================================-->
+  <script src="static/vendor/daterangepicker/moment.min.js"></script>
+  <script src="static/vendor/daterangepicker/daterangepicker.js"></script>
+  <!--===============================================================================================-->
+  <script src="static/vendor/countdowntime/countdowntime.js"></script>
+  <!--===============================================================================================-->
+  <script src="static/js/main.js"></script>
+
+  <!-- Bootstrap core JavaScript-->
   <script src="static/vendor/jquery/jquery.min.js"></script>
   <script src="static/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
@@ -72,62 +76,64 @@
   <!-- Page level custom scripts -->
   <script src="static/js/demo/chart-area-demo.js"></script>
   <script src="static/js/demo/chart-pie-demo.js"></script>
-        <!-- Page Wrapper -->
+  <!-- Page Wrapper -->
   <div id="wrapper">
-    
+
     <!-- Sidebar -->
     <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+
 
       <!-- Divider -->
       <hr class="sidebar-divider">
 
-    <!-- Content Wrapper -->
-    <div id="content-wrapper" class="d-flex flex-column">
+      <!-- Content Wrapper -->
+      <div id="content-wrapper" class="d-flex flex-column">
 
-      <!-- Main Content -->
-      <div id="content">
+        <!-- Main Content -->
+        <div id="content">
 
-        <!-- Topbar -->
-        <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+          <!-- Topbar -->
+          <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
 
-          <!-- Sidebar Toggle (Topbar) -->
-          <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
-            <i class="fa fa-bars"></i>
-          </button>
+            <!-- Sidebar Toggle (Topbar) -->
+            <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
+              <i class="fa fa-bars"></i>
+            </button>
 
-          <!-- Topbar Search -->
-          <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
-            <h1 class="h3 mb-0 text-gray-800">{% now "F jS Y H:i" %}</h1>
-          </form>
+            <!-- Topbar Search -->
+            <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+              <h1 class="h3 mb-0 text-gray-800">{% now "F jS Y H:i" %}</h1>
+            </form>
 
-          <!-- Topbar Navbar -->
-          <ul class="navbar-nav ml-auto">
+            <!-- Topbar Navbar -->
+            <ul class="navbar-nav ml-auto">
 
 
-            <!-- Nav Item - User Information -->
-            <li class="nav-item dropdown no-arrow">
-              <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <span class="mr-2 d-none d-lg-inline text-gray-600">{{user.username}}</span>
-              </a>
-              <!-- Dropdown - User Information -->
-              <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
-                
-                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
-                  <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-                  Logout
+              <!-- Nav Item - User Information -->
+              <li class="nav-item dropdown no-arrow">
+                <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown"
+                  aria-haspopup="true" aria-expanded="false">
+                  <span class="mr-2 d-none d-lg-inline text-gray-600">{{user.get_short_name}}</span>
                 </a>
-              </div>
-            </li>
+                <!-- Dropdown - User Information -->
+                <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
 
-          </ul>
+                  <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
+                    <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                    Logout
+                  </a>
+                </div>
+              </li>
 
-        </nav>
-        <!-- End of Topbar -->
+            </ul>
 
-        <!-- Begin Page Content -->
-        <div class="container-fluid">
+          </nav>
+          <!-- End of Topbar -->
 
-          <div class="row">
+          <!-- Begin Page Content -->
+          <div class="container-fluid">
+
+            <div class="row">
               <!-- todo  -->
               <div class="card shadow mb-4">
                 <div class="card-header py-3">
@@ -136,9 +142,9 @@
                 <div class="card-body">
                   <div class="card text-center" style="width: 18rem;">
                     <a href="todo/"> Todo list link</a>
+                  </div>
                 </div>
               </div>
-            </div>
 
               <!-- grades Card -->
               <div class="card shadow mb-4">
@@ -147,30 +153,35 @@
                 </div>
                 <div class="card-body">
                   <div class="card" style="width: 18rem;">
-                  <h4 class="small font-weight-bold">CompArch <span class="float-right">80%</span></h4>
-                  <div class="progress mb-4">
-                    <div class="progress-bar bg-primary" role="progressbar" style="width: 80%" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"></div>
-                  </div>
-                  <h4 class="small font-weight-bold">Algo <span class="float-right">70%</span></h4>
-                  <div class="progress mb-4">
-                    <div class="progress-bar bg-warning" role="progressbar" style="width: 70%" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100"></div>
-                  </div>
-                  <h4 class="small font-weight-bold">Database <span class="float-right">60%</span></h4>
-                  <div class="progress mb-4">
-                    <div class="progress-bar bg-danger" role="progressbar" style="width: 60%" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"></div>
-                  </div>
-                  <h4 class="small font-weight-bold">STS 4500 <span class="float-right">90%</span></h4>
-                  <div class="progress mb-4">
-                    <div class="progress-bar bg-success" role="progressbar" style="width: 90%" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"></div>
-                  </div>
-                  <h4 class="small font-weight-bold">Linear Algebra <span class="float-right">80%</span></h4>
-                  <div class="progress">
-                    <div class="progress-bar bg-primary" role="progressbar" style="width: 80%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+                    <h4 class="small font-weight-bold">CompArch <span class="float-right">80%</span></h4>
+                    <div class="progress mb-4">
+                      <div class="progress-bar bg-primary" role="progressbar" style="width: 80%" aria-valuenow="80"
+                        aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
+                    <h4 class="small font-weight-bold">Algo <span class="float-right">70%</span></h4>
+                    <div class="progress mb-4">
+                      <div class="progress-bar bg-warning" role="progressbar" style="width: 70%" aria-valuenow="70"
+                        aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
+                    <h4 class="small font-weight-bold">Database <span class="float-right">60%</span></h4>
+                    <div class="progress mb-4">
+                      <div class="progress-bar bg-danger" role="progressbar" style="width: 60%" aria-valuenow="60"
+                        aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
+                    <h4 class="small font-weight-bold">STS 4500 <span class="float-right">90%</span></h4>
+                    <div class="progress mb-4">
+                      <div class="progress-bar bg-success" role="progressbar" style="width: 90%" aria-valuenow="80"
+                        aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
+                    <h4 class="small font-weight-bold">Linear Algebra <span class="float-right">80%</span></h4>
+                    <div class="progress">
+                      <div class="progress-bar bg-primary" role="progressbar" style="width: 80%" aria-valuenow="100"
+                        aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
                   </div>
                 </div>
               </div>
-              </div>
-              
+
 
               <div class="row">
                 <!-- calendar  -->
@@ -181,150 +192,157 @@
                   <div class="card-body">
                     <div class="card text-center" style="width: 18rem;">
                       <a href="calendar/"> calendar link</a>
+                    </div>
                   </div>
                 </div>
-              </div>
 
 
 
-              <div class="row">
-                <!-- grades  -->
-                <div class="card shadow mb-4">
-                  <div class="card-header py-3">
-                    <h6 class="m-0 font-weight-bold text-primary">Grades</h6>
+                <div class="row">
+                  <!-- grades  -->
+                  <div class="card shadow mb-4">
+                    <div class="card-header py-3">
+                      <h6 class="m-0 font-weight-bold text-primary">Grades</h6>
+                    </div>
+                    <div class="card-body">
+                      <div class="card text-center" style="width: 18rem;">
+                        <a href="grades/"> Grades link</a>
+                      </div>
+                    </div>
                   </div>
-                  <div class="card-body">
-                    <div class="card text-center" style="width: 18rem;">
-                      <a href="grades/"> Grades link</a>
-                  </div>
+
                 </div>
               </div>
+            </div>
+          </div>
 
+          <!-- Footer -->
+          <footer class="sticky-footer bg-white">
+            <div class="container my-auto">
+              <div class="copyright text-center my-auto">
+                <span>Copyright &copy; Dash 2020</span>
+              </div>
+            </div>
+          </footer>
+          <!-- End of Footer -->
+
+        </div>
+        <!-- End of Content Wrapper -->
+
+      </div>
+      <!-- End of Page Wrapper -->
+
+
+      <!-- Logout Modal-->
+      <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+              <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">×</span>
+              </button>
+            </div>
+            <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+            <div class="modal-footer">
+              <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+              <a class="btn btn-primary" href="{% url 'logout' %}">Logout</a>
             </div>
           </div>
         </div>
       </div>
+      {% else %}
+      <link href="static/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+      <link
+        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+        rel="stylesheet">
 
-      <!-- Footer -->
-      <footer class="sticky-footer bg-white">
-        <div class="container my-auto">
-          <div class="copyright text-center my-auto">
-            <span>Copyright &copy; Dash 2020</span>
-          </div>
-        </div>
-      </footer>
-      <!-- End of Footer -->
+      <!-- Custom styles for this template-->
+      <link href="static/css/sb-admin-2.min.css" rel="stylesheet">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <!--===============================================================================================-->
+      <link rel="icon" type="image/png" href="static/images/icons/dash_logo.png" />
+      <!--===============================================================================================-->
+      <link rel="stylesheet" type="text/css" href="static/vendor/bootstrap/css/bootstrap.min.css">
+      <!--===============================================================================================-->
+      <link rel="stylesheet" type="text/css" href="static/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+      <!--===============================================================================================-->
+      <link rel="stylesheet" type="text/css" href="static/fonts/Linearicons-Free-v1.0.0/icon-font.min.css">
+      <!--===============================================================================================-->
+      <link rel="stylesheet" type="text/css" href="static/vendor/animate/animate.css">
+      <!--===============================================================================================-->
+      <link rel="stylesheet" type="text/css" href="static/vendor/css-hamburgers/hamburgers.min.css">
+      <!--===============================================================================================-->
+      <link rel="stylesheet" type="text/css" href="static/vendor/animsition/css/animsition.min.css">
+      <!--===============================================================================================-->
+      <link rel="stylesheet" type="text/css" href="static/vendor/select2/select2.min.css">
+      <!--===============================================================================================-->
+      <link rel="stylesheet" type="text/css" href="static/vendor/daterangepicker/daterangepicker.css">
+      <!--===============================================================================================-->
+      <link rel="stylesheet" type="text/css" href="static/css/util.css">
+      <link rel="stylesheet" type="text/css" href="static/css/main.css">
+      <!--===============================================================================================-->
 
-    </div>
-    <!-- End of Content Wrapper -->
+      <!--===============================================================================================-->
+      <script src="static/vendor/jquery/jquery-3.2.1.min.js"></script>
+      <!--===============================================================================================-->
+      <script src="static/vendor/animsition/js/animsition.min.js"></script>
+      <!--===============================================================================================-->
+      <script src="static/vendor/bootstrap/js/popper.js"></script>
+      <script src="static/vendor/bootstrap/js/bootstrap.min.js"></script>
+      <!--===============================================================================================-->
+      <script src="static/vendor/select2/select2.min.js"></script>
+      <!--===============================================================================================-->
+      <script src="static/vendor/daterangepicker/moment.min.js"></script>
+      <script src="static/vendor/daterangepicker/daterangepicker.js"></script>
+      <!--===============================================================================================-->
+      <script src="static/vendor/countdowntime/countdowntime.js"></script>
+      <!--===============================================================================================-->
+      <script src="static/js/main.js"></script>
 
-  </div>
-  <!-- End of Page Wrapper -->
-
-
-  <!-- Logout Modal-->
-  <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
-          <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">×</span>
-          </button>
-        </div>
-        <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
-        <div class="modal-footer">
-          <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-          <a class="btn btn-primary" href="{% url 'logout' %}">Logout</a>
-        </div>
-      </div>
-    </div>
-  </div>
-        {% else %}
-        <link href="static/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
-        <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
-      
-        <!-- Custom styles for this template-->
-        <link href="static/css/sb-admin-2.min.css" rel="stylesheet">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <!--===============================================================================================-->	
-            <link rel="icon" type="image/png" href="static/images/icons/dash_logo.png"/>
-        <!--===============================================================================================-->
-            <link rel="stylesheet" type="text/css" href="static/vendor/bootstrap/css/bootstrap.min.css">
-        <!--===============================================================================================-->
-            <link rel="stylesheet" type="text/css" href="static/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
-        <!--===============================================================================================-->
-            <link rel="stylesheet" type="text/css" href="static/fonts/Linearicons-Free-v1.0.0/icon-font.min.css">
-        <!--===============================================================================================-->
-            <link rel="stylesheet" type="text/css" href="static/vendor/animate/animate.css">
-        <!--===============================================================================================-->	
-            <link rel="stylesheet" type="text/css" href="static/vendor/css-hamburgers/hamburgers.min.css">
-        <!--===============================================================================================-->
-            <link rel="stylesheet" type="text/css" href="static/vendor/animsition/css/animsition.min.css">
-        <!--===============================================================================================-->
-            <link rel="stylesheet" type="text/css" href="static/vendor/select2/select2.min.css">
-        <!--===============================================================================================-->	
-            <link rel="stylesheet" type="text/css" href="static/vendor/daterangepicker/daterangepicker.css">
-        <!--===============================================================================================-->
-            <link rel="stylesheet" type="text/css" href="static/css/util.css">
-            <link rel="stylesheet" type="text/css" href="static/css/main.css">
-        <!--===============================================================================================-->
-    
-        <!--===============================================================================================-->
-            <script src="static/vendor/jquery/jquery-3.2.1.min.js"></script>
-        <!--===============================================================================================-->
-            <script src="static/vendor/animsition/js/animsition.min.js"></script>
-        <!--===============================================================================================-->
-            <script src="static/vendor/bootstrap/js/popper.js"></script>
-            <script src="static/vendor/bootstrap/js/bootstrap.min.js"></script>
-        <!--===============================================================================================-->
-            <script src="static/vendor/select2/select2.min.js"></script>
-        <!--===============================================================================================-->
-            <script src="static/vendor/daterangepicker/moment.min.js"></script>
-            <script src="static/vendor/daterangepicker/daterangepicker.js"></script>
-        <!--===============================================================================================-->
-            <script src="static/vendor/countdowntime/countdowntime.js"></script>
-        <!--===============================================================================================-->
-            <script src="static/js/main.js"></script>
-        
-        <!-- Bootstrap core JavaScript-->
+      <!-- Bootstrap core JavaScript-->
       <script src="static/vendor/jquery/jquery.min.js"></script>
       <script src="static/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-    
+
       <!-- Core plugin JavaScript-->
       <script src="static/vendor/jquery-easing/jquery.easing.min.js"></script>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
-        <!-- <link rel="stylesheet" media="screen" href="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/demo/css/style.css"> -->
-        <link rel="stylesheet" media="screen" href="static/css/login.css">
-        <div id="particles-js">
-          <div class="LoginContainer gradient-border"  id="box">
-            <div class="loginInner">
-                <form class="login100-form validate-form flex-sb flex-w">
-                    <span class="login100-form-title p-b-53">Welcome to Dash</span>
-                      <a href="{% url 'social:begin' 'google-oauth2' %}" class="btn-google m-b-20">
-                          <img src= "https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/512px-Google_%22G%22_Logo.svg.png">Login with Google</a>
-                  </form>
-              </div>
+      <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+      <!-- <link rel="stylesheet" media="screen" href="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/demo/css/style.css"> -->
+      <link rel="stylesheet" media="screen" href="static/css/login.css">
+      <div id="particles-js">
+        <div class="LoginContainer gradient-border" id="box">
+          <div class="loginInner">
+            <form class="login100-form validate-form flex-sb flex-w">
+              <span class="login100-form-title p-b-53">Welcome to Dash</span>
+              <a href="{% url 'social:begin' 'google-oauth2' %}" class="btn-google m-b-20">
+                <img
+                  src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/512px-Google_%22G%22_Logo.svg.png">Login
+                with Google</a>
+            </form>
           </div>
         </div>
       </div>
+  </div>
 
 
-        
-        <!-- scripts -->
-        <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/demo/js/app.js"></script>
-        
-        <!-- stats.js -->
-        <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/demo/js/lib/stats.js"></script>
-        <script>
-          particlesJS.load('particles-js', 'static/particles.json', function() {
-          console.log('callback - particles.js config loaded');
-        });
-          requestAnimationFrame(update);
-        </script>
-            
-        {% endif %}
-    
-    </body>
-    </html>
+
+  <!-- scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/demo/js/app.js"></script>
+
+  <!-- stats.js -->
+  <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/demo/js/lib/stats.js"></script>
+  <script>
+    particlesJS.load('particles-js', 'static/particles.json', function () {
+      console.log('callback - particles.js config loaded');
+    });
+    requestAnimationFrame(update);
+  </script>
+
+  {% endif %}
+
+</body>
+
+</html>
