@@ -4,7 +4,9 @@
     src: url('../fonts/poppins/Poppins-Regular.ttf'); 
   }
   body {
-	/* background: rgba(1, 61, 80, 0.8); */
+    background: #EEEEEE;
+    /* background-image: linear-gradient(+30deg, #DEFAFF, white); */
+    /* background: #E8FBFF; */
 	font-family: Poppins-Regular;
 }
 
@@ -15,4 +17,10 @@
 #firstrow{
     background-color: #D4F9E3;
     font-size: 20px;
+}
+
+#container1{
+    background-color: white; 
+    border-radius: 15px;
+    padding: 1.5em;
 }

@@ -267,10 +267,12 @@ def event(request, event_id=None):
         
         startminute = str(starttime.minute).zfill(2)
         endminute = str(endtime.minute).zfill(2)
-        
+        starthour = str(starttime.hour).zfill(2)
+        endhour = str(endtime.hour).zfill(2)
+        endmonth = endtime.strftime("%B")
         startmonth = starttime.strftime("%B")
         if(event_id is None):
-            Event.objects.create(title = title, owner=request.user,start_time = start, end_time = end, start_month_name = startmonth, from_google = False, startminute = startminute, endminute = endminute)
+            Event.objects.create(title = title, owner=request.user,start_time = start, end_time = end, start_month_name = startmonth, from_google = False, startminute = startminute, endminute = endminute, endhour = endhour, starthour = starthour, end_month_name = endmonth)
         else:
             instance.title = title
             instance.start_time = start
@@ -278,6 +280,9 @@ def event(request, event_id=None):
             instance.start_month_name = startmonth
             instance.startminute = startminute
             instance.endminute = endminute
+            instance.endhour = endhour
+            instance.end_month_name = endmonth
+            instance.starthour = starthour
             instance.save()
         return HttpResponseRedirect(reverse('calendar'))
     return render(request, 'calendar/event.html', {'form': form})

@@ -13,12 +13,14 @@
         crossorigin="anonymous"></script>
     <script src="https://kit.fontawesome.com/a076d05399.js"></script>
 
-    <div class="container">
+    <div class="container" id = "container1" >
         {% if user.is_authenticated %}
 
 
         <div class="container">
             <a href="{% url 'gohome2' %}">Back</a>
+            <h4>Welcome {{ user.get_short_name }}</h4>
+            
             <p>Here are your upcoming events:</p>
 
             <ul class="list-group" >
@@ -56,23 +58,23 @@
                 </li>
                 {%endfor%}
             </ul>
-        </div>
+       
 
 
 
+        <p>Note: Times are displayed in military.</p>
+    </div>
 
-
-
-        Get upcoming events from your currently selected calendars on Google Calendar!
+        Import your upcoming events from currently selected Google Calendars!
         <form action="{% url 'auth' %}" method="post">
             {% csrf_token %}
-            <button class="btn btn-primary btn-sm" type="submit">View events</button>
+            <button class="btn btn-primary btn-sm" type="submit">Import events</button>
 
         </form>
         <a href="{% url 'new_event' %}">Create new Event</a> <br>
         <a href="{% url 'delete_all' %}"> Delete All</a> <br>
         <a href="{% url 'calendar' %}">View calendar</a>
-
+  
         {% else %}
         <h1>Please log in to see your Personal Dashboard</h1>
         <a href="{% url 'social:begin' 'google-oauth2' %}">
