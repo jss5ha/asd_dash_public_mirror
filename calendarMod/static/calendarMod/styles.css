@@ -40,14 +40,15 @@
         width: 200px;
         height: 40px;
         background: white;
-        padding: 3px;
+        padding: 5px;
         text-align: center;
         border-radius: 5px;
-        color: gray;
-        font-weight: bold;
+        color: black;
+        font-weight: lighter;
         /* float: right; */
-        font-size: 20px;
-        border: 2px solid black;
+        font-size: 18px;
+        border: 2px solid #17a2b8;
+        box-shadow: 0 0 0 0;
 }
 
 a:link{
@@ -56,7 +57,7 @@ a:link{
 
 .button2:hover{
     color: white;
-    background-color: #D91CFE;
+    background-color:  #17a2b8;
    /* background: linear-gradient(45deg, #093233, #fc00ff);; */
 }
 
@@ -74,3 +75,11 @@ button{
     font-size: 20px;
     border: 2px solid black;
 }
+
+.btn {
+    outline: none;
+    color: black;
+    background-color: transparent;
+    box-shadow: 0 0 0 0;
+    border: 2px solid #17a2b8;
+  }

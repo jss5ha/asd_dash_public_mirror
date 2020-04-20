@@ -78,8 +78,8 @@
                 <!-- <h4 style="font-size: 20px;">Here are your upcoming events:</h4> -->
                 <div class="upcoming" style="font-size: 20px;">
                     Here are your upcoming events:
-                    <div class="delete">
-                        <a class="button2" href="{% url 'delete_all' %}"> Delete All</a> <br>
+                    <div class="delete" style = "position: relative; top: -5px;">
+                        <a class="btn btn-info left" href="{% url 'delete_all' %}"> Delete All</a> <br>
                     </div>
                 </div>
             </div>
@@ -132,26 +132,11 @@
 
                     </form> -->
                     <div class="view" style="padding-top: 5px;">
-                        <a class="button2" href="{% url 'auth' %}">Import events</a>
+                        <a class="btn btn-info left" href="{% url 'auth' %}">Import events</a>
                     </div>
 
                 </div>
-                <div class="col-sm" style="border-left: 1px solid black; border-right: 1px solid black;">
-                    <div style="width: 300px; margin: 0 auto; font-size: 20px; padding-bottom: 20px;">
-                        Scheduled something and you don't wanna forget? Create an event for it!
-                        <!-- <div style="padding-top:10px;">
-                            <form action="{% url 'new_event' %}" method="post">
-                                {% csrf_token %}
-                                <button class="btn btn-primary btn-sm" type="submit">Create New Event</button>
-
-                            </form>
-                        </div> -->
-                        <div class="view" style="padding-top: 12px;">
-                            <a class="button2" href="{% url 'new_event' %}">Create new Event</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm">
+                <div class="col-sm" style = "border-left: 1px solid black;">
                     <div style="width: 225px; margin: 0 auto; font-size: 20px; padding-bottom: 20px;">
                         View your events in a calendar type view!
                         <!-- <div style = "padding-top: 40px;">
@@ -161,11 +146,27 @@
     
                         </form>
                     </div> -->
-                        <div class="view" style="padding-top: 40px;">
-                            <a class="button2" href="{% url 'calendar' %}">View calendar</a>
+                        <div class="view" style="padding-top: 43px;">
+                            <a class="btn btn-info left" href="{% url 'calendar' %}">View calendar</a>
                         </div>
                     </div>
                 </div>
+                <div class="col-sm" style="border-left: 1px solid black; ">
+                    <div style="width: 300px; margin: 0 auto; font-size: 20px; padding-bottom: 20px;">
+                        Scheduled something and you don't wanna forget? Create an event for it!
+                        <!-- <div style="padding-top:10px;">
+                            <form action="{% url 'new_event' %}" method="post">
+                                {% csrf_token %}
+                                <button class="btn btn-primary btn-sm" type="submit">Create New Event</button>
+
+                            </form>
+                        </div> -->
+                        <div class="view" style="padding-top: 14px;">
+                            <a class="btn btn-info left" href="{% url 'new_event' %}">Create new Event</a>
+                        </div>
+                    </div>
+                </div>
+               
             </div>
         </div>
         {% else %}

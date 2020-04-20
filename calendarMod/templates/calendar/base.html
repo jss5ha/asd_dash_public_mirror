@@ -19,6 +19,7 @@
   margin: auto;
 }
 
+
 .form input, .form select, .form textarea {
   border-radius: 5px;
   border: 1px solid #17a2b8;
@@ -43,15 +44,18 @@
   color: black;
   background-color: transparent;
   box-shadow: 0 0 0 0;
+  border: 2px solid #17a2b8;
 }
 
 .clearfix {
   margin: 15px;
+  
   display: flex;
 }
 .calendar {
   width: 98%;
   margin: auto;
+  background-color: mintcream;
   font-size: 13px;
 }
 
@@ -69,7 +73,9 @@
   width: 200px;
   height: 150px;
   padding: 20px 0px 0px 5px;
+  
 }
+
 
 .month {
   font-size: 25px;
@@ -89,7 +95,53 @@ a {
 }
 </style>
 <body>
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand" href="{% url 'gohome2' %}">asd-dash</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText"
+        aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarText">
+        <ul class="navbar-nav mr-auto">
 
+            <li class="nav-item">
+                <a class="nav-link" href="#">To-Do</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">Grades</a>
+            </li>
+            <!-- <li class="nav-item">
+            <a class="nav-link" href="#">Events</a>
+          </li> -->
+            <li class="nav-item">
+                <a class="nav-link" href="#">Calendar</a>
+            </li>
+        </ul>
+
+        <!-- Topbar Navbar -->
+        <ul class="navbar-nav ml-auto">
+
+
+            <!-- Nav Item - User Information -->
+            <li class="nav-item dropdown no-arrow">
+                <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown"
+                    aria-haspopup="true" aria-expanded="false">
+                    <span class="mr-2 d-none d-lg-inline text-gray-600">{{user.get_short_name}}</span>
+                </a>
+                <!-- Dropdown - User Information -->
+                <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                    aria-labelledby="userDropdown">
+
+                    <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
+                        <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                        Logout
+                    </a>
+                </div>
+            </li>
+
+        </ul>
+    </div>
+</nav>
   {% block content %}
   {% endblock %}
 
