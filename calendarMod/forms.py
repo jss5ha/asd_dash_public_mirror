@@ -17,7 +17,7 @@ class EventForm(ModelForm):
      
         if end_time < start_time:
             self._errors['end_time'] = self.error_class(['The starting time must be before the ending time.'])
-            # raise forms.ValidationError("bruh")
+
        
         return self.cleaned_data
 

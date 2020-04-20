@@ -23,4 +23,54 @@
     background-color: white; 
     border-radius: 15px;
     padding: 1.5em;
+    margin-top: 2%;
+}
+
+.view {
+    /* float: right; */
+}
+
+.delete{
+    float: right;
+}
+
+.button2{
+  
+        display: inline-block;
+        width: 200px;
+        height: 40px;
+        background: white;
+        padding: 3px;
+        text-align: center;
+        border-radius: 5px;
+        color: gray;
+        font-weight: bold;
+        /* float: right; */
+        font-size: 20px;
+        border: 2px solid black;
+}
+
+a:link{
+    text-decoration: none;
+}
+
+.button2:hover{
+    color: white;
+    background-color: #D91CFE;
+   /* background: linear-gradient(45deg, #093233, #fc00ff);; */
+}
+
+button{
+    display: inline-block;
+    width: 200px;
+    height: 40px;
+    background: white;
+    padding: 3px;
+    text-align: center;
+    border-radius: 5px;
+    color: gray;
+    font-weight: bold;
+    /* float: right; */
+    font-size: 20px;
+    border: 2px solid black;
 }

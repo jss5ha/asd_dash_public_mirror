@@ -8,23 +8,83 @@
 </head>
 
 <body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="{% url 'gohome2' %}">asd-dash</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText"
+            aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarText">
+            <ul class="navbar-nav mr-auto">
+
+                <li class="nav-item">
+                    <a class="nav-link" href="#">To-Do</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Grades</a>
+                </li>
+                <!-- <li class="nav-item">
+                <a class="nav-link" href="#">Events</a>
+              </li> -->
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Calendar</a>
+                </li>
+            </ul>
+
+            <!-- Topbar Navbar -->
+            <ul class="navbar-nav ml-auto">
+
+
+                <!-- Nav Item - User Information -->
+                <li class="nav-item dropdown no-arrow">
+                    <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown"
+                        aria-haspopup="true" aria-expanded="false">
+                        <span class="mr-2 d-none d-lg-inline text-gray-600">{{user.get_short_name}}</span>
+                    </a>
+                    <!-- Dropdown - User Information -->
+                    <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                        aria-labelledby="userDropdown">
+
+                        <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
+                            <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                            Logout
+                        </a>
+                    </div>
+                </li>
+
+            </ul>
+        </div>
+    </nav>
+
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
         integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
         crossorigin="anonymous"></script>
     <script src="https://kit.fontawesome.com/a076d05399.js"></script>
 
-    <div class="container" id = "container1" >
+    <div class="container" id="container1">
         {% if user.is_authenticated %}
 
 
         <div class="container">
-            <a href="{% url 'gohome2' %}">Back</a>
-            <h4>Welcome {{ user.get_short_name }}</h4>
-            
-            <p>Here are your upcoming events:</p>
+            <!-- <a href="{% url 'gohome2' %}">Back</a> -->
+            <div class="bruh" style="display: inline-block; width: 100%; margin-bottom: 10px;">
+                <div class="goodmorning" style="font-size: 30px;">
+                    Good day, {{ user.get_short_name }}
 
-            <ul class="list-group" >
-                <li class="list-group-item" id = "firstrow" style="text-align: center;">
+
+                </div>
+            </div>
+            <div class="bruh" style="display: inline-block; width: 100%; margin-bottom: 10px;">
+                <!-- <h4 style="font-size: 20px;">Here are your upcoming events:</h4> -->
+                <div class="upcoming" style="font-size: 20px;">
+                    Here are your upcoming events:
+                    <div class="delete">
+                        <a class="button2" href="{% url 'delete_all' %}"> Delete All</a> <br>
+                    </div>
+                </div>
+            </div>
+            <ul class="list-group">
+                <li class="list-group-item" id="firstrow" style="text-align: center;">
                     <div class="row">
                         <div class="col-sm">
                             Event
@@ -58,23 +118,56 @@
                 </li>
                 {%endfor%}
             </ul>
-       
 
+            <p>Note: Times are displayed in military.</p>
 
+            <div class="row" style="text-align: center; padding-top: 50px;">
+                <div class="col-sm">
+                    <div style="width: 300px; margin: 0 auto; font-size: 20px; padding-bottom: 10px;">
+                        Import your upcoming events from currently selected Google Calendars!
+                    </div>
+                    <!-- <form action="{% url 'auth' %}" method="post">
+                        {% csrf_token %}
+                        <button class="btn btn-primary btn-sm" type="submit">Import events</button>
 
-        <p>Note: Times are displayed in military.</p>
-    </div>
+                    </form> -->
+                    <div class="view" style="padding-top: 5px;">
+                        <a class="button2" href="{% url 'auth' %}">Import events</a>
+                    </div>
 
-        Import your upcoming events from currently selected Google Calendars!
-        <form action="{% url 'auth' %}" method="post">
-            {% csrf_token %}
-            <button class="btn btn-primary btn-sm" type="submit">Import events</button>
+                </div>
+                <div class="col-sm" style="border-left: 1px solid black; border-right: 1px solid black;">
+                    <div style="width: 300px; margin: 0 auto; font-size: 20px; padding-bottom: 20px;">
+                        Scheduled something and you don't wanna forget? Create an event for it!
+                        <!-- <div style="padding-top:10px;">
+                            <form action="{% url 'new_event' %}" method="post">
+                                {% csrf_token %}
+                                <button class="btn btn-primary btn-sm" type="submit">Create New Event</button>
 
-        </form>
-        <a href="{% url 'new_event' %}">Create new Event</a> <br>
-        <a href="{% url 'delete_all' %}"> Delete All</a> <br>
-        <a href="{% url 'calendar' %}">View calendar</a>
-  
+                            </form>
+                        </div> -->
+                        <div class="view" style="padding-top: 12px;">
+                            <a class="button2" href="{% url 'new_event' %}">Create new Event</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm">
+                    <div style="width: 225px; margin: 0 auto; font-size: 20px; padding-bottom: 20px;">
+                        View your events in a calendar type view!
+                        <!-- <div style = "padding-top: 40px;">
+                        <form action="{% url 'auth' %}" method="post">
+                            {% csrf_token %}
+                            <button class="btn btn-primary btn-sm" type="submit">View Calendar</button>
+    
+                        </form>
+                    </div> -->
+                        <div class="view" style="padding-top: 40px;">
+                            <a class="button2" href="{% url 'calendar' %}">View calendar</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
         {% else %}
         <h1>Please log in to see your Personal Dashboard</h1>
         <a href="{% url 'social:begin' 'google-oauth2' %}">
@@ -82,4 +175,13 @@
         </a>
         {% endif %}
     </div>
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+        integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+        integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+        crossorigin="anonymous"></script>
 </body>
