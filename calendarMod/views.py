@@ -172,16 +172,18 @@ def main(request):
         # print(starttime)
         # localtime(endtime.start_time)
         # localtime(starttime.start_time)
-        print(starttime)
+        # print(starttime)
         #https://medium.com/@pritishmishra_72667/converting-rfc3339-timestamp-to-utc-timestamp-in-python-8dfa485358ff
 
         startminute = str(starttime.minute).zfill(2)
         endminute = str(endtime.minute).zfill(2)
-        
+        starthour = str(starttime.hour).zfill(2)
+        endhour = str(endtime.hour).zfill(2)
         eventdetails = []
         eventdetails.append(event['summary'])
         startmonth = starttime.strftime("%B")
-        Event.objects.create(title = event['summary'], owner= request.user, start_time = starttime, end_time = endtime, start_month_name = startmonth, from_google = True, startminute = startminute, endminute = endminute)
+        endmonth = endtime.strftime("%B")
+        Event.objects.create(title = event['summary'], owner= request.user, start_time = starttime, end_time = endtime, start_month_name = startmonth, end_month_name = endmonth, from_google = True, startminute = startminute, endminute = endminute, endhour = endhour, starthour = starthour)
         #add a user to the event here?
         eventlist.append(eventdetails)
      
