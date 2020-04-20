@@ -7,3 +7,12 @@
 	/* background: rgba(1, 61, 80, 0.8); */
 	font-family: Poppins-Regular;
 }
+
+.list-group-item{
+    text-align: center;
+}
+
+#firstrow{
+    background-color: #D4F9E3;
+    font-size: 20px;
+}

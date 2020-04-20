@@ -30,7 +30,7 @@ from google_auth_oauthlib.flow import InstalledAppFlow
 from google.auth.transport.requests import Request
 #to here, this came from https://developers.google.com/calendar/quickstart/python
 #and I'm not sure it's right for this place
-SCOPES = ['https://www.googleapis.com/auth/calendar']
+SCOPES = ['https://www.googleapis.com/auth/calendar.readonly']
 # Create your views here.
 # https://stackoverflow.com/questions/48242761/how-do-i-use-oauth2-and-refresh-tokens-with-the-google-api
 if settings.TEST_SERVER is True:

@@ -6,79 +6,78 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="{% static 'calendarMod/styles.css' %}" />
 </head>
+
 <body>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
-    integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-    crossorigin="anonymous"></script>
-<script src="https://kit.fontawesome.com/a076d05399.js"></script>
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
 
-<div class = "container">
-{% if user.is_authenticated %}
-
-
-<div class="container">
-<a href = "{% url 'gohome2' %}">Back</a>
-<p>Here are your upcoming events:</p>
+    <div class="container">
+        {% if user.is_authenticated %}
 
 
-    <div class="row">
+        <div class="container">
+            <a href="{% url 'gohome2' %}">Back</a>
+            <p>Here are your upcoming events:</p>
 
-
-        <div class="col-sm" style="width: 100;">
-            {% if event.exists %}
-            Event title<br>
-            {% endif %}
-            <ul>
+            <ul class="list-group" >
+                <li class="list-group-item" id = "firstrow" style="text-align: center;">
+                    <div class="row">
+                        <div class="col-sm">
+                            Event
+                        </div>
+                        <div class="col-sm">
+                            Start
+                        </div>
+                        <div class="col-sm">
+                            End
+                        </div>
+                    </div>
+                </li>
                 {% for i in event %}
-                <p>{{ i.title }} </p>
+                <li class="list-group-item">
+                    <div class="row">
+                        <div class="col-sm" style="width: 100;">
+                            {{ i.title }}
+                        </div>
 
-                {% endfor %}
-
+                        <div class="col-sm" style="width: 100;">
+                            {{ i.start_month_name }} {{ i.start_time.day }},
+                            {{ i.starthour}}:{{i.startminute}},
+                            {{ i.start_time.year }}
+                        </div>
+                        <div class="col-sm" style="width: 100;">
+                            {{ i.end_month_name }} {{ i.end_time.day }}, {{ i.endhour}}:{{i.endminute}},
+                            {{ i.end_time.year }} <a href="{% url 'delete_event' event_id=i.id %}"><i
+                                    class="fa fa-trash"></i></a>
+                        </div>
+                    </div>
+                </li>
+                {%endfor%}
             </ul>
         </div>
 
-        <div class="col-sm" style="width: 100;">
-            {% if event.exists %}
-            Start Date<br>
-            {% endif %}
-            <ul>
-                {% for i in event %}
-                <p> {{ i.start_month_name }} {{ i.start_time.day }}, {{ i.start_time.hour}}:{{i.startminute}}, {{ i.start_time.year }} </p>
-                    
-                {% endfor %}
-            </ul>
-        </div>
-        <div class="col-sm" style="width: 100;">
-            {% if event.exists %}
-            End Date<br>
-            {% endif %}
-            <ul>
-                {% for i in event %}
-                <p> {{ i.start_month_name }} {{ i.end_time.day }}, {{ i.end_time.hour}}:{{i.endminute}}, {{ i.end_time.year }} <a
-                    href="{% url 'delete_event' event_id=i.id %}"><i
-                        class="fa fa-trash"></i></a></p> </p>
-                    
-                {% endfor %}
-            </ul>
-        </div>
-    </div>
-</div>
 
-Get upcoming events from your currently selected calendars on Google Calendar!
-<form action="{% url 'auth' %}" method="post">
-    {% csrf_token %}
-        <button class="btn btn-primary btn-sm" type="submit">View events</button>
-   
-</form>
-<a href = "{% url 'new_event' %}">Create new Event</a> <br>
-<a href = "{% url 'delete_all' %}"> Delete All</a> <br>
-<a href="{% url 'calendar' %}" >View calendar</a>
 
-            {% else %}
+
+
+
+        Get upcoming events from your currently selected calendars on Google Calendar!
+        <form action="{% url 'auth' %}" method="post">
+            {% csrf_token %}
+            <button class="btn btn-primary btn-sm" type="submit">View events</button>
+
+        </form>
+        <a href="{% url 'new_event' %}">Create new Event</a> <br>
+        <a href="{% url 'delete_all' %}"> Delete All</a> <br>
+        <a href="{% url 'calendar' %}">View calendar</a>
+
+        {% else %}
         <h1>Please log in to see your Personal Dashboard</h1>
         <a href="{% url 'social:begin' 'google-oauth2' %}">
-                Login
-                </a>
+            Login
+        </a>
         {% endif %}
-</div>
+    </div>
 </body>
