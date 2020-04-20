@@ -1,10 +1,11 @@
 <!-- cal/templates/cal/base.html -->
 <!-- tutorial followed by https://www.huiwenteo.com/normal/2018/07/29/django-calendar-ii.html -->
-
+{% load static %}
 <!doctype html>
 <html lang="en">
 
 <head>
+
   <!-- Required meta tags -->
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -12,91 +13,101 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.10/css/all.css">
   <link rel="stylesheet" type="text/css" href="{'% static 'cal/css/styles.css' %}">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="{% static 'calendarMod/styles.css' %}" />
   <title>Django Calendar App</title>
 </head>
 <style>
   .form {
-  margin: auto;
-}
+    margin: auto;
+  }
 
 
-.form input, .form select, .form textarea {
-  border-radius: 5px;
-  border: 1px solid #17a2b8;
-  outline: none;
-  background: none;
-  padding: 5px;
-  width: 100%;
-}
-    .left {
-  float: left;
-}
-.middle{
-  margin-left: auto;
-  margin-right: auto;
-}
-.right {
-  float: right;
-}
+  .form input,
+  .form select,
+  .form textarea {
+    border-radius: 5px;
+    border: 1px solid #17a2b8;
+    outline: none;
+    background: none;
+    padding: 5px;
+    width: 100%;
+  }
 
-.btn {
-  outline: none;
-  color: black;
-  background-color: transparent;
-  box-shadow: 0 0 0 0;
-  border: 2px solid #17a2b8;
-}
+  .left {
+    float: left;
+  }
 
-.clearfix {
-  margin: 15px;
-  
-  display: flex;
-}
-.calendar {
-  width: 98%;
-  margin: auto;
-  background-color: mintcream;
-  font-size: 13px;
-}
+  .middle {
+    margin-left: auto;
+    margin-right: auto;
+  }
 
-.calendar tr, .calendar td {
-  border: 1px solid black;
-}
+  .right {
+    float: right;
+  }
 
-.calendar th {
-  padding: 10px;
-  text-align: center;
-  font-size: 18px;
-}
+  .btn {
+    outline: none;
+    color: black;
+    background-color: transparent;
+    box-shadow: 0 0 0 0;
+    border: 2px solid #17a2b8;
+  }
 
-.calendar td {
-  width: 200px;
-  height: 150px;
-  padding: 20px 0px 0px 5px;
-  
-}
+  .clearfix {
+    margin: 15px;
+
+    display: flex;
+  }
+
+  .calendar {
+    width: 98%;
+    margin: auto;
+    background-color: mintcream;
+    font-size: 13px;
+  }
+
+  .calendar tr,
+  .calendar td {
+    border: 1px solid black;
+  }
+
+  .calendar th {
+    padding: 10px;
+    text-align: center;
+    font-size: 18px;
+  }
+
+  .calendar td {
+    width: 200px;
+    height: 150px;
+    padding: 20px 0px 0px 5px;
+
+  }
 
 
-.month {
-  font-size: 25px;
-}
+  .month {
+    font-size: 25px;
+  }
 
-.date {
-  font-size: 16px;
-}
+  .date {
+    font-size: 16px;
+  }
 
-ul {
-  height: 100%;
-  padding: 0px 5px 0px 20px;
-}
+  ul {
+    height: 100%;
+    padding: 0px 5px 0px 20px;
+  }
 
-a {
-  color: #17a2b8;
-}
+  a {
+    color: #17a2b8;
+  }
 </style>
+
 <body>
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <a class="navbar-brand" href="{% url 'gohome2' %}">asd-dash</a>
+  <nav class="navbar navbar-expand-lg navbar-dark" style = "background: #3B8DE1;">
+    <a class="navbar-brand" href="..">asd-dash</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText"
         aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -105,16 +116,16 @@ a {
         <ul class="navbar-nav mr-auto">
 
             <li class="nav-item">
-                <a class="nav-link" href="#">To-Do</a>
+                <a class="nav-link" href="/todo">To-Do</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">Grades</a>
+                <a class="nav-link" href="/grades">Grades</a>
             </li>
-            <!-- <li class="nav-item">
-            <a class="nav-link" href="#">Events</a>
-          </li> -->
             <li class="nav-item">
-                <a class="nav-link" href="#">Calendar</a>
+            <a class="nav-link" href="/calendar">Events</a>
+          </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/calendar/view">Calendar</a>
             </li>
         </ul>
 
@@ -142,19 +153,24 @@ a {
         </ul>
     </div>
 </nav>
+
   {% block content %}
   {% endblock %}
 
   <!-- Optional JavaScript -->
   <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+    integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
     crossorigin="anonymous"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+    integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
     crossorigin="anonymous"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+    integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
     crossorigin="anonymous"></script>
 
   {% block script %}
   {% endblock %}
 </body>
+
 </html>

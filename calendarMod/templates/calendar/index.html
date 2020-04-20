@@ -8,8 +8,8 @@
 </head>
 
 <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <a class="navbar-brand" href="{% url 'gohome2' %}">asd-dash</a>
+    <nav class="navbar navbar-expand-lg navbar-dark" style = "background: #3B8DE1;">
+        <a class="navbar-brand" href="..">asd-dash</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText"
             aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -18,16 +18,16 @@
             <ul class="navbar-nav mr-auto">
 
                 <li class="nav-item">
-                    <a class="nav-link" href="#">To-Do</a>
+                    <a class="nav-link" href="/todo">To-Do</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Grades</a>
+                    <a class="nav-link" href="/grades">Grades</a>
                 </li>
-                <!-- <li class="nav-item">
-                <a class="nav-link" href="#">Events</a>
-              </li> -->
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Calendar</a>
+                <a class="nav-link" href="/calendar">Events</a>
+              </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/calendar/view">Calendar</a>
                 </li>
             </ul>
 
@@ -132,7 +132,7 @@
 
                     </form> -->
                     <div class="view" style="padding-top: 5px;">
-                        <a class="btn btn-info left" href="{% url 'auth' %}">Import events</a>
+                        <a class="btn btn-info left" href="{% url 'auth' %}">Import Events</a>
                     </div>
 
                 </div>
@@ -147,7 +147,7 @@
                         </form>
                     </div> -->
                         <div class="view" style="padding-top: 43px;">
-                            <a class="btn btn-info left" href="{% url 'calendar' %}">View calendar</a>
+                            <a class="btn btn-info left" href="{% url 'calendar' %}">View Calendar</a>
                         </div>
                     </div>
                 </div>
@@ -162,7 +162,7 @@
                             </form>
                         </div> -->
                         <div class="view" style="padding-top: 14px;">
-                            <a class="btn btn-info left" href="{% url 'new_event' %}">Create new Event</a>
+                            <a class="btn btn-info left" href="{% url 'new_event' %}">Create New Event</a>
                         </div>
                     </div>
                 </div>
