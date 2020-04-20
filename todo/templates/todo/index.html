@@ -21,8 +21,54 @@
 </head>
 
 <body>
+	<nav class="navbar navbar-expand-lg navbar-dark" style="background: #3B8DE1;">
+		<a class="navbar-brand" href="..">asd-dash</a>
+		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText"
+		  aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+		  <span class="navbar-toggler-icon"></span>
+		</button>
+		<div class="collapse navbar-collapse" id="navbarText">
+		  <ul class="navbar-nav mr-auto">
+	
+			<li class="nav-item">
+			  <a class="nav-link" href="/todo">To-Do</a>
+			</li>
+			<li class="nav-item">
+			  <a class="nav-link" href="/grades">Grades</a>
+			</li>
+			<li class="nav-item">
+			  <a class="nav-link" href="/calendar">Events</a>
+			</li>
+			<li class="nav-item">
+			  <a class="nav-link" href="/calendar/view">Calendar</a>
+			</li>
+		  </ul>
+	
+		  <!-- Topbar Navbar -->
+		  <ul class="navbar-nav ml-auto">
+	
+	
+			<!-- Nav Item - User Information -->
+			<li class="nav-item dropdown no-arrow">
+			  <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown"
+				aria-haspopup="true" aria-expanded="false">
+				<span class="mr-2 d-none d-lg-inline text-gray-600">{{user.get_short_name}}</span>
+			  </a>
+			  <!-- Dropdown - User Information -->
+			  <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
+	
+				<a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
+				  <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+				  Logout
+				</a>
+			  </div>
+			</li>
+	
+		  </ul>
+		</div>
+	  </nav>
 	<div class="container">
-		<a href="{% url 'gohome3' %}">Back</a>
+		
 		<div class="container-fluid" id="wrapper">
 			{% if user.is_authenticated %}
 			<div class="page-content page-container" id="page-content">

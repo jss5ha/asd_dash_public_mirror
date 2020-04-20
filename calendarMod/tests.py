@@ -6,10 +6,10 @@ from .views import IndexView
 # Create your tests here.
 
 def create_event(title, start_time, user, end_time, start_month_name, from_google, startminute, endminute):
-    return Event.objects.create(title = title, owner = user, start_time = start_time, end_time = end_time, start_month_name = start_month_name, from_google = from_google, startminute = startminute, endminute = endminute)
+    return Event.objects.create(title = title, owner = user, start_time = start_time, end_time = end_time, start_month_name = start_month_name, from_google = from_google, startminute = startminute, endminute = endminute, end_month_name = "", starthour = "", endhour = "")
 
 def create_event_with_user(title, description, start_time, end_time, start_month_name, from_google, startminute, endminute ,user):
-    return Event.objects.create(title = title,  start_time = start_time, end_time = end_time, start_month_name = start_month_name, from_google = from_google, startminute = startminute, endminute = endminute, owner = user)
+    return Event.objects.create(title = title,  start_time = start_time, end_time = end_time, start_month_name = start_month_name, from_google = from_google, startminute = startminute, endminute = endminute, owner = user, end_month_name = "", starthour = "", endhour = "")
 
 
 class CourseTests(TestCase):

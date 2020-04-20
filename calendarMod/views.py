@@ -30,7 +30,7 @@ from google_auth_oauthlib.flow import InstalledAppFlow
 from google.auth.transport.requests import Request
 #to here, this came from https://developers.google.com/calendar/quickstart/python
 #and I'm not sure it's right for this place
-SCOPES = ['https://www.googleapis.com/auth/calendar']
+SCOPES = ['https://www.googleapis.com/auth/calendar.readonly']
 # Create your views here.
 # https://stackoverflow.com/questions/48242761/how-do-i-use-oauth2-and-refresh-tokens-with-the-google-api
 if settings.TEST_SERVER is True:
@@ -172,16 +172,18 @@ def main(request):
         # print(starttime)
         # localtime(endtime.start_time)
         # localtime(starttime.start_time)
-        print(starttime)
+        # print(starttime)
         #https://medium.com/@pritishmishra_72667/converting-rfc3339-timestamp-to-utc-timestamp-in-python-8dfa485358ff
 
         startminute = str(starttime.minute).zfill(2)
         endminute = str(endtime.minute).zfill(2)
-        
+        starthour = str(starttime.hour).zfill(2)
+        endhour = str(endtime.hour).zfill(2)
         eventdetails = []
         eventdetails.append(event['summary'])
         startmonth = starttime.strftime("%B")
-        Event.objects.create(title = event['summary'], owner= request.user, start_time = starttime, end_time = endtime, start_month_name = startmonth, from_google = True, startminute = startminute, endminute = endminute)
+        endmonth = endtime.strftime("%B")
+        Event.objects.create(title = event['summary'], owner= request.user, start_time = starttime, end_time = endtime, start_month_name = startmonth, end_month_name = endmonth, from_google = True, startminute = startminute, endminute = endminute, endhour = endhour, starthour = starthour)
         #add a user to the event here?
         eventlist.append(eventdetails)
      
@@ -265,10 +267,12 @@ def event(request, event_id=None):
         
         startminute = str(starttime.minute).zfill(2)
         endminute = str(endtime.minute).zfill(2)
-        
+        starthour = str(starttime.hour).zfill(2)
+        endhour = str(endtime.hour).zfill(2)
+        endmonth = endtime.strftime("%B")
         startmonth = starttime.strftime("%B")
         if(event_id is None):
-            Event.objects.create(title = title, owner=request.user,start_time = start, end_time = end, start_month_name = startmonth, from_google = False, startminute = startminute, endminute = endminute)
+            Event.objects.create(title = title, owner=request.user,start_time = start, end_time = end, start_month_name = startmonth, from_google = False, startminute = startminute, endminute = endminute, endhour = endhour, starthour = starthour, end_month_name = endmonth)
         else:
             instance.title = title
             instance.start_time = start
@@ -276,6 +280,9 @@ def event(request, event_id=None):
             instance.start_month_name = startmonth
             instance.startminute = startminute
             instance.endminute = endminute
+            instance.endhour = endhour
+            instance.end_month_name = endmonth
+            instance.starthour = starthour
             instance.save()
         return HttpResponseRedirect(reverse('calendar'))
     return render(request, 'calendar/event.html', {'form': form})

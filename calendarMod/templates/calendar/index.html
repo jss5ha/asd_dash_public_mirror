@@ -1,74 +1,188 @@
+{% load static %}
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
     integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
-    integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-    crossorigin="anonymous"></script>
-<script src="https://kit.fontawesome.com/a076d05399.js"></script>
 
-<div class = "container">
-{% if user.is_authenticated %}
+<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="{% static 'calendarMod/styles.css' %}" />
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark" style = "background: #3B8DE1;">
+        <a class="navbar-brand" href="..">asd-dash</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText"
+            aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarText">
+            <ul class="navbar-nav mr-auto">
+
+                <li class="nav-item">
+                    <a class="nav-link" href="/todo">To-Do</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/grades">Grades</a>
+                </li>
+                <li class="nav-item">
+                <a class="nav-link" href="/calendar">Events</a>
+              </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/calendar/view">Calendar</a>
+                </li>
+            </ul>
+
+            <!-- Topbar Navbar -->
+            <ul class="navbar-nav ml-auto">
 
 
-<div class="container">
-<a href = "{% url 'gohome2' %}">Back</a>
-<p>Here are your upcoming events:</p>
-    <div class="row">
+                <!-- Nav Item - User Information -->
+                <li class="nav-item dropdown no-arrow">
+                    <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown"
+                        aria-haspopup="true" aria-expanded="false">
+                        <span class="mr-2 d-none d-lg-inline text-gray-600">{{user.get_short_name}}</span>
+                    </a>
+                    <!-- Dropdown - User Information -->
+                    <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                        aria-labelledby="userDropdown">
 
-
-        <div class="col-sm" style="width: 100;">
-            {% if event.exists %}
-            Event title<br>
-            {% endif %}
-            <ul>
-                {% for i in event %}
-                <p>{{ i.title }} </p>
-
-                {% endfor %}
+                        <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
+                            <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                            Logout
+                        </a>
+                    </div>
+                </li>
 
             </ul>
         </div>
+    </nav>
 
-        <div class="col-sm" style="width: 100;">
-            {% if event.exists %}
-            Start Date<br>
-            {% endif %}
-            <ul>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+
+    <div class="container" id="container1">
+        {% if user.is_authenticated %}
+
+
+        <div class="container">
+            <!-- <a href="{% url 'gohome2' %}">Back</a> -->
+            <div class="bruh" style="display: inline-block; width: 100%; margin-bottom: 10px;">
+                <div class="goodmorning" style="font-size: 30px;">
+                    Good day, {{ user.get_short_name }}
+
+
+                </div>
+            </div>
+            <div class="bruh" style="display: inline-block; width: 100%; margin-bottom: 10px;">
+                <!-- <h4 style="font-size: 20px;">Here are your upcoming events:</h4> -->
+                <div class="upcoming" style="font-size: 20px;">
+                    Here are your upcoming events:
+                    <div class="delete" style = "position: relative; top: -5px;">
+                        <a class="btn btn-info left" href="{% url 'delete_all' %}"> Delete All</a> <br>
+                    </div>
+                </div>
+            </div>
+            <ul class="list-group">
+                <li class="list-group-item" id="firstrow" style="text-align: center;">
+                    <div class="row">
+                        <div class="col-sm">
+                            Event
+                        </div>
+                        <div class="col-sm">
+                            Start
+                        </div>
+                        <div class="col-sm">
+                            End
+                        </div>
+                    </div>
+                </li>
                 {% for i in event %}
-                <p> {{ i.start_month_name }} {{ i.start_time.day }}, {{ i.start_time.hour}}:{{i.startminute}}, {{ i.start_time.year }} </p>
-                    
-                {% endfor %}
-            </ul>
-        </div>
-        <div class="col-sm" style="width: 100;">
-            {% if event.exists %}
-            End Date<br>
-            {% endif %}
-            <ul>
-                {% for i in event %}
-                <p> {{ i.start_month_name }} {{ i.end_time.day }}, {{ i.end_time.hour}}:{{i.endminute}}, {{ i.end_time.year }} <a
-                    href="{% url 'delete_event' event_id=i.id %}"><i
-                        class="fa fa-trash"></i></a></p> </p>
-                    
-                {% endfor %}
-            </ul>
-        </div>
-    </div>
-</div>
+                <li class="list-group-item">
+                    <div class="row">
+                        <div class="col-sm" style="width: 100;">
+                            {{ i.title }}
+                        </div>
 
-Get upcoming events from your currently selected calendars on Google Calendar!
-<form action="{% url 'auth' %}" method="post">
-    {% csrf_token %}
-        <button class="btn btn-primary btn-sm" type="submit">View events</button>
-   
-</form>
-<a href = "{% url 'new_event' %}">Create new Event</a> <br>
-<a href = "{% url 'delete_all' %}"> Delete All</a> <br>
-<a href="{% url 'calendar' %}" >View calendar</a>
+                        <div class="col-sm" style="width: 100;">
+                            {{ i.start_month_name }} {{ i.start_time.day }},
+                            {{ i.starthour}}:{{i.startminute}},
+                            {{ i.start_time.year }}
+                        </div>
+                        <div class="col-sm" style="width: 100;">
+                            {{ i.end_month_name }} {{ i.end_time.day }}, {{ i.endhour}}:{{i.endminute}},
+                            {{ i.end_time.year }} <a href="{% url 'delete_event' event_id=i.id %}"><i
+                                    class="fa fa-trash"></i></a>
+                        </div>
+                    </div>
+                </li>
+                {%endfor%}
+            </ul>
 
-            {% else %}
+            <p>Note: Times are displayed in military.</p>
+
+            <div class="row" style="text-align: center; padding-top: 50px;">
+                <div class="col-sm">
+                    <div style="width: 300px; margin: 0 auto; font-size: 20px; padding-bottom: 10px;">
+                        Import your upcoming events from currently selected Google Calendars!
+                    </div>
+                    <!-- <form action="{% url 'auth' %}" method="post">
+                        {% csrf_token %}
+                        <button class="btn btn-primary btn-sm" type="submit">Import events</button>
+
+                    </form> -->
+                    <div class="view" style="padding-top: 5px;">
+                        <a class="btn btn-info left" href="{% url 'auth' %}">Import Events</a>
+                    </div>
+
+                </div>
+                <div class="col-sm" style = "border-left: 1px solid black;">
+                    <div style="width: 225px; margin: 0 auto; font-size: 20px; padding-bottom: 20px;">
+                        View your events in a calendar type view!
+                        <!-- <div style = "padding-top: 40px;">
+                        <form action="{% url 'auth' %}" method="post">
+                            {% csrf_token %}
+                            <button class="btn btn-primary btn-sm" type="submit">View Calendar</button>
+    
+                        </form>
+                    </div> -->
+                        <div class="view" style="padding-top: 43px;">
+                            <a class="btn btn-info left" href="{% url 'calendar' %}">View Calendar</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm" style="border-left: 1px solid black; ">
+                    <div style="width: 300px; margin: 0 auto; font-size: 20px; padding-bottom: 20px;">
+                        Scheduled something and you don't wanna forget? Create an event for it!
+                        <!-- <div style="padding-top:10px;">
+                            <form action="{% url 'new_event' %}" method="post">
+                                {% csrf_token %}
+                                <button class="btn btn-primary btn-sm" type="submit">Create New Event</button>
+
+                            </form>
+                        </div> -->
+                        <div class="view" style="padding-top: 14px;">
+                            <a class="btn btn-info left" href="{% url 'new_event' %}">Create New Event</a>
+                        </div>
+                    </div>
+                </div>
+               
+            </div>
+        </div>
+        {% else %}
         <h1>Please log in to see your Personal Dashboard</h1>
         <a href="{% url 'social:begin' 'google-oauth2' %}">
-                Login
-                </a>
+            Login
+        </a>
         {% endif %}
-</div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+        integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+        integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+        crossorigin="anonymous"></script>
+</body>
