@@ -7,4 +7,15 @@
   body {
 	/* background: rgba(1, 61, 80, 0.8); */
 	font-family: Poppins-Regular;
+  background: #EEEEEE;
 }
+
+#container2{
+  /* width: 200%; */
+  background: white;
+  padding: 4em;
+  border-radius: 15px;
+  padding-top: 15px;
+  margin-top: 4%;
+}
+
