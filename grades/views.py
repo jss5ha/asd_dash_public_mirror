@@ -188,12 +188,16 @@ def CalculatePointGrade(request, course_id):
         return
     # total_grade_percent = 0
     for i in indCourse.pointassignment_set.all():
-        earned += i.points_achieved
-        total += i.points_total
+        if i.points_total > 0:
+            earned += i.points_achieved
+            total += i.points_total
             
     indCourse.earned_points = earned
-    indCourse.total_points = total
-    x = float(earned/total) * 100
+    x=0
+    if total > 0:
+        indCourse.total_points = total
+        x = float(earned/total) * 100
+
     indCourse.course_grade_points = x
     if x >= current:
         indCourse.point_improved = True
