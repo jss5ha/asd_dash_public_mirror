@@ -15,9 +15,12 @@ class Event(models.Model):
     start_time = models.DateTimeField()
     end_time = models.DateTimeField()
     start_month_name = models.TextField()
+    end_month_name = models.TextField(default = "")
     from_google = models.BooleanField(default=False)
     startminute = models.TextField(default="")
     endminute = models.TextField(default = "")
+    starthour = models.TextField(default = "")
+    endhour = models.TextField(default = "")
     @property
     def get_html_url(self):
         url = reverse('edit_event', args=(self.id,))
