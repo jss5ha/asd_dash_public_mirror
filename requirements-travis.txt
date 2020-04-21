@@ -4,7 +4,6 @@ Django==3.0.2
 django-heroku==0.3.1
 gunicorn==20.0.4
 oauthlib==3.1.0
-psycopg2==2.8.4
 pytz==2019.3
 requests==2.23.0
 requests-oauthlib==1.3.0
@@ -12,7 +11,6 @@ social-auth-app-django==3.1.0
 social-auth-core==3.2.0
 whitenoise==5.0.1
 django-nested-inline
-psycopg2-binary==2.8.5
 google-api-python-client
 google-auth-oauthlib
 iso8601
