@@ -97,6 +97,7 @@
                         </div>
                     </div>
                 </li>
+                {% if event.exists %}
                 {% for i in event %}
                 <li class="list-group-item">
                     <div class="row">
@@ -117,6 +118,7 @@
                     </div>
                 </li>
                 {%endfor%}
+                {%endif%}
             </ul>
 
             <p>Note: Times are displayed in military.</p>
