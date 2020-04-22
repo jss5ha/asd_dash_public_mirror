@@ -145,7 +145,7 @@ def main(request):
         # if(calendar_ID.get('selected') is True or calendar_ID.get('accessRole') == 'reader'):
         if(calendar_ID.get('selected') is True):
             events_result = service.events().list(calendarId=calendar_ID['id'], timeMin=now,
-                                                singleEvents=True,
+                                                maxResults = 20, singleEvents=True,
                                                 orderBy='startTime').execute()
             # if(events_result is not None):
             events = events_result.get('items',[])
