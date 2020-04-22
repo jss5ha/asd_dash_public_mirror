@@ -8,7 +8,7 @@ script:
 deploy:
   provider: heroku
   api_key:
-    secure: jK439lxaiKC9LOGAYlDdHQU3wfVU1w2p0/CS3Tx813ygDp/rZGaJGrCp9J/5jnpXm2ojnDOtIeOK5lJAEEh9pxHDxp12u9aeQeyXdfgIweA9W1QMDwRgca+zapsIsGPkUfpr38d/Vb3ZEzIG+zrFKV2JQz1DVMl6syUmdtjAXBBJKwCGsQ4tSXFkCI5sqAzZC8ddz+CMdALRjeWkDD6H78MbnYg0ZLdTy2ml5GvUcCrOANXcMzn/BTaNzO8CSsbtN0o8HIc74BkJgnTSOdBHG+M9geYfS+q4wIZrNiV2WVs2OcsP3rWeJyjrLEmFvu10efqUyffJb1uyqUZEmHv/wguah2cyl6eybS7YvWCXUv2/JwN6bJEBpQVYllzzHNLFpDYTOFlWxnafuItVTI5XxICDFqs3eL8R0kjMThIsixFwQJijXrPF8Sm2w6gWqKXzBRfo0Sij2sqCf/VMIuFMzt9iBjAH/GY6HNy1dDULpN0vhiYC0gSk8lpP1SRfMQ0s8DSzl/PCOHq6ouDcR9xEXgk7UA5O36HdMLw9E+eWZcmC/pLbidpw6cz0aqiBmPVrORZEY/Jj9AhwEtVDin6WZNlS5fOHE/Euai1hI0rrhj0X9qakyuUYoVYZmEM/aPUs/xSp5/SW6K8ifPixDQWKc3yz1PLCHhETb5iF+Xn8Vvg=
+    secure: f72d1c3f-da42-4644-bd4d-1e98abc3b14a
   app: asd-dash
   on:
     repo: uva-cs3240-s20/project-102-asdfghjkl
