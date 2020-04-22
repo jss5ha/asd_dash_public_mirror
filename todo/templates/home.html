@@ -83,103 +83,144 @@
     </div>
   </div>
 </div>
+  
+<div class="container">
+		
+  <div class="container-fluid" id="wrapper">
+    <div class="page-content page-container" id="page-content">
+      <div class="padding">
+        <div class="row container d-flex justify-content-center">
+          <div class="col-lg-12">
+            <div class="card px-3">
+              <div class="card-body">
+                <h4 class="card-title">Todo list</h4>
 
-              <!-- todo  -->
-                <div class="card-header py-3">
-                  <h6 class="m-0 font-weight-bold text-primary">Todo list</h6>
-                </div>
-                <div class="card-body">
-                  <div class="card text-center">
-                    <div class="card-group" style = "margin-top: 20px;">
-                      <div class="card text-center" style="width: 18rem;">
-                        <div class="card-header">
-                          School
-                        </div>
-                        {% for todo in todo_list %}
-                        {% if todo.group == "school" %}
-                        {% if todo.complete %}
-                        <a href="{% url 'deselect' todo.id %}">
-                          <li class="list-group-item todo-completed">{{todo.due_date}} --
-                            {{ todo.text }} -- {{todo.group}}</li>
-                        </a>
-                        {% else %}
-                        <a href="{% url 'complete' todo.id %}">
-                          <li class="list-group-item">{{todo.due_date}} -- {{ todo.text }} --
-                            {{todo.group}}</li>
-                        </a>
-                        {% endif %}
-                        {% endif %}
-                        {% endfor %}
+                <form action="{% url 'add' %}" method="POST" role="form">
+                  {% csrf_token %}
+                  <div class="form-group">
+                    <div class="input-group">
+                      <div style = "width: 100%; margin-bottom: 10px;">{{ form.text }}
                       </div>
-  
-                      <div class="card text-center" style="width: 18rem;">
-                        <div class="card-header">
-                          Leisure
-                        </div>
-                        {% for todo in todo_list %}
-                        {% if todo.group == "leisure" %}
-                        {% if todo.complete %}
-                        <a href="{% url 'deselect' todo.id %}">
-                          <li class="list-group-item todo-completed">{{todo.due_date}} --
-                            {{ todo.text }} -- {{todo.group}}</li>
-                        </a>
-                        {% else %}
-                        <a href="{% url 'complete' todo.id %}">
-                          <li class="list-group-item">{{todo.due_date}} -- {{ todo.text }} --
-                            {{todo.group}}</li>
-                        </a>
-                        {% endif %}
-                        {% endif %}
-                        {% endfor %}
-                      </div>
-  
-                      <div class="card text-center" style="width: 18rem;">
-                        <div class="card-header">
-                          Financial
-                        </div>
-                        {% for todo in todo_list %}
-                        {% if todo.group == "financial" %}
-                        {% if todo.complete %}
-                        <a href="{% url 'deselect' todo.id %}">
-                          <li class="list-group-item todo-completed">{{todo.due_date}} --
-                            {{ todo.text }} -- {{todo.group}}Done</li>
-                        </a>
-                        {% else %}
-                        <a href="{% url 'complete' todo.id %}">
-                          <li class="list-group-item">{{todo.due_date}} -- {{ todo.text }} --
-                            {{todo.group}}</li>
-                        </a>
-                        {% endif %}
-                        {% endif %}
-                        {% endfor %}
-                      </div>
-  
-                      <div class="card text-center" style="width: 18rem;">
-                        <div class="card-header">
-                          Miscellaneous
-                        </div>
-                        {% for todo in todo_list %}
-                        {% if todo.group == "misc" %}
-                        {% if todo.complete %}
-                        <a href="{% url 'deselect' todo.id %}">
-                          <li class="list-group-item todo-completed">{{todo.due_date}} --
-                            {{ todo.text }} -- {{todo.group}}Done</li>
-                        </a>
-                        {% else %}
-                        <a href="{% url 'complete' todo.id %}">
-                          <li class="list-group-item">{{todo.due_date}} -- {{ todo.text }} --
-                            {{todo.group}}</li>
-                        </a>
-                        {% endif %}
-                        {% endif %}
-                        {% endfor %}
+                        {{form.date}}
+                      <div style = "margin-left: 5px;"> </div>
+                        {{form.group}}
+                      
+                      <div style = "margin: auto; margin-left: 50px;">
+                        <span class="input-group-btn">
+                          <button type="submit"
+                            class="add btn btn-primary font-weight-bold todo-list-add-btn">ADD</button>
+                          <div class="btn-group">
+                            <a href="{% url 'deletecomplete' %}"><button type="button"
+                                class="btn btn-warning">
+                                <i class="glyphicon glyphicon-trash"></i> DELETE
+                                COMPLETED
+                              </button></a>
+                          </div>
+                          <div class="btn-group">
+                            <a href="{% url 'deleteall' %}"><button type="button"
+                                class="btn btn-warning">
+                                <i class="glyphicon glyphicon-trash"></i> DELETE ALL
+                              </button></a>
+                        </span>
                       </div>
                     </div>
-                    asdfasdf
+                  </div>
+                </form>
+
+                <div class="card-group" style = "margin-top: 20px;">
+                  <div class="card text-center" style="width: 18rem;">
+                    <div class="card-header">
+                      School
+                    </div>
+                    {% for todo in todo_list %}
+                    {% if todo.group == "school" %}
+                    {% if todo.complete %}
+                    <a href="{% url 'deselect' todo.id %}">
+                      <li class="list-group-item todo-completed">{{todo.due_date}} --
+                        {{ todo.text }} -- {{todo.group}}</li>
+                    </a>
+                    {% else %}
+                    <a href="{% url 'complete' todo.id %}">
+                      <li class="list-group-item">{{todo.due_date}} -- {{ todo.text }} --
+                        {{todo.group}}</li>
+                    </a>
+                    {% endif %}
+                    {% endif %}
+                    {% endfor %}
+                  </div>
+
+                  <div class="card text-center" style="width: 18rem;">
+                    <div class="card-header">
+                      Leisure
+                    </div>
+                    {% for todo in todo_list %}
+                    {% if todo.group == "leisure" %}
+                    {% if todo.complete %}
+                    <a href="{% url 'deselect' todo.id %}">
+                      <li class="list-group-item todo-completed">{{todo.due_date}} --
+                        {{ todo.text }} -- {{todo.group}}</li>
+                    </a>
+                    {% else %}
+                    <a href="{% url 'complete' todo.id %}">
+                      <li class="list-group-item">{{todo.due_date}} -- {{ todo.text }} --
+                        {{todo.group}}</li>
+                    </a>
+                    {% endif %}
+                    {% endif %}
+                    {% endfor %}
+                  </div>
+
+                  <div class="card text-center" style="width: 18rem;">
+                    <div class="card-header">
+                      Financial
+                    </div>
+                    {% for todo in todo_list %}
+                    {% if todo.group == "financial" %}
+                    {% if todo.complete %}
+                    <a href="{% url 'deselect' todo.id %}">
+                      <li class="list-group-item todo-completed">{{todo.due_date}} --
+                        {{ todo.text }} -- {{todo.group}}Done</li>
+                    </a>
+                    {% else %}
+                    <a href="{% url 'complete' todo.id %}">
+                      <li class="list-group-item">{{todo.due_date}} -- {{ todo.text }} --
+                        {{todo.group}}</li>
+                    </a>
+                    {% endif %}
+                    {% endif %}
+                    {% endfor %}
+                  </div>
+
+                  <div class="card text-center" style="width: 18rem;">
+                    <div class="card-header">
+                      Miscellaneous
+                    </div>
+                    {% for todo in todo_list %}
+                    {% if todo.group == "misc" %}
+                    {% if todo.complete %}
+                    <a href="{% url 'deselect' todo.id %}">
+                      <li class="list-group-item todo-completed">{{todo.due_date}} --
+                        {{ todo.text }} -- {{todo.group}}Done</li>
+                    </a>
+                    {% else %}
+                    <a href="{% url 'complete' todo.id %}">
+                      <li class="list-group-item">{{todo.due_date}} -- {{ todo.text }} --
+                        {{todo.group}}</li>
+                    </a>
+                    {% endif %}
+                    {% endif %}
+                    {% endfor %}
+                  </div>
                 </div>
-              
-              asdfasdf
               </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
 
 
       {% else %}
