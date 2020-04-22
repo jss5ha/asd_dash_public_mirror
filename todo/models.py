@@ -17,7 +17,7 @@ class Todo(models.Model):
     text = models.CharField(max_length=100)
     complete = models.BooleanField(default=False)
     due_date = models.DateField(default=datetime.datetime.now)
-    group = models.CharField(max_length=100, default="school")
+    group = models.CharField(max_length=100, blank = False)
 
     def __str__(self):
         return self.text

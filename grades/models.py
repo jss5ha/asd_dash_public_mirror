@@ -43,4 +43,4 @@ class pointAssignment (models.Model):
     course = models.ForeignKey(course, on_delete=models.CASCADE)
     point_ass_name = models.CharField(max_length=100)
     points_achieved = models.IntegerField(default = 0)
-    points_total = models.IntegerField(default = 0)
+    points_total = models.IntegerField(default = 1)
