@@ -11,15 +11,16 @@ class DataInput(forms.DateInput):
 
 class TodoForm(forms.Form):
     GROUP_CHOICES = (
-        ('school', 'School'),
-        ('leisure', 'Leisure'),
-        ('financial', 'Financial'),
-        ('misc', 'Miscellaneous')
+        ('','Select Todo Type'),
+        ('School', 'School'),
+        ('Leisure', 'Leisure'),
+        ('Financial', 'Financial'),
+        ('Misc', 'Miscellaneous')
     )
 
     text = forms.CharField(max_length=200, widget=forms.TextInput(
             attrs={'class': 'form-control',
-                   'placeholder': 'Enter todo e.g. Delete junk files',
+                   'placeholder': 'Enter Todo e.g. Delete junk files',
                    'aria-label': 'Todo',
                    'aria-describedby': 'add-btn'}))
     date = forms.DateField(widget=DataInput)
