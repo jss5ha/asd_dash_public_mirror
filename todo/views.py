@@ -16,7 +16,7 @@ def index(request):
         todo_list = Todo.objects.none()
         form = TodoForm()
         context = {'todo_list' : todo_list, 'form' : form}
-        return render(request, 'todo/index.html', context)
+        return render(request, 'home.html', context)
 
 @require_POST
 def addTodo(request):
