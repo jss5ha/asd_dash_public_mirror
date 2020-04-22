@@ -12,10 +12,9 @@
   <!-- Bootstrap CSS -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.10/css/all.css">
-  <link rel="stylesheet" type="text/css" href="{'% static 'cal/css/styles.css' %}">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <link rel="stylesheet" href="{% static 'calendarMod/styles.css' %}" />
-  <title>Django Calendar App</title>
+  <title>Dash Calendar</title>
 </head>
 <style>
   .form {
@@ -107,7 +106,7 @@
 
 <body>
   <nav class="navbar navbar-expand-lg navbar-dark" style = "background: #3B8DE1;">
-    <a class="navbar-brand" href="/">asd-dash</a>
+    <a class="navbar-brand" href="">Dash</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText"
         aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -153,6 +152,27 @@
         </ul>
     </div>
 </nav>
+
+
+	<!-- Logout Modal-->
+  <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">×</span>
+        </button>
+      </div>
+      <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+        <a class="btn btn-primary" href="{% url 'logout' %}">Logout</a>
+      </div>
+    </div>
+  </div>
+</div>
 
   {% block content %}
   {% endblock %}
