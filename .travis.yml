@@ -8,7 +8,7 @@ script:
 deploy:
   provider: heroku
   api_key:
-    secure: f72d1c3f-da42-4644-bd4d-1e98abc3b14a
+    secure: d6d993d1-f231-4803-ac84-a7cbfbc40b19
   app: asd-dash
   on:
     repo: uva-cs3240-s20/project-102-asdfghjkl
