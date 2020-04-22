@@ -4,8 +4,6 @@ python:
 install:
 - pip install -r requirements-travis.txt
 script:
-- python manage.py makemigrations
-- python manage.py migrate
 - python manage.py test
 deploy:
   provider: heroku
@@ -17,4 +15,4 @@ deploy:
 services:
   - postgresql
 before_script:
-  - psql -c 'create database dash;' -U postgres
+  - psql -c 'create database travis_ci_test;' -U postgres
