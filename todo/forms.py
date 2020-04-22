@@ -12,10 +12,10 @@ class DataInput(forms.DateInput):
 class TodoForm(forms.Form):
     GROUP_CHOICES = (
         ('','Select Todo Type'),
-        ('school', 'School'),
-        ('leisure', 'Leisure'),
-        ('financial', 'Financial'),
-        ('misc', 'Miscellaneous')
+        ('School', 'School'),
+        ('Leisure', 'Leisure'),
+        ('Financial', 'Financial'),
+        ('Misc', 'Miscellaneous')
     )
 
     text = forms.CharField(max_length=200, widget=forms.TextInput(

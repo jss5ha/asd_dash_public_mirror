@@ -5,8 +5,8 @@ from django.contrib.auth.models import User
 from .views import index, deleteAll
 # Create your tests here.
 
-def create_todo(thing, user):
-    return Todo.objects.create(text=thing, owner=user)
+def create_todo(thing, group,user):
+    return Todo.objects.create(text=thing, group=group ,owner=user)
 
 class todo_tests(TestCase):
     def setUp(self):
@@ -15,7 +15,7 @@ class todo_tests(TestCase):
         self.user2 = User.objects.create_user(username='loser')
 
     def test_connection(self):
-        create_todo('task', self.user)
+        create_todo('task', 'School',self.user)
         request = self.factory.get('/todo/index.html')
         request.user = self.user
         response = index(request)
@@ -29,21 +29,21 @@ class MoreTodoTests(TestCase):
 
 
     def test_user_grade(self):
-        create_todo('task', self.user)
+        create_todo('task', 'School', self.user)
         request = self.factory.get('/todo/index.html')
         request.user = self.user
-        response = index(request)
-        self.assertEqual(response.content.__contains__('task'.encode()), True)
+        response = self.client.get(reverse('index'))
+        self.assertQuerysetEqual(response.context['todo_list'], 'task')
 
     def test_not_user_grade(self):
-        create_todo('task1', self.user)
+        create_todo('task1', 'School',self.user)
         request = self.factory.get('/todo/index.html')
         request.user = self.user2
         response = index(request)
         self.assertEqual(response.content.__contains__(''.encode()), True)
 
     def test_del_grade(self):
-        create_todo('task2',self.user)
+        create_todo('task2','School',self.user)
         request = self.factory.get('/todo/index.html')
         request.user = self.user
         response = deleteAll(request)
