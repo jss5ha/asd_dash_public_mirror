@@ -143,7 +143,7 @@ aria-hidden="true">
 												School
 											</div>
 											{% for todo in todo_list %}
-											{% if todo.group == "school" %}
+											{% if todo.group == "School" %}
 											{% if todo.complete %}
 											<a href="{% url 'deselect' todo.id %}">
 												<li class="list-group-item todo-completed">{{todo.due_date}} --
@@ -164,7 +164,7 @@ aria-hidden="true">
 												Leisure
 											</div>
 											{% for todo in todo_list %}
-											{% if todo.group == "leisure" %}
+											{% if todo.group == "Leisure" %}
 											{% if todo.complete %}
 											<a href="{% url 'deselect' todo.id %}">
 												<li class="list-group-item todo-completed">{{todo.due_date}} --
@@ -185,7 +185,7 @@ aria-hidden="true">
 												Financial
 											</div>
 											{% for todo in todo_list %}
-											{% if todo.group == "financial" %}
+											{% if todo.group == "Financial" %}
 											{% if todo.complete %}
 											<a href="{% url 'deselect' todo.id %}">
 												<li class="list-group-item todo-completed">{{todo.due_date}} --
@@ -206,7 +206,7 @@ aria-hidden="true">
 												Miscellaneous
 											</div>
 											{% for todo in todo_list %}
-											{% if todo.group == "misc" %}
+											{% if todo.group == "Misc" %}
 											{% if todo.complete %}
 											<a href="{% url 'deselect' todo.id %}">
 												<li class="list-group-item todo-completed">{{todo.due_date}} --
