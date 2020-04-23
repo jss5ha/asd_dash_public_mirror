@@ -55,12 +55,12 @@ a:link{
     text-decoration: none;
 }
 
-.button2:hover{
+#bruh2:hover{
     color: white;
     background-color:  #17a2b8;
    /* background: linear-gradient(45deg, #093233, #fc00ff);; */
 }
-
+/* 
 button{
     display: inline-block;
     width: 200px;
@@ -71,7 +71,7 @@ button{
     border-radius: 5px;
     color: gray;
     font-weight: bold;
-    /* float: right; */
+    float: right;
     font-size: 20px;
     border: 2px solid black;
 }
@@ -80,6 +80,14 @@ button{
     outline: none;
     color: black;
     background-color: transparent;
+    box-shadow: 0 0 0 0;
+    border: 2px solid #17a2b8;
+  } */
+
+  #bruh2 {
+    outline: none;
+    color: black;
+    background-color: white;
     box-shadow: 0 0 0 0;
     border: 2px solid #17a2b8;
   }

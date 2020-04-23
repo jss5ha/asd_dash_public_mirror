@@ -5,11 +5,12 @@
 <head>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="{% static 'calendarMod/styles.css' %}" />
+    <title>Dash</title>
 </head>
 
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark" style = "background: #3B8DE1;">
-        <a class="navbar-brand" href="..">Dash</a>
+        <a class="navbar-brand" href="/">Dash</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText"
             aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -100,7 +101,7 @@
                 <div class="upcoming" style="font-size: 20px;">
                     Here are your upcoming events:
                     <div class="delete" style = "position: relative; top: -5px;">
-                        <a class="btn btn-info left" href="{% url 'delete_all' %}"> Delete All</a> <br>
+                        <a class="btn btn-info left" id = "bruh2" href="{% url 'delete_all' %}"> Delete All</a> <br>
                     </div>
                 </div>
             </div>
@@ -155,7 +156,7 @@
 
                     </form> -->
                     <div class="view" style="padding-top: 5px;">
-                        <a class="btn btn-info left" href="{% url 'auth' %}">Import Events</a>
+                        <a class="btn btn-info left" id = "bruh2" href="{% url 'auth' %}">Import Events</a>
                     </div>
 
                 </div>
@@ -170,7 +171,7 @@
                         </form>
                     </div> -->
                         <div class="view" style="padding-top: 43px;">
-                            <a class="btn btn-info left" href="{% url 'calendar' %}">View Calendar</a>
+                            <a class="btn btn-info left" id = "bruh2" href="{% url 'calendar' %}">View Calendar</a>
                         </div>
                     </div>
                 </div>
@@ -185,7 +186,7 @@
                             </form>
                         </div> -->
                         <div class="view" style="padding-top: 14px;">
-                            <a class="btn btn-info left" href="{% url 'new_event' %}">Create New Event</a>
+                            <a class="btn btn-info left" id = "bruh2" href="{% url 'new_event' %}">Create New Event</a>
                         </div>
                     </div>
                 </div>
