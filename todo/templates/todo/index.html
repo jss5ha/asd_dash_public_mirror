@@ -12,7 +12,7 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>To-do View </title>
-
+	<script src="https://kit.fontawesome.com/a076d05399.js"></script>
 	<link href="https://fonts.googleapis.com/css?family=Oswald" rel="stylesheet">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 	<!-- Bootstrap CSS -->
@@ -60,7 +60,7 @@
 	
 				<a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
 				  <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-				  Logout asdfasdf
+				  Logout 
 				</a>
 			  </div>
 			</li>
@@ -143,7 +143,7 @@ aria-hidden="true">
 												School
 											</div>
 											{% for todo in todo_list %}
-											{% if todo.group == "school" %}
+											{% if todo.group == "School" %}
 											{% if todo.complete %}
 											<a href="{% url 'deselect' todo.id %}">
 												<li class="list-group-item todo-completed">{{todo.due_date}} --
@@ -164,7 +164,7 @@ aria-hidden="true">
 												Leisure
 											</div>
 											{% for todo in todo_list %}
-											{% if todo.group == "leisure" %}
+											{% if todo.group == "Leisure" %}
 											{% if todo.complete %}
 											<a href="{% url 'deselect' todo.id %}">
 												<li class="list-group-item todo-completed">{{todo.due_date}} --
@@ -185,7 +185,7 @@ aria-hidden="true">
 												Financial
 											</div>
 											{% for todo in todo_list %}
-											{% if todo.group == "financial" %}
+											{% if todo.group == "Financial" %}
 											{% if todo.complete %}
 											<a href="{% url 'deselect' todo.id %}">
 												<li class="list-group-item todo-completed">{{todo.due_date}} --
@@ -206,7 +206,7 @@ aria-hidden="true">
 												Miscellaneous
 											</div>
 											{% for todo in todo_list %}
-											{% if todo.group == "misc" %}
+											{% if todo.group == "Misc" %}
 											{% if todo.complete %}
 											<a href="{% url 'deselect' todo.id %}">
 												<li class="list-group-item todo-completed">{{todo.due_date}} --
@@ -326,7 +326,15 @@ aria-hidden="true">
 	{%endif%}
 
 	</footer>
-
+	
 </body>
-
+<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+	integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+	crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+	integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+	crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+	integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+	crossorigin="anonymous"></script>
 </html>

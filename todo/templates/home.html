@@ -84,6 +84,128 @@
   </div>
 </div>
 
+              <!-- todo  -->
+                <div class="card-header py-3">
+                  <h6 class="m-0 font-weight-bold text-primary">Todo list</h6>
+                </div>
+                <div class="card-body">
+                  <div class="card text-center">
+                    <div class="card-group" style = "margin-top: 20px;">
+                      <div class="card text-center" style="width: 18rem;">
+                        <div class="card-header">
+                          School
+                        </div>
+                        {% for todo in todo_list %}
+                        {% if todo.group == "school" %}
+                        {% if todo.complete %}
+                        <a href="{% url 'deselect' todo.id %}">
+                          <li class="list-group-item todo-completed">{{todo.due_date}} --
+                            {{ todo.text }} -- {{todo.group}}</li>
+                        </a>
+                        {% else %}
+                        <a href="{% url 'complete' todo.id %}">
+                          <li class="list-group-item">{{todo.due_date}} -- {{ todo.text }} --
+                            {{todo.group}}</li>
+                        </a>
+                        {% endif %}
+                        {% endif %}
+                        {% endfor %}
+                      </div>
+  
+                      <div class="card text-center" style="width: 18rem;">
+                        <div class="card-header">
+                          Leisure
+                        </div>
+                        {% for todo in todo_list %}
+                        {% if todo.group == "leisure" %}
+                        {% if todo.complete %}
+                        <a href="{% url 'deselect' todo.id %}">
+                          <li class="list-group-item todo-completed">{{todo.due_date}} --
+                            {{ todo.text }} -- {{todo.group}}</li>
+                        </a>
+                        {% else %}
+                        <a href="{% url 'complete' todo.id %}">
+                          <li class="list-group-item">{{todo.due_date}} -- {{ todo.text }} --
+                            {{todo.group}}</li>
+                        </a>
+                        {% endif %}
+                        {% endif %}
+                        {% endfor %}
+                      </div>
+  
+                      <div class="card text-center" style="width: 18rem;">
+                        <div class="card-header">
+                          Financial
+                        </div>
+                        {% for todo in todo_list %}
+                        {% if todo.group == "financial" %}
+                        {% if todo.complete %}
+                        <a href="{% url 'deselect' todo.id %}">
+                          <li class="list-group-item todo-completed">{{todo.due_date}} --
+                            {{ todo.text }} -- {{todo.group}}Done</li>
+                        </a>
+                        {% else %}
+                        <a href="{% url 'complete' todo.id %}">
+                          <li class="list-group-item">{{todo.due_date}} -- {{ todo.text }} --
+                            {{todo.group}}</li>
+                        </a>
+                        {% endif %}
+                        {% endif %}
+                        {% endfor %}
+                      </div>
+  
+                      <div class="card text-center" style="width: 18rem;">
+                        <div class="card-header">
+                          Miscellaneous
+                        </div>
+                        {% for todo in todo_list %}
+                        {% if todo.group == "misc" %}
+                        {% if todo.complete %}
+                        <a href="{% url 'deselect' todo.id %}">
+                          <li class="list-group-item todo-completed">{{todo.due_date}} --
+                            {{ todo.text }} -- {{todo.group}}Done</li>
+                        </a>
+                        {% else %}
+                        <a href="{% url 'complete' todo.id %}">
+                          <li class="list-group-item">{{todo.due_date}} -- {{ todo.text }} --
+                            {{todo.group}}</li>
+                        </a>
+                        {% endif %}
+                        {% endif %}
+                        {% endfor %}
+                      </div>
+                    </div>
+                    asdfasdf
+                </div>
+              
+              asdfasdf
+              </div>
+
+
+      {% else %}
+      <link rel="icon" type="image/png" href="static/images/icons/dash_logo.png" />
+      <link rel="stylesheet" type="text/css" href="static/css/util.css">
+      <link rel="stylesheet" type="text/css" href="static/css/main.css">
+      <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+      <!-- <link rel="stylesheet" media="screen" href="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/demo/css/style.css"> -->
+      <link rel="stylesheet" media="screen" href="static/css/login.css">
+      <div id="particles-js">
+        <div class="LoginContainer gradient-border" id="box">
+          <div class="loginInner">
+            <form class="login100-form validate-form flex-sb flex-w">
+              <span class="login100-form-title p-b-53">Welcome to Dash</span>
+              <a href="{% url 'social:begin' 'google-oauth2' %}" class="btn-google m-b-20">
+                <img
+                  src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/512px-Google_%22G%22_Logo.svg.png">Login
+                with Google</a>
+            </form>
+          </div>
+        </div>
+      </div>
+  </div>
+
+
 
   <!-- scripts -->
   <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>

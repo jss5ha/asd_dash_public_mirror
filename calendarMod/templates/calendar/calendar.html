@@ -5,9 +5,9 @@
 {% block content %}
 {% csrf_token %}
 <div class="clearfix">
-    <a class="btn btn-info left" href="{% url 'calendar' %}?{{ prev_month }}"> Previous Month </a>
-    <a class="btn btn-info middle" href="{% url 'index2' %}"> List View</a>
-    <a class="btn btn-info right" href="{% url 'calendar' %}?{{ next_month }}"> Next Month </a>
+    <a class="btn btn-info left" id = "bruh2" href="{% url 'calendar' %}?{{ prev_month }}"> Previous Month </a>
+    <a class="btn btn-info middle" id = "bruh2" href="{% url 'index2' %}"> List View</a>
+    <a class="btn btn-info right" id = "bruh2" href="{% url 'calendar' %}?{{ next_month }}"> Next Month </a>
     
 </div>
 {{ calendar }}
