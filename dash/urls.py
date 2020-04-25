@@ -16,6 +16,8 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from django.contrib.auth.views import LogoutView
+from django.conf.urls.static import static
+from django.conf import settings
 from . import settings, views
 
 urlpatterns = [
@@ -27,4 +29,4 @@ urlpatterns = [
     path('', views.home, name='home'),  # when nothing is matched, default to home inside todo/templates
     path('logout/', LogoutView.as_view(template_name=settings.LOGOUT_REDIRECT_URL), name='logout'),
     path('home/', views.home, name='home'),
-]
+] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
