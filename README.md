@@ -1,5 +1,9 @@
 # Dash - Your Personal Dashboard
 
+### Tasks
+-[] Licenses and citations
+-[] Add brief explanations to homepage
+
 ##  REFERENCES
 **Title:** Django  
 **Author:** https://github.com/django/django/blob/master/AUTHORS  
@@ -8,3 +12,9 @@
 **URL:** https://github.com/django/django  
 **Software License:** BSD  
 
+**Title:** PostgreSQL
+**Author:** https://www.postgresql.org/community/contributors/
+**Date:** April 25, 2020  
+**Code version:** 9.4  
+**URL:** https://www.postgresql.org/ 
+**Software License:** PostgreSQL License  
