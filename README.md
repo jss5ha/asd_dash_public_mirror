@@ -19,3 +19,9 @@
 **URL:** https://www.postgresql.org/ 
 **Software License:** PostgreSQL License  
 
+**Title:** particles.js  
+**Author:** Vincent Garreu
+**Date:** April 25, 2020  
+**Code version:** 2.0.0  
+**URL:** https://github.com/VincentGarreau/particles.js/ 
+**Software License:** MIT License  
