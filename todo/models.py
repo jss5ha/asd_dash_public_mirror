@@ -4,6 +4,8 @@ import datetime
 from django.contrib.auth.models import User
 from django.forms import ModelForm
 
+#THIS IS A TEST
+
 #
 # GROUP_CHOICES = (
 #         ('school', 'School'),
