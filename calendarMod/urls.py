@@ -1,6 +1,4 @@
 from django.urls import path
-from django.conf import settings
-from django.conf.urls.static import static
 from . import views
 
 urlpatterns = [
@@ -13,4 +11,4 @@ urlpatterns = [
     path('delete/', views.deleteall, name = 'delete_all'),
     path('delete/<int:event_id>', views.delete_event, name = 'delete_event'),
     path('gohome2', views.gohome2, name = "gohome2"),
-] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+]
