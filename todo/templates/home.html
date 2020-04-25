@@ -86,100 +86,61 @@
 
               <!-- todo  -->
                 <div class="card-header py-3">
-                  <h6 class="m-0 font-weight-bold text-primary">Todo list</h6>
+                    <h6 class="m-0 font-weight-bold text-primary"><center>Click the icons below to use your Dashboard!</center></h6>
                 </div>
                 <div class="card-body">
                   <div class="card text-center">
                     <div class="card-group" style = "margin-top: 20px;">
                       <div class="card text-center" style="width: 18rem;">
                         <div class="card-header">
-                          School
+                          Todo
                         </div>
-                        {% for todo in todo_list %}
-                        {% if todo.group == "school" %}
-                        {% if todo.complete %}
-                        <a href="{% url 'deselect' todo.id %}">
-                          <li class="list-group-item todo-completed">{{todo.due_date}} --
-                            {{ todo.text }} -- {{todo.group}}</li>
-                        </a>
-                        {% else %}
-                        <a href="{% url 'complete' todo.id %}">
-                          <li class="list-group-item">{{todo.due_date}} -- {{ todo.text }} --
-                            {{todo.group}}</li>
-                        </a>
-                        {% endif %}
-                        {% endif %}
-                        {% endfor %}
+                          <div>
+                              <a href="/todo">
+                          <img src="https://img.icons8.com/windows/96/000000/scroll.png"/>
+                              </a>>
+                          </div>
                       </div>
   
                       <div class="card text-center" style="width: 18rem;">
                         <div class="card-header">
-                          Leisure
+                          Grades
                         </div>
-                        {% for todo in todo_list %}
-                        {% if todo.group == "leisure" %}
-                        {% if todo.complete %}
-                        <a href="{% url 'deselect' todo.id %}">
-                          <li class="list-group-item todo-completed">{{todo.due_date}} --
-                            {{ todo.text }} -- {{todo.group}}</li>
-                        </a>
-                        {% else %}
-                        <a href="{% url 'complete' todo.id %}">
-                          <li class="list-group-item">{{todo.due_date}} -- {{ todo.text }} --
-                            {{todo.group}}</li>
-                        </a>
-                        {% endif %}
-                        {% endif %}
-                        {% endfor %}
+                          <div>
+                              <a href="/grades">
+                          <img src="https://img.icons8.com/windows/96/000000/grades.png"/>
+                              </a>
+                          </div>
                       </div>
   
                       <div class="card text-center" style="width: 18rem;">
                         <div class="card-header">
-                          Financial
+                          Events
                         </div>
-                        {% for todo in todo_list %}
-                        {% if todo.group == "financial" %}
-                        {% if todo.complete %}
-                        <a href="{% url 'deselect' todo.id %}">
-                          <li class="list-group-item todo-completed">{{todo.due_date}} --
-                            {{ todo.text }} -- {{todo.group}}Done</li>
-                        </a>
-                        {% else %}
-                        <a href="{% url 'complete' todo.id %}">
-                          <li class="list-group-item">{{todo.due_date}} -- {{ todo.text }} --
-                            {{todo.group}}</li>
-                        </a>
-                        {% endif %}
-                        {% endif %}
-                        {% endfor %}
+                          <div>
+                              <a href="/calendar">
+                         <img src="https://img.icons8.com/windows/96/000000/calendar-27.png"/>
+                              </a>
+                          </div>
                       </div>
   
                       <div class="card text-center" style="width: 18rem;">
                         <div class="card-header">
-                          Miscellaneous
+                          Calendar
                         </div>
-                        {% for todo in todo_list %}
-                        {% if todo.group == "misc" %}
-                        {% if todo.complete %}
-                        <a href="{% url 'deselect' todo.id %}">
-                          <li class="list-group-item todo-completed">{{todo.due_date}} --
-                            {{ todo.text }} -- {{todo.group}}Done</li>
-                        </a>
-                        {% else %}
-                        <a href="{% url 'complete' todo.id %}">
-                          <li class="list-group-item">{{todo.due_date}} -- {{ todo.text }} --
-                            {{todo.group}}</li>
-                        </a>
-                        {% endif %}
-                        {% endif %}
-                        {% endfor %}
+                          <div>
+                              <a href="/calendar/view">
+                              <img src="https://img.icons8.com/windows/96/000000/calendar.png"/>
+                              </a>
+                          </div>
                       </div>
                     </div>
-                    asdfasdf
                 </div>
-              
-              asdfasdf
-              </div>
+                    <center>
+                    <p>&copy asdfghjkl 2020</p>
+                    <a href="icons8.com/">Icons courtesy of icons8.com</a>
+                    </center>
+                </div>
 
 
       {% else %}
