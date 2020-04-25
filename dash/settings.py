@@ -32,7 +32,7 @@ SECRET_KEY = '3$*rou8bp)mk2z@e6&3$ehq&2lg0=o&!bj(@)d6*=kcy#ow@9j'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 # https://stackoverflow.com/questions/12027545/determine-if-django-is-running-under-the-development-server/12028260
-DEBUG = False
+DEBUG = (sys.argv[1] == 'runserver' or sys.argv[1] == 'runsslserver')
 TEST_SERVER = (sys.argv[1] == 'runserver' or sys.argv[1] == 'runsslserver')
 ALLOWED_HOSTS = ['*']
 
