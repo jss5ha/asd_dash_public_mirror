@@ -17,74 +17,74 @@
 
 <body class = "bruh">
    
-    <nav class="navbar navbar-expand-lg navbar-dark" style="background: #3B8DE1;">
-        <a class="navbar-brand" href="..">Dash</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText"
-          aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarText">
-          <ul class="navbar-nav mr-auto">
     
-            <li class="nav-item">
-              <a class="nav-link" href="/todo">To-Do</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="/grades">Grades</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="/calendar">Events</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="/calendar/view">Calendar</a>
-            </li>
-          </ul>
-    
-          <!-- Topbar Navbar -->
-          <ul class="navbar-nav ml-auto">
-    
-    
-            <!-- Nav Item - User Information -->
-            <li class="nav-item dropdown no-arrow">
-              <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown"
-                aria-haspopup="true" aria-expanded="false">
-                <span class="mr-2 d-none d-lg-inline text-gray-600">{{user.get_short_name}}</span>
-              </a>
-              <!-- Dropdown - User Information -->
-              <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
-    
-                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
-                  <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-                  Logout
-                </a>
-              </div>
-            </li>
-    
-          </ul>
+{% if user.is_authenticated %}
+<nav class="navbar navbar-expand-lg navbar-dark" style="background: #3B8DE1;">
+  <a class="navbar-brand" href="..">Dash</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText"
+    aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarText">
+    <ul class="navbar-nav mr-auto">
+
+      <li class="nav-item">
+        <a class="nav-link" href="/todo">To-Do</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/grades">Grades</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/calendar">Events</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/calendar/view">Calendar</a>
+      </li>
+    </ul>
+
+    <!-- Topbar Navbar -->
+    <ul class="navbar-nav ml-auto">
+
+
+      <!-- Nav Item - User Information -->
+      <li class="nav-item dropdown no-arrow">
+        <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown"
+          aria-haspopup="true" aria-expanded="false">
+          <span class="mr-2 d-none d-lg-inline text-gray-600">{{user.get_short_name}}</span>
+        </a>
+        <!-- Dropdown - User Information -->
+        <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
+
+          <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
+            <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+            Logout
+          </a>
         </div>
-      </nav>
+      </li>
+
+    </ul>
+  </div>
+</nav>
 
 <!-- Logout Modal-->
 <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
 aria-hidden="true">
 <div class="modal-dialog" role="document">
-  <div class="modal-content">
-    <div class="modal-header">
-      <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
-      <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-        <span aria-hidden="true">×</span>
-      </button>
-    </div>
-    <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
-    <div class="modal-footer">
-      <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-      <a class="btn btn-primary" href="{% url 'logout' %}">Logout</a>
-    </div>
-  </div>
+<div class="modal-content">
+<div class="modal-header">
+<h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+<button class="close" type="button" data-dismiss="modal" aria-label="Close">
+  <span aria-hidden="true">×</span>
+</button>
+</div>
+<div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+<div class="modal-footer">
+<button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+<a class="btn btn-primary" href="{% url 'logout' %}">Logout</a>
 </div>
 </div>
-{% if user.is_authenticated %}
-
+</div>
+</div>
     <div class="container">
         <div class="container" >
             <div class="container"  id = "container2">
@@ -176,10 +176,44 @@ aria-hidden="true">
     {% endif %}
     {% else %}
     
-    <h1>Please log in to see your Personal Dashboard</h1>
-    <a href="{% url 'social:begin' 'google-oauth2' %}">
-        Login
-    </a>
+    <link rel="icon" type="image/png" href="static/images/icons/dash_logo.png" />
+    <link rel="stylesheet" type="text/css" href="{% static 'css/util.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">
+    <meta name="viewport"
+      content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <!-- <link rel="stylesheet" media="screen" href="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/demo/css/style.css"> -->
+    <link rel="stylesheet" media="screen" href="{% static 'css/login.css' %}">
+    <div id="particles-js">
+      <div class="LoginContainer gradient-border" id="box">
+        <div class="loginInner">
+          <form class="login100-form validate-form flex-sb flex-w">
+            <span class="login100-form-title p-b-53">Welcome to Dash</span>
+            <a href="{% url 'social:begin' 'google-oauth2' %}" class="btn-google m-b-20">
+              <img
+                src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/512px-Google_%22G%22_Logo.svg.png">Login
+              with Google</a>
+          </form>
+        </div>
+      </div>
+    </div>
+    </div>
+  
+  
+  
+    <!-- scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/demo/js/app.js"></script>
+  
+    <!-- stats.js -->
+    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/demo/js/lib/stats.js"></script>
+    <script>
+      particlesJS.load('particles-js', "{% static 'particles.json' %}", function () {
+        console.log('callback - particles.js config loaded');
+      });
+      requestAnimationFrame(update);
+    </script>
+
+</footer>
     {% endif %}
     <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
     integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"

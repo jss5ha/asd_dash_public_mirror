@@ -5,15 +5,22 @@ Event
 {% endblock %}
 
 {% block content %}
-<div class="clearfix">
-  <a class="btn btn-info left" href="{% url 'index2' %}"> List View </a>
+<div class = "row" style = "display: inline;">
+<div class="clearfix" style = "float: left;">
+  <a class="btn btn-info left" href="{% url 'index2' %}" id = "bruh2"> List View </a>
 </div>
-
+<div class="clearfix" style = "float: right;">
+  <a class="btn btn-info right" href="{% url 'calendar' %}" id = "bruh2"> Calendar View </a>
+</div>
+</div>
+<div class = "container" style = "background-color: white; padding: 2em; border-radius: 20px; width: 40%; margin-top: 50px;">
+  <h3 style = "text-align: center; padding-bottom: 15px;">Create/Edit an Event</h3>
 <form method="post">
   {% csrf_token %}
   <table class="form form-table">
     {{ form }}
-    <tr><td colspan="2"><button type="submit" class="btn btn-info right"> Submit </button></td></tr>
+    <tr><td colspan="2"><button type="submit" class="btn btn-info right" id = "bruh2"> Submit </button></td></tr>
   </table>
 </form>
+</div>
 {% endblock %}

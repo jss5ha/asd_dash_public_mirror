@@ -17,7 +17,7 @@
     integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
   <script src="https://kit.fontawesome.com/a076d05399.js"></script>
   <link rel="icon" type="image/png" href="static/images/icons/dash_logo.png" />
-  <link rel="stylesheet" href="static/css/home.css" />
+  <link rel="stylesheet" href="{% static 'css/home.css' %}" />
 
   <!--==========================necessary for loginout drop down???? only on this page=====================================================================-->
   <script src="static/vendor/jquery/jquery-3.2.1.min.js"></script>
@@ -158,12 +158,12 @@
 
   {% else %}
   <link rel="icon" type="image/png" href="static/images/icons/dash_logo.png" />
-  <link rel="stylesheet" type="text/css" href="static/css/util.css">
-  <link rel="stylesheet" type="text/css" href="static/css/main.css">
+  <link rel="stylesheet" type="text/css" href="{% static 'css/util.css' %}">
+  <link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">
   <meta name="viewport"
     content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <!-- <link rel="stylesheet" media="screen" href="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/demo/css/style.css"> -->
-  <link rel="stylesheet" media="screen" href="static/css/login.css">
+  <link rel="stylesheet" media="screen" href="{% static 'css/login.css' %}">
   <div id="particles-js">
     <div class="LoginContainer gradient-border" id="box">
       <div class="loginInner">
@@ -188,7 +188,7 @@
   <!-- stats.js -->
   <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/demo/js/lib/stats.js"></script>
   <script>
-    particlesJS.load('particles-js', 'static/particles.json', function () {
+    particlesJS.load('particles-js', "{% static 'particles.json' %}", function () {
       console.log('callback - particles.js config loaded');
     });
     requestAnimationFrame(update);
