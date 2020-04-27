@@ -23,7 +23,7 @@
 **Author:** Vincent Garreu
 **Date:** April 25, 2020  
 **Code version:** 2.0.0  
-**URL:** https://github.com/VincentGarreau/particles.js/ 
+**URL:** https://github.com/VincentGarreau/particles.js/  
 **Software License:** MIT License  
 
 **Title:** Bootstrap  
@@ -31,7 +31,7 @@
 **Date:** April 25, 2020  
 **Code version:** v4.4.1  
 **URL:** https://github.com/twbs/bootstrap  
-**Software License:** MIT License
+**Software License:** MIT License  
 
 **Title:** Chart.js  
 **Author:** Chart.js Contributors  
