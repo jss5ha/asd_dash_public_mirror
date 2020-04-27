@@ -111,6 +111,7 @@
 </style>
 
 <body>
+  {% if user.is_authenticated %}
   <nav class="navbar navbar-expand-lg navbar-dark" style = "background: #3B8DE1;">
     <a class="navbar-brand" href="/">Dash</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText"
@@ -197,6 +198,49 @@
 
   {% block script %}
   {% endblock %}
+
+{% else %}
+<link rel="icon" type="image/png" href="static/images/icons/dash_logo.png" />
+    <link rel="stylesheet" type="text/css" href="{% static 'css/util.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <!-- <link rel="stylesheet" media="screen" href="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/demo/css/style.css"> -->
+    <link rel="stylesheet" media="screen" href="{% static 'css/login.css' %}">
+    <div id="particles-js">
+        <div class="LoginContainer gradient-border" id="box">
+            <div class="loginInner">
+                <form class="login100-form validate-form flex-sb flex-w">
+                    <span class="login100-form-title p-b-53">Welcome to Dash</span>
+                    <a href="{% url 'social:begin' 'google-oauth2' %}" class="btn-google m-b-20">
+                        <img
+                            src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/512px-Google_%22G%22_Logo.svg.png">Login
+                        with Google</a>
+                </form>
+            </div>
+        </div>
+    </div>
+    </div>
+
+
+
+    <!-- scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/demo/js/app.js"></script>
+
+    <!-- stats.js -->
+    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/demo/js/lib/stats.js"></script>
+    <script>
+        particlesJS.load('particles-js', "{% static 'particles.json' %}", function () {
+            console.log('callback - particles.js config loaded');
+        });
+        requestAnimationFrame(update);
+    </script>
+
+    {% endif %}
+
+
+  
 </body>
 
 </html>
