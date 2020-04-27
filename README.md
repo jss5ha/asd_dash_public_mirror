@@ -1,8 +1,8 @@
 # Dash - Your Personal Dashboard
 
-### Tasks
-- [ ] Licenses and citations
-- [ ] Add brief explanations to homepage
+### Remaining Tasks
+- [x] Licenses and citations
+- [x] Add brief explanations to homepage
 
 ##  REFERENCES
 **Title:** Django  
@@ -10,7 +10,7 @@
 **Date:** April 25, 2020  
 **Code version:** 3.0.2  
 **URL:** https://github.com/django/django  
-**Software License:** BSD  
+**Software License:** BSD License  
 
 **Title:** PostgreSQL  
 **Author:** https://www.postgresql.org/community/contributors/  
@@ -25,3 +25,10 @@
 **Code version:** 2.0.0  
 **URL:** https://github.com/VincentGarreau/particles.js/ 
 **Software License:** MIT License  
+
+**Title:** Bootstrap  
+**Author:** https://getbootstrap.com/docs/4.4/about/team/  
+**Date:** April 25, 2020  
+**Code version:** v4.4.1  
+**URL:** https://github.com/twbs/bootstrap  
+**Software License:** MIT License
