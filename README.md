@@ -64,6 +64,6 @@
 **Title:** Icons8 Icons  
 **Author:** Icons8 LLC  
 **Date:** April 28, 2020  
-**Code version:** N/A 
-**URL:** https://icons8.com/license 
+**Code version:** N/A         
+**URL:** https://icons8.com/license       
 **Software License:** Icons8 Free Liscense 
