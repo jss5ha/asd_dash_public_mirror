@@ -4,7 +4,7 @@
 - [x] Licenses and citations
 - [x] Add brief explanations to homepage
 
-##  REFERENCES
+##  Citations
 **Title:** Django  
 **Author:** https://github.com/django/django/blob/master/AUTHORS  
 **Date:** April 25, 2020  
