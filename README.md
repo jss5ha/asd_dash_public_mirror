@@ -47,3 +47,16 @@
 **URL:** http://daneden.me/animate  
 **Software License:** MIT License  
 
+**Title:** Python Social Auth  
+**Author:** https://github.com/python-social-auth/social-app-django/graphs/contributors  
+**Date:** April 27, 2020  
+**Code version:** 3.1.0  
+**URL:** https://github.com/python-social-auth/social-app-django  
+**Software License:** BSD License  
+
+**Title:** Google API Client  
+**Author:** https://github.com/googleapis/google-api-python-client/graphs/contributors  
+**Date:** April 27, 2020  
+**Code version:** 1.8.2  
+**URL:** https://github.com/googleapis/google-api-python-client  
+**Software License:** Apache 2.0  
