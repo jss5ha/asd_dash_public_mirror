@@ -16,7 +16,7 @@
 **Author:** https://www.postgresql.org/community/contributors/  
 **Date:** April 25, 2020  
 **Code version:** 9.4  
-**URL:** https://www.postgresql.org/ 
+**URL:** https://www.postgresql.org/  
 **Software License:** PostgreSQL License  
 
 **Title:** particles.js  
