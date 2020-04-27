@@ -32,3 +32,18 @@
 **Code version:** v4.4.1  
 **URL:** https://github.com/twbs/bootstrap  
 **Software License:** MIT License
+
+**Title:** Chart.js  
+**Author:** Chart.js Contributors  
+**Date:** April 25, 2020  
+**Code version:** v3.0.0  
+**URL:** https://github.com/chartjs/Chart.js  
+**Software License:** MIT License  
+
+**Title:** animate.css  
+**Author:** Daniel Eden  
+**Date:** April 25, 2020  
+**Code version:** v3.5.2  
+**URL:** http://daneden.me/animate  
+**Software License:** MIT License  
+
