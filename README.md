@@ -7,7 +7,7 @@ Dash is a personal dashboard web application built with the Django Framework to 
 Clicking on To-do on the navbar or the icon on the home page will direct you to a page where you can create a to-do for a to-do list by inputting a description, due-date, and category. It will then be sorted and displayed by category chosen, and you can click on the item when you have completed it, followed by deleting it with the "delete completed" button.
 
 ### Grades
-Navigating to grades first requires you to create a course first. After creating a course, you can click on the course to navigate to that course's individual page. Here, you can toggle in the right between percentage-based grading systems and pure point-based grading systems.
+Upon navigating to grades, you need to create a course. After creating a course, you can click on the course to navigate to that course's individual page. Here, you can toggle in the right between percentage-based grading systems and pure point-based grading systems.
 
 For percentage-based grading systems, you must create an "Assignment Type/Category," such as "Test," "Homework," "Quizzes," etc., and give the category a weight corresponding to how much the category weighs out of the total grade. Then you submit assignments underneath each category using a dropdown, and it will automatically calculate your grade for the category and your grade overall for the course.
 
