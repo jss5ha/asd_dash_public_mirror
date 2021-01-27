@@ -1,7 +1,7 @@
 # Dash - Your Personal Dashboard
 
 ## About
-Dash is a personal dashboard web application built with the Django Framework to allow you to keep track of your to-dos, courses, grades, and events.
+Dash is a personal dashboard web application built with the Django Framework to allow you to keep track of your to-dos, courses, grades, and events. This website was created by myself and 4 others (collectively "Team asdfghjkl") during Spring 2020 at UVA for CS 3240 Advanced Software Development. We recieved a perfect score on the project. In order to use Dash one must log in with Google OAuth. Additionally, events has optional Google Calendar integration. 
 
 ### To-dos
 Clicking on To-do on the navbar or the icon on the home page will direct you to a page where you can create a to-do for a to-do list by inputting a description, due-date, and category. It will then be sorted and displayed by category chosen, and you can click on the item when you have completed it, followed by deleting it with the "delete completed" button.
